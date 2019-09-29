@@ -1,0 +1,25 @@
+/* TODO: move common CSS to universal CSS */
+/* define common attributes such as color */
+
+body {
+	background-color: #101010;
+	color: #EEEEEE;
+}
+
+#menu_left, #menu_right {
+	display: inline-block;
+	border: solid;
+}
+
+#menu_left:hover, #menu_right:hover {
+	background-color: #EEEEEE;
+	color: #101010;
+	cursor: pointer;
+}
+
+#menu_left {
+}
+
+#menu_right {
+	float: right;
+}
