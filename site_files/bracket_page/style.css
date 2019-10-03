@@ -5,9 +5,18 @@ body {
 	background-color: #101010;
 	color: #EEEEEE;
 }
+.container{
+	background-color:blue;
+	color: lightblue;
+	display:flex;
+}
+.column{
+	float: right;
+	flex: 50%;
+  background-color: red;
 
-.navbar {
+}
+/*.navbar {
 	position: fixed;
 	width: 100%;
-}
-
+}*/
