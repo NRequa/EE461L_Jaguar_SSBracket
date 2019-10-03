@@ -8,6 +8,38 @@ body {
 
 .navbar {
 	position: fixed;
+	z-index: 1;
 	width: 100%;
 }
 
+.third {
+	z-index: -1;
+	margin-top: 5%;
+	display: inline-block;
+	width: 33%;
+	color: black;
+}
+
+#third1 {
+	background-color: beige;
+}
+
+#third2 {
+	background-color: green;
+}
+
+#third3 {
+	background-color: blue;
+}
+
+#twitter_feed {
+	height: 750px;
+}
+
+#top_events {
+	height: 750px;
+}
+
+#change_this {
+	height: 750px;
+}
