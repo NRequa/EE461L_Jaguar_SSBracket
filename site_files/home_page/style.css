@@ -5,3 +5,22 @@
 body {
 	padding-top: 70px;
 }
+
+.carousel-inner img {
+	margin: auto;
+}
+
+#twitter_view {
+	outline: 2px solid black;
+}
+
+#tweets {
+	margin-left: 5%;
+	height: 700px;
+	overflow-y: scroll;
+}
+
+#popular {
+	height: 625px;
+	overflow-y: scroll;
+}
