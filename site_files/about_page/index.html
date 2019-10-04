@@ -8,28 +8,120 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
+		<style>
+			#individualGitStats {
+			  border-collapse: collapse;
+			  width: 100%;
+			}
+
+			#individualGitStats td, #individualGitStats th {
+			  border: 1px solid #fff;
+			  padding: 8px;
+			}
+
+			#individualGitStats tr:nth-child(even){background-color: #6b6969;}
+
+			#individualGitStats tr:hover {background-color: rgb(146, 10, 10);}
+
+			#individualGitStats th {
+			  padding-top: 12px;
+			  padding-bottom: 12px;
+			  text-align: left;
+			  background-color: black;
+			  color: white;
+			}
+		</style>
+					
 	</head>
+
 	<body>
-	
-	<nav class="navbar navbar-default" id="fixed-nav">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Tournaments</a></li>
-      <li><a href="#">LeaderBoard</a></li>
-      <li class="active"><a href="#">About Us</a></li>
-	  <li><a href="#">Register</a></li>
-      <li><a href="#">Log In</a></li>
-    </ul>
-  </div>
-</nav>
-  
-<div class="container">
-  <h3>Basic Navbar Example</h3>
-  <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
-</div>	
+		<nav class="navbar navbar-default" id="fixed-nav">
+			<div class="container-fluid">
+			  <div class="navbar-header">
+				<a class="navbar-brand" href="#">WebSiteName</a>
+			  </div>
+			  <ul class="nav navbar-nav">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Tournaments</a></li>
+				<li><a href="#">LeaderBoard</a></li>
+				<li class="active"><a href="#">About Us</a></li>
+				<li><a href="#">Register</a></li>
+				<li><a href="#">Log In</a></li>
+			  </ul>
+			</div>
+		  </nav>
+			
+		  <div class="container">
+			<h3>Basic Navbar Example</h3>
+			<p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+		  </div>
+		
+		<div id=projectSummary>
+		<h1>The Bracket Project</h1>
+		<p> Rustic, artisinal brackets made by craftsmen in the nintendo valley.</p>
+		</div>
+		
+		<div>
+		
+		<table id=individualGitStats>
+			<tr>
+				<th>Member</th>
+				<th>Git Username</th>
+				<th>Number of Commits</th>
+				<th>Number of Issues</th>
+				<th>Number of Unit Tests</th>
+			</tr>
+			
+			<tr>
+				<td>Joseph Dieciedue</td>
+				<td>jdieciedue</td>
+				<td id=JDCommits></td>
+				<td id=JDIssues></td>
+				<td id=JDUnitTests></td>
+			</tr>
+			
+			<tr>
+				<td>Nick Duggar</td>
+				<td>NickDuggar</td>
+				<td id=NDCommits></td>
+				<td id=NDIssues></td>
+				<td id=NDUnitTests></td>
+			</tr>
+			
+			<tr>
+				<td>Takuma Fujiwara</td>
+				<td>TakumaFujiwara</td>
+				<td id=TFCommits></td>
+				<td id=TFIssues></td>
+				<td id=TFUnitTests></td>
+			</tr>
+			
+			<tr>
+				<td>Nick Requa</td>
+				<td>NRequa</td>
+				<td id=NRCommits></td>
+				<td id=NRIssues></td>
+				<td id=NRUnitTests></td>
+			</tr>
+			
+			<tr>
+				<td>Tyler Takeyama</td>
+				<td>up1007</td>
+				<td id=TTCommits></td>
+				<td id=TTIssues></td>
+				<td id=TTUnitTests></td>
+			</tr>
+			
+			<tr>
+				<td>Arthur Wojtyna</td>
+				<td>bsx-1</td>
+				<td id=AWCommits></td>
+				<td id=AWIssues></td>
+				<td id=AWUnitTests></td>
+			</tr>
+		<table>
+		
+		</div>
+
 	</body>
 </html>
