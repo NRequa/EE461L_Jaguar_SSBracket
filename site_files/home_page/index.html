@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<script src="../res/jquery.js"></script>
+		<!-- <script src="../res/jquery.js"></script> -->
 		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
@@ -11,41 +12,67 @@
 	</head>
 	<body>
 	
-	<nav class="navbar navbar-default" id="fixed-nav">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">WebSiteName</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Tournaments</a></li>
+					<li><a href="#">LeaderBoard</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Register</a></li>
+					<li><a href="#">Log In</a></li>
+				</ul>
 			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Tournaments</a></li>
-				<li><a href="#">LeaderBoard</a></li>
-				<li><a href="#">About Us</a></li>
-				<li><a href="#">Register</a></li>
-				<li><a href="#">Log In</a></li>
-			</ul>
+		</nav>
+		
+		<div class="container-fluid">
+			<h1>Hello World!</h1>
+			<p>Resize the browser window to see the effect.</p>
+			<p>The columns will automatically stack on top of each other when the screen is less than 768px wide.</p>
+			<div class="row">
+				<div class="col-sm-3" style="background-color:lavender;">.col-sm-4</div>
+				<div class="col-sm-6" style="background-color:lavenderblush;">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					
+					  <!-- Indicators -->
+					  <ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+					  </ol>
+
+					  <!-- Wrapper for slides -->
+					  <div class="carousel-inner">
+						<div class="item active">
+						  <img src="test_images/la.jpg" alt="Los Angeles">
+						</div>
+
+						<div class="item">
+						  <img src="test_images/chicago.jpg" alt="Chicago">
+						</div>
+
+						<div class="item">
+						  <img src="test_images/ny.jpg" alt="New York">
+						</div>
+					  </div>
+
+					  <!-- Left and right controls -->
+					  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+						<span class="sr-only">Previous</span>
+					  </a>
+					  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+						<span class="sr-only">Next</span>
+					  </a>
+					</div>
+				</div>
+				<div class="col-sm-3" style="background-color:lavender;">.col-sm-4</div>
+			</div>
 		</div>
-	</nav>
-	
-	
-	<div class="third" id="third1">
-		<div id="twitter_feed">@SsBracket Twitter Feed</div>
-	</div>
-	
-	<div class="third" id="third2">
-		<div id="top_events">Top Events</div>
-	</div>
-	
-	<div class="third" id="third3">
-		<div id="change_this">
-			<form>
-				<input type="text" value="Search...">
-			</form>
-			<button type="submit" id="mb_btn">Make Bracket</button>
-			<div id="popular_events"></div>
-			<button type="submit" id="mb_btn">Contact</button>
-		</div>
-	</div>
-  
+		
 	</body>
 </html>
