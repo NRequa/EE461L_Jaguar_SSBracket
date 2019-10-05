@@ -3,24 +3,56 @@
 
 
 body {
-	padding-top: 70px;
+	padding-top: 50px;
 }
 
 .carousel-inner img {
 	margin: auto;
 }
 
-#twitter_view {
+#col1 {
+	height: 937px;
+}
+
+#col2 {
+	height: 937px;
+}
+
+#col3 {
+	height: 937px;
 	outline: 2px solid black;
 }
 
+#twitter_view {
+	margin-top: -2%;
+	height: 920px;
+	background-color: white;
+	outline: 2px solid black;
+}
+
+#twitter_title {
+	padding-top: 5%;
+}
+
+hr {
+	border: 1px solid black;
+}
+
 #tweets {
-	margin-left: 5%;
-	height: 700px;
-	overflow-y: scroll;
+	height: 820px;;
+	overflow-y: scroll
+}
+
+#scroller_text {
+	margin-top: 10%;
 }
 
 #popular {
 	height: 625px;
 	overflow-y: scroll;
+}
+
+/* TODO: center properly */
+#contact_button {
+	margin-left: 42.5%;
 }

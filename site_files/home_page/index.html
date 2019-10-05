@@ -30,7 +30,7 @@
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-3" style="background-color:lavender;">
+				<div class="col-sm-3" style="background-color:lavender;" id="col1">
 					<div id="twitter_view">
 						<h3 style="text-align: center" id="twitter_title">Tweets from SSBracket (@SsBracket)</h3>
 						<hr>
@@ -42,11 +42,12 @@
 					</div>
 				</div>
 				
-				<div class="col-sm-6" style="background-color:lavenderblush;">
+				<div class="col-sm-6" style="background-color:lavenderblush;" id="col2">
 				
 					<h1 style="text-align: center;">Top Tournaments</h1>
+					<br>
 				
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller">
 					
 					  <!-- Indicators -->
 					  <ol class="carousel-indicators">
@@ -83,7 +84,7 @@
 					
 					<br>
 					
-					<p style="font-size: 20px;">
+					<p style="font-size: 20px;" id ="scroller_text">
 						The FitnessGram™ Pacer Test is a multistage aerobic capacity test that 
 						progressively gets more difficult as it continues. The 20 meter pacer 
 						test will begin in 30 seconds. Line up at the start. The running speed 
@@ -95,7 +96,7 @@
 					</p>
 				</div>
 				
-				<div class="col-sm-3" style="background-color:lavender; padding-bottom: 10px;"">
+				<div class="col-sm-3" style="background-color:lavender; padding-bottom: 10px;" id="col3">
 					<br>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search tournaments...">
@@ -123,7 +124,7 @@
 						<div><h4>Event</h4><p>Contents</p></div>
 					</div>
 					<hr>
-					<button type="button" class="btn" style="float: right">Contact</button>
+					<button type="button" class="btn" id="contact_button">Contact</button>
 				</div>
 			</div>
 		</div>
