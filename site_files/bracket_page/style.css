@@ -2,21 +2,33 @@
 /* define common attributes such as color */
 
 body {
-	background-color: #101010;
-	color: #EEEEEE;
+	padding-top: 50px;
 }
 .container{
 	background-color:blue;
 	color: lightblue;
 	display:flex;
 }
-.column{
-	float: right;
-	flex: 50%;
-  background-color: red;
+.top{
+	background-color:red;
+	width:1000px;
+	height:150px;
+}
+.bottom{
+	outline: 2px solid black;
+	background-color:white;
+}
+/*TODO Make box scale dynamically*/
+.bracketbox{
+	height:250px;
 
 }
-/*.navbar {
-	position: fixed;
-	width: 100%;
-}*/
+#twitter_view {
+	outline: 2px solid black;
+}
+
+#tweets {
+	margin-left: 5%;
+	height: 700px;
+	overflow-y: scroll;
+}
