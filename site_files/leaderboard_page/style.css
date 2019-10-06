@@ -3,3 +3,31 @@ body {
 	background-image: url("leaderboard_background.png");
 }
 
+#leader_col {
+	margin-top: 7.5%;
+}
+
+#sections button {
+	display: inline-block;
+}
+
+#btn_33 {
+	width: 33%;
+}
+
+/* TODO: use better method for width */
+#btn_last {
+	width: 199px;
+}
+
+#clear_row {
+	margin-top: 15%;
+	color: white;
+	font-size: 40px;
+	text-align: center;
+}
+
+#top_lists {
+	margin-top: -30%;
+	font-size: 14px;
+}
