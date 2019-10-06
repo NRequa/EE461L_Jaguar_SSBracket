@@ -35,35 +35,91 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-default" id="fixed-nav">
+		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
-			  <div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
-			  </div>
-			  <ul class="nav navbar-nav">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Tournaments</a></li>
-				<li><a href="#">LeaderBoard</a></li>
-				<li class="active"><a href="#">About Us</a></li>
-				<li><a href="#">Register</a></li>
-				<li><a href="#">Log In</a></li>
-			  </ul>
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">WebSiteName</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Tournaments</a></li>
+					<li><a href="#">LeaderBoard</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Register</a></li>
+					<li><a href="#">Log In</a></li>
+				</ul>
 			</div>
-		  </nav>
+		</nav>
 			
-		  <div class="container">
-			<h3>Basic Navbar Example</h3>
-			<p>A navigation bar is a navigation header that is placed at the top of the page.</p>
-		  </div>
 		
-		<div id=projectSummary>
-		<h1>The Bracket Project</h1>
-		<p> Rustic, artisinal brackets made by craftsmen in the nintendo valley.</p>
+		<div id=projectSummary class=container-fluid>
+			<div class="row">
+				<div class="col-sm-12">
+					<h1>SSBracket</h1>
+					<p> A website to organize and find tournaments for the hit video game <i>Super Smash Siblings</i>.</p>
+					
+					<a href=https://github.com/NRequa/EE461L_Jaguar_SSBracket>Our GitHub repository for this project.</a>
+
+					<table class="table table-hover">
+						<tr>
+							<th>Name</th>
+							<th>Bio</th>
+							<th>Major Responsibilies</th>
+							<th>Picture</th>
+						</tr>
+
+						<tr>
+							<td>Joseph Dieciedue</td>
+							<td>(Insert Joseph Bio)</td>
+							<td>(Insert Joseph Responsibilies)</td>
+							<td>(Insert Pic)</td>
+						</tr>
+
+						<tr>
+							<td>Nick Duggar</td>
+							<td>Third-year electrical engineering student with nanotechnology as my primary tech core.</td>
+							<td>Figure out how to host on AWS and integrate the different hosting services together.</td>
+							<td>(Insert Pic)</td>
+						</tr>
+
+						<tr>
+							<td>Takuma Fujiwara</td>
+							<td>(Insert TakumaFujiwara Bio)</td>
+							<td>(Insert TakumaFujiwara Responsibilies)</td>
+							<td>(Insert Pic)</td>
+						</tr>
+
+						<tr>
+							<td>Nick Requa</td>
+							<td>(Insert NickRequa Bio)</td>
+							<td>(Insert NickRequa Responsibilies)</td>
+							<td>(Insert Pic)</td>
+						</tr>
+
+						<tr>
+							<td>Tyler Takeyama</td>
+							<td>(Insert TylerTakeyama Bio)</td>
+							<td>(Insert TylerTakeyama Responsibilies)</td>
+							<td>(Insert Pic)</td>
+						</tr>
+
+						<tr>
+							<td>Arthur Wojtyna</td>
+							<td>Arthur is a 3rd year Electrical and Computer Engineering student at UT with an interest in both software design and signal processing. 
+								He is part of the Robotics and Automation society and likes to grow alfalfa sprouts in his free time.</td>
+							<td>(Insert Arthur Responsibilies)</td>
+							<td>(Insert Pic)</td>
+						</tr>
+
+					</table>
+				</div>	
+			</div>	
 		</div>
 		
-		<div>
 		
-				<table id=statsTable class=aboutTable>
+		<div>
+				<h2>Contributers GitHub Stats</h2>
+				<table id=statsTable class="table table-hover">
 						<tr>
 							<th>User</th>
 							<th>Git Username</th>
@@ -121,8 +177,9 @@
 						</tr>
 			
 					</table>
-			
-					<table id=totalStats class=aboutTable>
+					
+					<h2>GitHub Stats Summary</h2>
+					<table id=totalStats class="table table-hover">
 						<tr>
 							<th>Total Commits</th>
 							<th>Total Open Issues</th>

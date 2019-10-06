@@ -2,8 +2,7 @@
 /* define common attributes such as color */
 
 body {
-	background-color: #101010;
-	color: #EEEEEE;
+	padding-top: 50px;
 }
 
 .navbar {
