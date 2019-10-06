@@ -1,11 +1,21 @@
 How to test database locally
 
-download cloud sql proxy
+Step 1.
+if you haven't done so in the Google App Engine guestbook tutorial
+install gcloud command
+https://cloud.google.com/sdk/docs/#install_the_latest_cloud_sdk_version
 
-run with
+Step 2. 
+download cloud sql proxy
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+chmod +x cloud_sql_proxy
+
+Step 3.
+run proxy with:
 ./cloud_sql_proxy -instances=ssbracket:us-central1:ssbracket=tcp:3306
 
-to connect to this, open new terminal and:
+Step 4. (Optional)
+to connect to this manually to see if it worked, open new terminal and:
 mysql -u root -h 127.0.0.1 -p
 password is 0321scks
 
