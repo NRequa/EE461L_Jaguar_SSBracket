@@ -9,21 +9,21 @@
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
 		<style>
-			#individualGitStats {
+			.aboutTable {
 			  border-collapse: collapse;
 			  width: 100%;
 			}
 
-			#individualGitStats td, #individualGitStats th {
+			.aboutTable td, .aboutTable th {
 			  border: 1px solid #fff;
 			  padding: 8px;
 			}
 
-			#individualGitStats tr:nth-child(even){background-color: #6b6969;}
+			.aboutTable tr:nth-child(even){background-color: #6b6969;}
 
-			#individualGitStats tr:hover {background-color: rgb(146, 10, 10);}
+			.aboutTable tr:hover {background-color: rgb(146, 10, 10);}
 
-			#individualGitStats th {
+			.aboutTable th {
 			  padding-top: 12px;
 			  padding-bottom: 12px;
 			  text-align: left;
@@ -63,63 +63,80 @@
 		
 		<div>
 		
-		<table id=individualGitStats>
-			<tr>
-				<th>Member</th>
-				<th>Git Username</th>
-				<th>Number of Commits</th>
-				<th>Number of Issues</th>
-				<th>Number of Unit Tests</th>
-			</tr>
+				<table id=statsTable class=aboutTable>
+						<tr>
+							<th>User</th>
+							<th>Git Username</th>
+							<th>Commits</th>
+							<th>Open Issues</th>
+							<th>Closed Issues</th>
+						</tr>
 			
-			<tr>
-				<td>Joseph Dieciedue</td>
-				<td>jdieciedue</td>
-				<td id=JDCommits></td>
-				<td id=JDIssues></td>
-				<td id=JDUnitTests></td>
-			</tr>
+						<tr>
+							<td>Joseph Dieciedue</td>
+							<td>jdieciedue</td>
+							<td id=jdieciedueCommits>0</td>
+							<td id=jdieciedueOpenIssues>0</td>
+							<td id=jdieciedueClosedIssues>0</td>
+						</tr>
 			
-			<tr>
-				<td>Nick Duggar</td>
-				<td>NickDuggar</td>
-				<td id=NDCommits></td>
-				<td id=NDIssues></td>
-				<td id=NDUnitTests></td>
-			</tr>
+						<tr>
+								<td>Nick Duggar</td>
+								<td>NickDuggar</td>
+								<td id=NickDuggarCommits>0</td>
+								<td id=NickDuggarOpenIssues>0</td>
+								<td id=NickDuggarClosedIssues>0</td>
+						</tr>
 			
-			<tr>
-				<td>Takuma Fujiwara</td>
-				<td>TakumaFujiwara</td>
-				<td id=TFCommits></td>
-				<td id=TFIssues></td>
-				<td id=TFUnitTests></td>
-			</tr>
+						<tr>
+								<td>Takuma Fujiwara</td>
+								<td>TakumaFujiwara</td>
+								<td id=TakumaFujiwaraCommits>0</td>
+								<td id=TakumaFujiwaraOpenIssues>0</td>
+								<td id=TakumaFujiwaraClosedIssues>0</td>
+						</tr>
 			
-			<tr>
-				<td>Nick Requa</td>
-				<td>NRequa</td>
-				<td id=NRCommits></td>
-				<td id=NRIssues></td>
-				<td id=NRUnitTests></td>
-			</tr>
+						<tr>
+								<td>Nick Requa</td>
+								<td>NRequa</td>
+								<td id=NRequaCommits>0</td>
+								<td id=NRequaOpenIssues>0</td>
+								<td id=NRequaClosedIssues>0</td>
+						</tr>
 			
-			<tr>
-				<td>Tyler Takeyama</td>
-				<td>up1007</td>
-				<td id=TTCommits></td>
-				<td id=TTIssues></td>
-				<td id=TTUnitTests></td>
-			</tr>
+						<tr>
+								<td>Tyler Takeyama</td>
+								<td>up1007</td>
+								<td id=up1007Commits>0</td>
+								<td id=up1007OpenIssues>0</td>
+								<td id=up1007ClosedIssues>0</td>
+						</tr>
 			
-			<tr>
-				<td>Arthur Wojtyna</td>
-				<td>bsx-1</td>
-				<td id=AWCommits></td>
-				<td id=AWIssues></td>
-				<td id=AWUnitTests></td>
-			</tr>
-		<table>
+						<tr>
+							<td>Arthur Wojtyna</td>
+							<td>bsx-1</td>
+							<td id=bsx-1Commits>0</td>
+							<td id=bsx-1OpenIssues>0</td>
+							<td id=bsx-1ClosedIssues>0</td>
+						</tr>
+			
+					</table>
+			
+					<table id=totalStats class=aboutTable>
+						<tr>
+							<th>Total Commits</th>
+							<th>Total Open Issues</th>
+							<th>Total Closed Issues</th>
+							<th>Total Unit Tests</th>
+						</tr>
+			
+						<tr>
+							<td id=sumCommits>0</td>
+							<td id=sumOpenIss>0</td>
+							<td id=sumCloseIss>0</td>
+							<td id=sumUnits>0</td>
+						</tr>
+					</table>
 		
 		</div>
 
