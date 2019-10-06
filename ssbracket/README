@@ -1,5 +1,9 @@
 How to test database locally
 
+Steps taken from this link
+Windows users might want to just follow this sites instructions because it has links to downloads
+https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test
+
 Step 1.
 if you haven't done so in the Google App Engine guestbook tutorial
 install gcloud command
@@ -7,14 +11,24 @@ https://cloud.google.com/sdk/docs/#install_the_latest_cloud_sdk_version
 
 Step 2. 
 download cloud sql proxy
+For Linux
 wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
-chmod +x cloud_sql_proxy
+
+For Mac
+curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
+
+For Windows 
+https://dl.google.com/cloudsql/cloud_sql_proxy_x64.exe
 
 Step 3.
+make proxy executable
+chmod +x cloud_sql_proxy
+
+Step 4.
 run proxy with:
 ./cloud_sql_proxy -instances=ssbracket:us-central1:ssbracket=tcp:3306
 
-Step 4. (Optional)
+Step 5. (Optional)
 to connect to this manually to see if it worked, open new terminal and:
 mysql -u root -h 127.0.0.1 -p
 password is 0321scks
