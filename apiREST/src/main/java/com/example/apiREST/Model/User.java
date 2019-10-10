@@ -18,6 +18,7 @@ import java.util.List;
 @Table(name = "users")
 public class User implements Serializable {
     @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 

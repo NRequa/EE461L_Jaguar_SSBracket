@@ -17,12 +17,24 @@ import java.util.List;
 @Table(name = "tournaments")
 public class Tournament implements Serializable {
     @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
 
     @Column(name = "tname", nullable = false)
     private String tname;
+	
+	@Column(name = "tcreator", nullable = false)
+    private String tcreator;
+	
+	@Column(name = "ttype", nullable = false)
+    private int ttype;
+	
+	@Column(name = "tsize", nullable = false)
+	private int tsize;
+	
+	
     /*
     @Column(name = "type", nullable = false)
     private String type;

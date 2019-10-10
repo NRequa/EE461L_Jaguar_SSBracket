@@ -37,9 +37,9 @@ public class TournamentController {
     }
 
     @PostMapping
-    public ResponseWrapper<Tournament> createPublisher( @Valid @RequestBody Tournament book )
+    public ResponseWrapper<Tournament> createPublisher( @Valid @RequestBody Tournament tournament )
     {
-        return new ResponseWrapper<>( tournamentService.add( book ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.add( tournament ), HttpStatus.OK );
     }
 
     @DeleteMapping(value = "/{id}")
@@ -50,9 +50,9 @@ public class TournamentController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> UpdateAuthor( @Valid @RequestBody Tournament book,
+    public ResponseWrapper<Tournament> UpdateAuthor( @Valid @RequestBody Tournament tournament,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( tournamentService.update( book, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.update( tournament, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }
