@@ -2,12 +2,20 @@
 /* define common attributes such as color */
 
 body {
-	background-color: #101010;
-	color: #EEEEEE;
+	background-color: white;
+	color: black;
+	padding-top: 50px;
 }
 
 .navbar {
 	position: fixed;
 	width: 100%;
+}
+
+.accountForms {
+	text-align: center;
+	width: 50%;
+	margin-left: 25%;
+	padding-top: 50px;
 }
 

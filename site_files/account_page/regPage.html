@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<script src="../res/jquery.js"></script>
+		<script src="script.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<meta charset="UTF-8">
+		<title>SSBracket</title>
+	</head>
+	
+    <body class="text-center">
+
+		<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">WebSiteName</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#">Tournaments</a></li>
+						<li><a href="#">LeaderBoard</a></li>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Register</a></li>
+						<li><a href="#">Log In</a></li>
+					</ul>
+				</div>
+            </nav>
+
+            <form class="accountForms" oninput="confirmPassword()">
+                <div class="form-group">
+                    <label for="regUserName">User Name</label>
+                    <input type="text" class="form-control" id="registerUserName" aria-describedby="emailHelp" placeholder="Enter username">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" class="form-control" id="regPass" placeholder="Password">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPasswordConfirm">Password</label>
+                    <input type="password" class="form-control" id="confirmPass" placeholder="Re-enter password">
+                </div>
+
+                <div class="form-group">
+                    <output id="passwordOK"></output>
+                </div>
+                <button id="submit" disabled="true" type="submit" class="btn btn-primary">Submit</button>
+                </form>
+       
+    </body>
+
+    <script>
+        function confirmPassword(){
+            if(document.getElementById("regPass").value != document.getElementById("confirmPass").value ){
+                document.getElementById("passwordOK").value = "Passwords don't match.";
+                document.getElementById("submit").disabled = true;
+            }
+            else{
+                document.getElementById("passwordOK").value = "";
+                document.getElementById("submit").disabled = false;
+            }    
+        }
+    </script>
+
+</html>
