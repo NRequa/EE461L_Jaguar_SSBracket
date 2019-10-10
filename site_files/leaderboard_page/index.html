@@ -29,11 +29,11 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-4" style="background-color:lavender;"></div>
-				<div class="col-sm-4" style="background-color:lavender;" id="leader_col">
+				<div class="col-sm-4" id="leader_col">
 					<div id="sections">
-						<button type="button" class="btn btn-primary" onClick="showBoard();" id="btn_33">Overall</button>
-						<button type="button" class="btn btn-primary" id="btn_33">By Character</button>
-						<button type="button" class="btn btn-primary" id="btn_last">By Region?</button>
+						<button type="button" class="btn btn-primary" onClick="showBoard(1);" id="btn_33">Overall</button>
+						<button type="button" class="btn btn-primary" onClick="showBoard(2);" id="btn_33">By Character</button>
+						<button type="button" class="btn btn-primary" onClick="showBoard(3);" id="btn_last">By Region?</button>
 					</div>
 				</div>
 				<div class="col-sm-4" style="background-color:lavender;"></div>
@@ -41,10 +41,12 @@
 		</div>
 		
 		<div class="container-fluid">
-			<div class="row" id="clear_row" style="display: none; opacity: 0;"">
+			<div class="row"">
 				<div class="col-sm-4"></div>
-				<div class="col-sm-4">
-					<ol id="top_lists"></ol>
+				<div class="col-sm-4" id="content_row">
+					<ol id="top_list1"></ol>
+					<ol id="top_list2"></ol>
+					<ol id="top_list3"></ol>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
