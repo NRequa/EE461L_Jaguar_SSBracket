@@ -21,7 +21,6 @@ import static com.example.apiREST.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 @Validated
 @RestController
 @RequestMapping("/api/v1/user")
-
 public class UserController {
 
     @Autowired
