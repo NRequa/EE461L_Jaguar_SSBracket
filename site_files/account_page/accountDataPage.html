@@ -17,12 +17,12 @@
 						<a class="navbar-brand" href="#">WebSiteName</a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#">Tournaments</a></li>
-						<li><a href="#">LeaderBoard</a></li>
-						<li><a href="/site_files/about_page/index.html">About Us</a></li>
-						<li><a href="#">Register</a></li>
-						<li><a href="#">Log In</a></li>
+						<li class="active"><a href="../home_page/index.html">Home</a></li>
+						<li><a href="../bracket_page/index.html">Tournaments</a></li>
+						<li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+						<li><a href="../about_page/index.html">About Us</a></li>
+						<li><a href="regPage.html">Register</a></li>
+						<li><a href="loginPrompt.html">Log In</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -36,7 +36,9 @@
 		<div class="row">
 			<nav class="col-md-2">
 				<div class="sidebar-sticky">
+					<h3>Account Navigation</h3>
 					<ul class="nav flex-coulmn">
+						<li><img class="center" src="images/userImage.png" alt="Profile Pic" width="120" height="120"</li>
 						<li class="nav-item">
 							<a href="#">
 								Tournament Stats
@@ -73,7 +75,7 @@
 
 			<main class="col-md-9 bg-light">
 				<div class="table-responsive">
-					<table class="table table-striped table-md">
+					<table id="mainContentTable" class="table table-striped table-md">
 						<tr>
 							<th>Character</th>
 							<th>Games Played</th>
