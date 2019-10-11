@@ -1,6 +1,6 @@
-package com.example.apiREST.Repository;
+package xyz.ssbracket.Repository;
 
-import com.example.apiREST.Model.Tournament;
+import xyz.ssbracket.Model.Tournament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

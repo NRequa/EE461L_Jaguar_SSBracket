@@ -1,7 +1,7 @@
-package com.example.apiREST.Service;
+package xyz.ssbracket.Service;
 
-import com.example.apiREST.Model.Tournament;
-import com.example.apiREST.Model.User;
+import xyz.ssbracket.Model.Tournament;
+import xyz.ssbracket.Model.User;
 
 import java.util.List;
 

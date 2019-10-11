@@ -1,9 +1,9 @@
-package com.example.apiREST.Controller;
+package xyz.ssbracket.Controller;
 
-import com.example.apiREST.Model.User;
-import com.example.apiREST.Model.Tournament;
-import com.example.apiREST.Results.ResponseWrapper;
-import com.example.apiREST.Service.UserService;
+import xyz.ssbracket.Model.User;
+import xyz.ssbracket.Model.Tournament;
+import xyz.ssbracket.Results.ResponseWrapper;
+import xyz.ssbracket.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +15,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-import static com.example.apiREST.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
-import static com.example.apiREST.Constants.ApiConstants.REGEX_FOR_NUMBERS;
+import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
+import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
 @Validated
 @RestController
@@ -40,9 +40,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseWrapper<User> createUser( @Valid @RequestBody User author )
+    public ResponseWrapper<User> createUser( @Valid @RequestBody User user )
     {
-        return new ResponseWrapper<>( userMainService.add( author ), HttpStatus.OK );
+        return new ResponseWrapper<>( userMainService.add( user ), HttpStatus.OK );
     }
 
     @DeleteMapping(value = "/{id}")
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseWrapper<User> UpdateUser( @Valid @RequestBody User user,
+    public ResponseWrapper<User> updateUser( @Valid @RequestBody User user,
                                                  @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
         return new ResponseWrapper<>( userMainService.update( user, Integer.parseInt( id ) ), HttpStatus.OK );

@@ -1,4 +1,4 @@
-package com.example.apiREST.Constants;
+package xyz.ssbracket.Constants;
 
 public class ApiConstants {
     public static final String REGEX_FOR_NUMBERS = "^\\d+$";

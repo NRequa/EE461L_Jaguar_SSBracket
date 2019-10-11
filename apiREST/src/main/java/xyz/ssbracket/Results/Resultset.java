@@ -1,8 +1,8 @@
-package com.example.apiREST.Results;
+package xyz.ssbracket.Results;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import com.example.apiREST.Exception.ResourceNotFoundException;
+import xyz.ssbracket.Exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;

@@ -1,10 +1,10 @@
-package com.example.apiREST.Service;
+package xyz.ssbracket.Service;
 
-import com.example.apiREST.Model.Tournament;
-import com.example.apiREST.Model.User;
-import com.example.apiREST.Repository.UserRepository;
-import com.example.apiREST.Repository.TournamentRepository;
-import com.example.apiREST.Exception.ResourceNotFoundException;
+import xyz.ssbracket.Model.Tournament;
+import xyz.ssbracket.Model.User;
+import xyz.ssbracket.Repository.UserRepository;
+import xyz.ssbracket.Repository.TournamentRepository;
+import xyz.ssbracket.Exception.ResourceNotFoundException;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class TournamentServiceImp extends TournamentService {
 
     private Tournament checkIfIdIsPresentAndReturnTournament( int id ) {
         if ( !tournamentRepository.findById( id ).isPresent() )
-            throw new ResourceNotFoundException( " Tournament id=" + id + " not found" );
+            throw new ResourceNotFoundException( " Tournament id = " + id + " not found" );
         else
             return tournamentRepository.findById( id ).get();
     }

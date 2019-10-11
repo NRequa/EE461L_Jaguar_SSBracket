@@ -1,4 +1,4 @@
-package com.example.apiREST.Exception;
+package xyz.ssbracket.Exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

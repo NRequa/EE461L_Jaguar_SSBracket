@@ -1,4 +1,4 @@
-package com.example.apiREST.Model;
+package xyz.ssbracket.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,8 @@
-package com.example.apiREST.Controller;
+package xyz.ssbracket.Controller;
 
-import com.example.apiREST.Model.Tournament;
-import com.example.apiREST.Results.ResponseWrapper;
-import com.example.apiREST.Service.TournamentService;
+import xyz.ssbracket.Tournament;
+import xyz.ssbracket.Results.ResponseWrapper;
+import xyz.ssbracket.Service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
-import static com.example.apiREST.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
-import static com.example.apiREST.Constants.ApiConstants.REGEX_FOR_NUMBERS;
+import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
+import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
 @Validated
 @RestController
@@ -24,14 +24,14 @@ public class TournamentController {
     private TournamentService tournamentService;
 
     @GetMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> getPublisherById(
+    public ResponseWrapper<Tournament> getTournamentById(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
         return new ResponseWrapper<>( tournamentService.getById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
     @GetMapping()
-    public ResponseWrapper<Page<Tournament>> getPublisherAll( Pageable pageable )
+    public ResponseWrapper<Page<Tournament>> getTournamentAll( Pageable pageable )
     {
         return new ResponseWrapper<>( tournamentService.getAll( pageable ), HttpStatus.OK );
     }
@@ -43,14 +43,14 @@ public class TournamentController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> deletePublisher(
+    public ResponseWrapper<Tournament> deleteTournament(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
         return new ResponseWrapper<>( tournamentService.deleteById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> UpdateAuthor( @Valid @RequestBody Tournament tournament,
+    public ResponseWrapper<Tournament> updateTournament( @Valid @RequestBody Tournament tournament,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
         return new ResponseWrapper<>( tournamentService.update( tournament, Integer.parseInt( id ) ), HttpStatus.OK );

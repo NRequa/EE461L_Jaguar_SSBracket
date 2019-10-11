@@ -1,4 +1,4 @@
-package com.example.apiREST.Exception;
+package xyz.ssbracket.Exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

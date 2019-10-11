@@ -1,9 +1,9 @@
-package com.example.apiREST.Service;
+package xyz.ssbracket.Service;
 
-import com.example.apiREST.Exception.ResourceNotFoundException;
-import com.example.apiREST.Model.Tournament;
-import com.example.apiREST.Model.User;
-import com.example.apiREST.Repository.UserRepository;
+import xyz.ssbracket.Exception.ResourceNotFoundException;
+import xyz.ssbracket.Model.Tournament;
+import xyz.ssbracket.Model.User;
+import xyz.ssbracket.Repository.UserRepository;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

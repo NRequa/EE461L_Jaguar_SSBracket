@@ -1,4 +1,4 @@
-package com.example.apiREST.Results;
+package xyz.ssbracket.Results;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

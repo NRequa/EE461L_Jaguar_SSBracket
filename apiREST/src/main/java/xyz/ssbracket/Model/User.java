@@ -1,4 +1,4 @@
-package com.example.apiREST.Model;
+package xyz.ssbracket.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

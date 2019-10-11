@@ -1,4 +1,4 @@
-package com.example.apiREST;
+package xyz.ssbracket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
