@@ -10,30 +10,30 @@
 		<title>SSBracket</title>
 	<body>
 	
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">WebSiteName</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Tournaments</a></li>
-					<li><a href="#">LeaderBoard</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Register</a></li>
-					<li><a href="#">Log In</a></li>
-				</ul>
-			</div>
-		</nav>
+			<nav class="navbar navbar-default navbar-fixed-top">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#">WebSiteName</a>
+						</div>
+						<ul class="nav navbar-nav">
+							<li><a href="../home_page/index.html">Home</a></li>
+							<li><a href="../bracket_page/index.html">Tournaments</a></li>
+							<li class="active"><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+							<li><a href="../about_page/index.html">About Us</a></li>
+							<li><a href="../account_page/regPage.html">Register</a></li>
+							<li><a href="../account_page/loginPrompt.html">Log In</a></li>
+						</ul>
+					</div>
+				</nav>
 		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-4" style="background-color:lavender;"></div>
-				<div class="col-sm-4" style="background-color:lavender;" id="leader_col">
+				<div class="col-sm-4" id="leader_col">
 					<div id="sections">
-						<button type="button" class="btn btn-primary" onClick="showBoard();" id="btn_33">Overall</button>
-						<button type="button" class="btn btn-primary" id="btn_33">By Character</button>
-						<button type="button" class="btn btn-primary" id="btn_last">By Region?</button>
+						<button type="button" class="btn btn-primary" onClick="showBoard(1);" id="btn_33">Overall</button>
+						<button type="button" class="btn btn-primary" onClick="showBoard(2);" id="btn_33">By Character</button>
+						<button type="button" class="btn btn-primary" onClick="showBoard(3);" id="btn_last">By Region?</button>
 					</div>
 				</div>
 				<div class="col-sm-4" style="background-color:lavender;"></div>
@@ -41,10 +41,12 @@
 		</div>
 		
 		<div class="container-fluid">
-			<div class="row" id="clear_row" style="display: none; opacity: 0;"">
+			<div class="row"">
 				<div class="col-sm-4"></div>
-				<div class="col-sm-4">
-					<ol id="top_lists"></ol>
+				<div class="col-sm-4" id="content_row">
+					<ol id="top_list1"></ol>
+					<ol id="top_list2"></ol>
+					<ol id="top_list3"></ol>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
