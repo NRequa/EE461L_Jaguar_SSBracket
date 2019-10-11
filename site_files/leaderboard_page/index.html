@@ -28,12 +28,12 @@
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-4" style="background-color:lavender;"></div>
+				<div class="col-sm-4"></div>
 				<div class="col-sm-4" id="leader_col">
 					<div id="sections">
-						<button type="button" class="btn btn-primary" onClick="showBoard(2);" id="btn_33">By Character</button>
-						<button type="button" class="btn btn-primary" onClick="showBoard(1);" id="btn_33">Overall</button>
-						<button type="button" class="btn btn-primary" onClick="showBoard(3);" id="btn_last">By Region?</button>
+						<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(2);" id="btn2">BY CHARACTER</button>
+						<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(1);" id="btn1">OVERALL</button>
+						<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(3);" id="btn3">BY REGION</button>
 					</div>
 				</div>
 				<div class="col-sm-4" style="background-color:lavender;"></div>
@@ -47,18 +47,30 @@
 				<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-4" id="bar2">
-					<svg width="5" height="100" id="svg2">
-						<rect width="5" height="100" style="fill: white;" />
+					<svg width="7.5" height="50" id="svg21">
+						<rect width="7.5" height="50" style="fill: white;" />
+					</svg>
+					<svg width="125" height="7.5" id="svg22">
+						<rect width="125" height="7.5" style="fill: white;" />
+					</svg>
+					<svg width="7.5" height="50" id="svg23">
+						<rect width="7.5" height="50" style="fill: white;" />
 					</svg>
 				</div>
 				<div class="col-sm-4" id="bar1">
-					<svg width="5" height="100" id="svg1">
-						<rect width="5" height="100" style="fill: white;" />
+					<svg width="7.5" height="100" id="svg1">
+						<rect width="7.5" height="100" style="fill: white;" />
 					</svg>
 				</div>
 				<div class="col-sm-4" id="bar3">
-					<svg width="5" height="100" id="svg3">
-						<rect width="5" height="100" style="fill: white;" />
+					<svg width="7.5" height="50" id="svg31">
+						<rect width="7.5" height="50" style="fill: white;" />
+					</svg>
+					<svg width="125" height="7.5" id="svg32">
+						<rect width="125" height="7.5" style="fill: white;" />
+					</svg>
+					<svg width="7.5" height="50" id="svg33">
+						<rect width="7.5" height="50" style="fill: white;" />
 					</svg>
 				</div>
 			</div>
@@ -73,20 +85,10 @@
 			<div class="row"">
 				<div class="col-sm-4"></div>
 				<div class="col-sm-4" id="content_row">
+					<p id="leader_text">select a category</p>
 					<ol id="top_list1"></ol>
 					<ol id="top_list2"></ol>
 					<ol id="top_list3"></ol>
-				</div>
-				<div class="col-sm-4"></div>
-			</div>
-		</div>
-		
-		
-		<div class="container-fluid">
-			<div class="row" id="clear_row">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-4">
-					<p id="leader_text">LeaderBoard</p>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
