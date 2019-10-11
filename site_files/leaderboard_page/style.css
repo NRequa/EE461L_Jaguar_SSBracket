@@ -40,3 +40,18 @@ body {
 #leader_text {
 	border: 3px solid white;
 }
+
+#svg2 {
+	position: absolute;
+	left: 10%;
+}
+
+#svg1 {
+	position: absolute;
+	left: 50%;
+}
+
+#svg3 {
+	position: absolute;
+	right: 10%;
+}

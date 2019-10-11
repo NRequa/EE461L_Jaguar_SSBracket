@@ -1,5 +1,14 @@
+$(document).ready(function() {
+	// begin with showing overall
+	showBoard(1);
+});
+
 function showBoard(buttonNum) {
 	$("#leader_text").css({"display": "none"});
+	
+	$("#svg1").css({"display": "none"});
+	$("#svg2").css({"display": "none"});
+	$("#svg3").css({"display": "none"});
 	
 	$("#top_list1").css({"display": "none"});
 	$("#top_list2").css({"display": "none"});
