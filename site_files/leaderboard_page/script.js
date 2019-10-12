@@ -14,19 +14,16 @@ function showBoard(buttonNum) {
 		case 1: list = document.getElementById("top_list1");
 		nodeString = "---- testOverall: Test Number ";
 		$("#top_list1").css({"display": ""});
-		$("#bar1").css({"opacity": "1"});
 		$("#btn1").css({"background-color": "rgb(230, 115, 0)"});
 		break;
 		case 2: list = document.getElementById("top_list2");
 		nodeString = "---- testCharacter: Test Number ";
 		$("#top_list2").css({"display": ""});
-		$("#bar2").css({"opacity": "1"});
 		$("#btn2").css({"background-color": "rgb(230, 115, 0)"});
 		break;
 		case 3: list = document.getElementById("top_list3");
 		nodeString = "---- testRegion: Test Number ";
 		$("#top_list3").css({"display": ""});
-		$("#bar3").css({"opacity": "1"});
 		$("#btn3").css({"background-color": "rgb(230, 115, 0)"});
 		break;
 		default: return;
@@ -51,10 +48,6 @@ function showBoard(buttonNum) {
 }
 
 function resetAll() {
-	$("#bar1").css({"opacity": "0"});
-	$("#bar2").css({"opacity": "0"});
-	$("#bar3").css({"opacity": "0"});
-	
 	$("#top_list1").css({"display": "none"});
 	$("#top_list2").css({"display": "none"});
 	$("#top_list3").css({"display": "none"});

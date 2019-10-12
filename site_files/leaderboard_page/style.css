@@ -4,7 +4,7 @@ body {
 }
 
 #leader_col {
-	margin-top: 5%;
+	margin-top: 3%;
 }
 
 /* width 200px looks fine but isn't exact */
@@ -45,43 +45,4 @@ body {
 
 #leader_text {
 	font-size: 35px;
-}
-
-#svg21 {
-	position: absolute;
-	left: 20%;
-}
-
-#svg22 {
-	position: absolute;
-	margin-top: 24.5%;
-	left: 20%;
-}
-
-#svg23 {
-	position: absolute;
-	left: 80%;
-	margin-top: 50px;
-}
-
-#svg1 {
-	position: absolute;
-	left: 50%;
-}
-
-#svg31 {
-	position: absolute;
-	right: 80%;
-	margin-top: 50px;
-}
-
-#svg32 {
-	position: absolute;
-	margin-top: 24.5%;
-	right: 20%;
-}
-
-#svg33 {
-	position: absolute;
-	right: 20%;
 }
