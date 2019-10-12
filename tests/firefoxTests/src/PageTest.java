@@ -7,7 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 class PageTest {
 	
-	String leaderboardURL = "http://www.ssbracket.xyz.s3-website.us-east-2.amazonaws.com/site_files/leaderboard_page/index.html";
+	//TODO: document all tests
+	
+	String leaderboardURL = "http://www.ssbracket.xyz/site_files/leaderboard_page/index.html";
 
 	@Test
 	void buttonTest() {
@@ -18,7 +20,8 @@ class PageTest {
 		WebElement overallBtn = driver.findElement(By.id("btn1"));
 		overallBtn.click();
 		
-		WebElement list = driver.findElement(By.id("")
+		WebElement list = driver.findElement(By.id("top_list1"));
+		System.out.println(list.getText());
 		
 		driver.quit();
 	}
