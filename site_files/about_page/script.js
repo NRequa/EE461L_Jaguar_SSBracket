@@ -71,6 +71,11 @@ function grabCommits() {
                
     }
 
+    function sumUnitTests(userName){
+        var indUnitTests = parseInt(document.getElementById(userName + "UnitTests").innerHTML);
+        document.getElementById("sumUnits").innerHTML = parseInt(document.getElementById("sumUnits").innerHTML) + indUnitTests; 
+    }
+
     function runGETS(){
         // Get individual commits for 
         grabCommits();
@@ -78,6 +83,7 @@ function grabCommits() {
         for(var i in userArray){      
             grabIssues(userArray[i], true);
             grabIssues(userArray[i], false);
+            sumUnitTests(userArray[i]);
         }
     }
 
