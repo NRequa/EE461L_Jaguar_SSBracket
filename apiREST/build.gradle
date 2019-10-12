@@ -1,0 +1,67 @@
+buildscript {
+	repositories {
+		maven { url 'https://repo.spring.io/libs-milestone' }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.9.RELEASE")
+		//classpath("com.google.cloud.tools:appengine-gradle-plugin:2.1.0")
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.1.9.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+//appengine.tools.cloudSdkHome="/usr/local/google-cloud-sdk"
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'maven'
+//apply plugin: 'com.google.cloud.tools.appengine'
+
+group = 'xyz.ssbracket'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+	jcenter()
+	mavenCentral()
+}
+
+dependencies {
+	//compile 'com.google.appengine:appengine-api-1.0-sdk:+'
+	//compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+	compile 'jstl:jstl:1.2'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//compile 'com.google.apis:google-api-services-sqladmin:v1beta4-rev76-1.25.0'
+	//compile group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-sql-mysql'
+	//compile group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-sql-postgresql'
+}
+
+//appengine {  // App Engine tasks configuration
+//  deploy {   // deploy configuration
+//	 projectId = 'GCLOUD_CONFIG'
+//	 version = 'GCLOUD_CONFIG'
+//  }
+//}
+
