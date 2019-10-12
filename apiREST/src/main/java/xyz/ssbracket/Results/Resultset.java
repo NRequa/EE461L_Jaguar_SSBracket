@@ -16,8 +16,6 @@ public class Resultset <T> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
     private T data;
-    //
-    private String toStringData;
 
     private Resultset() {
         this.timestamp = LocalDateTime.now();
@@ -29,7 +27,5 @@ public class Resultset <T> {
             throw new ResourceNotFoundException("No Content Found");
         this.status = status;
         this.data = o;
-        //
-        this.toStringData = o.toString();
     }
 }
