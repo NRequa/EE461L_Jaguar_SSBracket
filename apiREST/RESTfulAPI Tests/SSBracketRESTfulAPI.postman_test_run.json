@@ -1,0 +1,627 @@
+{
+	"id": "ba0fd194-7e78-422a-bd41-6cffc9e5c278",
+	"name": "SSBracketRESTfulAPI",
+	"allTests": [],
+	"timestamp": "2019-10-12T15:45:23.079Z",
+	"collection_id": "02630cdd-a505-46b0-b3a1-5350845df22c",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "0",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "02630cdd-a505-46b0-b3a1-5350845df22c",
+		"name": "SSBracketRESTfulAPI",
+		"order": [],
+		"folders_order": [
+			"e61b79b4-5972-4285-9cc2-5dcbe7aecc40",
+			"f829cf7b-b9c0-4d0b-9e2b-bf1d98ba4eec"
+		],
+		"isFavorite": true
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [],
+	"results": [
+		{
+			"name": "Post Tournament",
+			"id": "1a389710-7d6c-43c7-b66d-9443627bf3e8",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"103"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "103",
+			"totalRequestTime": "103",
+			"iterationResults": {}
+		},
+		{
+			"name": "Get Tournament",
+			"id": "b9651d1c-9c04-4427-9702-9c897f20148e",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/3",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"59"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "59",
+			"totalRequestTime": "59",
+			"iterationResults": {}
+		},
+		{
+			"name": "Delete Tournament",
+			"id": "ed14f130-c9a9-446d-8107-62c3446447aa",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/5",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"67"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "67",
+			"totalRequestTime": "67",
+			"iterationResults": {}
+		},
+		{
+			"name": "Get All Tournaments",
+			"id": "fcac7f87-a3dc-4fa6-a8a5-30e1eab1a932",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"50"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "50",
+			"totalRequestTime": "50",
+			"iterationResults": {}
+		},
+		{
+			"name": "Post User",
+			"id": "fdfaa362-43ec-45db-9193-518b59be59bc",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"58"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "58",
+			"totalRequestTime": "58",
+			"iterationResults": {}
+		},
+		{
+			"name": "Get User",
+			"id": "7e04085f-f8e1-4e0f-a538-744419aa7d98",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/12",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"64"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "64",
+			"totalRequestTime": "64",
+			"iterationResults": {}
+		},
+		{
+			"name": "Delete User",
+			"id": "967f9eb1-a24c-414e-88df-2105c74dc138",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/10",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"70"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "70",
+			"totalRequestTime": "70",
+			"iterationResults": {}
+		},
+		{
+			"name": "Get All Users",
+			"id": "755d0b2e-456b-4524-bc86-e64ab04d666e",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code: Code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response contains a valid JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"56"
+			],
+			"allTests": [
+				{
+					"Status code: Code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response contains a valid JSON": true
+				}
+			],
+			"time": "56",
+			"totalRequestTime": "56",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 24,
+	"totalFail": 0,
+	"totalTime": 527,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "Post Tournament",
+			"id": "1a389710-7d6c-43c7-b66d-9443627bf3e8",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Get Tournament",
+			"id": "b9651d1c-9c04-4427-9702-9c897f20148e",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/3",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Delete Tournament",
+			"id": "ed14f130-c9a9-446d-8107-62c3446447aa",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/5",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Get All Tournaments",
+			"id": "fcac7f87-a3dc-4fa6-a8a5-30e1eab1a932",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Post User",
+			"id": "fdfaa362-43ec-45db-9193-518b59be59bc",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Get User",
+			"id": "7e04085f-f8e1-4e0f-a538-744419aa7d98",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/12",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Delete User",
+			"id": "967f9eb1-a24c-414e-88df-2105c74dc138",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/10",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Get All Users",
+			"id": "755d0b2e-456b-4524-bc86-e64ab04d666e",
+			"url": "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user",
+			"time": "2019-10-12T15:45:23.079Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code: Code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a valid JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}
