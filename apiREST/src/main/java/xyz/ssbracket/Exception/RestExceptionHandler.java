@@ -11,8 +11,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import javax.validation.ConstraintViolationException;
 
-import static com.example.apiREST.Constants.ApiConstants.MESSAGE_FOR_INVALID_BODY_ERROR;
-import static com.example.apiREST.Constants.ApiConstants.MESSAGE_FOR_INVALID_PARAMETERS_ERROR;
+import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_INVALID_BODY_ERROR;
+import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_INVALID_PARAMETERS_ERROR;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {

@@ -31,5 +31,9 @@ public class User implements Serializable {
     @Column(name = "win", nullable = false)
     private String win;
 
-     */
+    */
+    public String toString() {
+    	String s = id + " " + username;
+    	return s;
+    }
 }

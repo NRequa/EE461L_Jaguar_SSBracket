@@ -1,4 +1,4 @@
-package com.example.apiREST;
+package xyz.ssbracket;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
-import static com.example.apiREST.Constants.ApiConstants.DATE_FORMAT;
+import static xyz.ssbracket.Constants.ApiConstants.DATE_FORMAT;
 
 @Data
 public class ApiError {
