@@ -1,10 +1,13 @@
 $(document).ready(function() {
-	// begin with showing overall
-	//showBoard(1);
+	$("#content_row").css({"display": "none"});
+	
+	$("#content_row").css({"transition-duration": "0.5s"});
+	$("#content_row").css({"transform-origin": "top"});
+	$("#content_row").css({"transform": "scale(0)"});
 });
 
 function showBoard(buttonNum) {
-	$("#leader_text").css({"display": "none"});
+	$("#content_row").css({"display": ""});
 	
 	resetAll(buttonNum);
 	
@@ -45,6 +48,8 @@ function showBoard(buttonNum) {
 		
 		list.appendChild(entry);
 	}
+	
+	$("#content_row").css({"transform": "scale(1)"});
 }
 
 function resetAll() {
