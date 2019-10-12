@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<!-- <script src="../res/jquery.js"></script> -->
+		<script src="site_files/home_page/script.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="site_files/home_page/style.css">
+		<meta charset="UTF-8">
+		<title>SSBracket</title>
+	</head>
+	<body>
+
+			<nav class="navbar navbar-default navbar-fixed-top">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#">SSBracket</a>
+						</div>
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#">Home</a></li>
+							<li><a href="site_files/bracket_page/index.html">Tournaments</a></li>
+							<li><a href="site_files/leaderboard_page/index.html">LeaderBoard</a></li>
+							<li><a href="site_files/about_page/index.html">About Us</a></li>
+							<li><a href="site_files/account_page/regPage.html">Register</a></li>
+							<li><a href="site_files/account_page/loginPrompt.html">Log In</a></li>
+						</ul>
+					</div>
+				</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3" style="background-color:lavender;" id="col1">
+					<div id="twitter_view">
+						<h3 style="text-align: center" id="twitter_title">Tweets from SSBracket (@SsBracket)</h3>
+						<hr>
+						<!-- obviously change -->
+						<div id="tweets">
+							<a class="twitter-timeline" data-dnt="true" data-theme="light" href="https://twitter.com/SsBracket?ref_src=twsrc%5Etfw">Tweets by SsBracket</a>
+							<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-6" style="background-color:lavenderblush;" id="col2">
+
+					<h1 style="text-align: center;">Top Tournaments</h1>
+					<br>
+
+					<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller">
+
+					  <!-- Indicators -->
+					  <ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+					  </ol>
+
+					  <!-- Wrapper for slides -->
+					  <div class="carousel-inner">
+						<div class="item active">
+						  <img src="test_images/la.jpg" alt="Los Angeles">
+						</div>
+
+						<div class="item">
+						  <img src="test_images/chicago.jpg" alt="Chicago">
+						</div>
+
+						<div class="item">
+						  <img src="test_images/ny.jpg" alt="New York">
+						</div>
+					  </div>
+
+					  <!-- Left and right controls -->
+					  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+						<span class="sr-only">Previous</span>
+					  </a>
+					  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+						<span class="sr-only">Next</span>
+					  </a>
+					</div>
+
+					<br>
+
+					<p style="font-size: 20px;" id ="scroller_text">
+						The FitnessGram™ Pacer Test is a multistage aerobic capacity test that
+						progressively gets more difficult as it continues. The 20 meter pacer
+						test will begin in 30 seconds. Line up at the start. The running speed
+						starts slowly, but gets faster each minute after you hear this signal.
+						[beep] A single lap should be completed each time you hear this sound.
+						[ding] Remember to run in a straight line, and run as long as possible.
+						The second time you fail to complete a lap before the sound, your test is over.
+						The test will begin on the word start. On your mark, get ready, start.
+					</p>
+				</div>
+
+				<div class="col-sm-3" style="background-color:lavender; padding-bottom: 10px;" id="col3">
+					<br>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search tournaments...">
+					</div>
+					<button type="button" class="btn">Make a bracket</button>
+					<hr>
+					<h3>Popular Events</h3>
+					<div id="popular">
+						<!-- obviously change as well-->
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+						<div><h4>Event</h4><p>Contents</p></div>
+					</div>
+					<hr>
+					<button type="button" class="btn" id="contact_button">Contact</button>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

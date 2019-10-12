@@ -7,10 +7,10 @@ body {
 	margin-top: 3%;
 }
 
-/* width 200px looks fine but isn't exact */
+/* using 32%, find a better fix for 3 buttons vs small resolution */
 #sections button {
 	display: inline-block;
-	width: 200px;
+	width: 32%;
 	color: black;
 	font-weight: bold;
 	background-color: rgb(255, 191, 128);
