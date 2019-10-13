@@ -22,6 +22,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError apiError = createError( ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST, ex );
         return new ResponseEntity<>( apiError, apiError.getStatus() );
     }
+    
+    @ExceptionHandler(DuplicateResourceFoundException.class)
+    public ResponseEntity<Object> resourceEntityDuplicate( DuplicateResourceFoundException ex )
+    {
+        ApiError apiError = createError( ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST, ex );
+        return new ResponseEntity<>( apiError, apiError.getStatus() );
+    }
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
