@@ -1,6 +1,7 @@
 package xyz.ssbracket.Service;
 
 import xyz.ssbracket.Exception.ResourceNotFoundException;
+import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Repository.UserRepository;
@@ -27,7 +28,11 @@ public class UserServiceImp extends UserService {
 
     @Override
     public User add(User o ) {
-        return userRepository.save( o );
+    	int id = o.getId();
+    	if ( userRepository.findById( id ).isPresent() )
+    		throw new DuplicateResourceFoundException( " User id = " + id + " already exists" );
+    	else
+    		return userRepository.save( o );
     }
 
     @Override

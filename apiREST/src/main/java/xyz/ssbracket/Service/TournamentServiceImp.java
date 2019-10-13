@@ -5,6 +5,7 @@ import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Exception.ResourceNotFoundException;
+import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,11 @@ public class TournamentServiceImp extends TournamentService {
 
     @Override
     public Tournament add( Tournament o ) {
-        return tournamentRepository.save( o );
+    	int id = o.getId();
+    	if ( tournamentRepository.findById( id ).isPresent() )
+    		throw new DuplicateResourceFoundException( " Tournament id = " + id + " already exists" );
+    	else
+    		return tournamentRepository.save( o );
     }
 
     @Override
