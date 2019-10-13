@@ -99,9 +99,21 @@
 				<div class="col-sm-3" style="background-color:lavender; padding-bottom: 10px;" id="col3">
 					<br>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search tournaments...">
+						<input type="text" class="form-control" placeholder="Search tournaments..." onkeydown="populateDrop(event)" id="searchForm">
 					</div>
-					<button type="button" class="btn">Make a bracket</button>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="display: none;">
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu" id="drop_menu">
+							<li style="padding-left: 5%; font-size= 14px; font-weight: bold" id="search_ph">search text</li>
+							<li style="padding-left: 5%;">Event 1</li>
+							<li style="padding-left: 5%;">Event 2</li>
+							<li style="padding-left: 5%;">Event 3</li>
+						</ul>
+					</div> 
+					<button type="button" class="btn" onclick="location.href='site_files/bracket_page/index.html';">
+						Make a bracket
+					</button>
 					<hr>
 					<h3>Popular Events</h3>
 					<div id="popular">
@@ -124,7 +136,8 @@
 						<div><h4>Event</h4><p>Contents</p></div>
 					</div>
 					<hr>
-					<button type="button" class="btn" id="contact_button">Contact</button>
+					<button type="button" class="btn" onclick="showContactInfo();" id="contact_btn">Contact</button>
+					<p style="display: none" id="contact_p">ssbracket.web@gmail.com</p>
 				</div>
 			</div>
 		</div>

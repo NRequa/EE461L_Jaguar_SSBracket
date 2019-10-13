@@ -47,12 +47,22 @@ hr {
 	margin-top: 10%;
 }
 
+#drop_menu {
+	width: 100%;
+}
+
 #popular {
 	height: 625px;
 	overflow-y: scroll;
 }
 
 /* TODO: center properly */
-#contact_button {
+#contact_btn {
 	margin-left: 42.5%;
+}
+
+#contact_p {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
 }
