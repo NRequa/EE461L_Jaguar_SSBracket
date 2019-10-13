@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -80,7 +81,7 @@ class PageTest {
 		
 		for (int i = 1; i < 20; i++)
 			assertTrue(listText.contains(Integer.toString(i)));
-	}
+	}*/
 	
 	@Test
 	void navBarTest() {
@@ -94,7 +95,7 @@ class PageTest {
 				fail();
 			}
 		}
-	} */
+	} 
 	
 	@Test
 	void homePageButtons() {
