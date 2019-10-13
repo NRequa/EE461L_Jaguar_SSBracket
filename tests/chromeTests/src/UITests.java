@@ -177,9 +177,16 @@ class UITests {
 			for(int i = 0; i < btnIds.length; i++) {
 				WebElement btn = driver.findElement(By.id(btnIds[i]));
 				btn.click();
-				WebElement divSection = driver.findElement(By.id(sectIds[i]));
-				// 
-				assertEquals(visibility.get(i)[0], divSection.isDisplayed());			
+				
+				WebElement charSection = driver.findElement(By.id(sectIds[0]));
+				WebElement friendSection = driver.findElement(By.id(sectIds[1]));
+				WebElement settingsSection = driver.findElement(By.id(sectIds[2]));
+				
+				// Check if div sections expected are dispalayed as expected
+				assertEquals(visibility.get(i)[0], charSection.isDisplayed());
+				assertEquals(visibility.get(i)[1], friendSection.isDisplayed());			
+				assertEquals(visibility.get(i)[2], settingsSection.isDisplayed());			
+
 			}
 		}
 		
