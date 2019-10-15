@@ -24,16 +24,18 @@ public class User implements Serializable {
 
     @Column(name = "username", nullable = false)
     private String username;
+
     /*
-    @Column(name = "character", nullable = false)
-    private String character;
+    @Column(name = "numWins", nullable = false)
+    private int numWins;
 
-    @Column(name = "win", nullable = false)
-    private String win;
+    @Column(name = "numTotalGames", nullable = false)
+    private int numTotalGames;
 
+    @Column(name = "numTournamentsCreated", nullable = false)
+    private int numTournamentsCreated;
+
+    @Column(name = "numTournamentsPlayedIn", nullable = false)
+    private int numTournamentsPlayedIn;
     */
-    public String toString() {
-    	String s = id + " " + username;
-    	return s;
-    }
 }

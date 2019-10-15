@@ -21,7 +21,6 @@ public class Tournament implements Serializable {
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
-
     @Column(name = "tname", nullable = false)
     private String tname;
 	
@@ -33,13 +32,5 @@ public class Tournament implements Serializable {
 	
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
-	
-	
-    /*
-    @Column(name = "type", nullable = false)
-    private String type;
 
-    @Column(name = "size", nullable = false)
-    private int size;
-    */
 }

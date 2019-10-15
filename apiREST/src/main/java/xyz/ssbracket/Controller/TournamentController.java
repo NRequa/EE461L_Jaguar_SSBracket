@@ -37,7 +37,7 @@ public class TournamentController {
     }
 
     @PostMapping
-    public ResponseWrapper<Tournament> createPublisher( @Valid @RequestBody Tournament tournament )
+    public ResponseWrapper<Tournament> createTournament( @Valid @RequestBody Tournament tournament )
     {
         return new ResponseWrapper<>( tournamentService.add( tournament ), HttpStatus.OK );
     }
