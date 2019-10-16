@@ -1,12 +1,13 @@
 package xyz.ssbracket.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +37,14 @@ public class User implements Serializable {
 
     @Column(name = "num_tournaments_won", nullable = false)
     private int num_tournaments_won;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "user_tournaments",
+            joinColumns = { @JoinColumn(name = "user_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "tournament_ID") })
+    private Set<Tournament> tournaments = new HashSet<>();
 }

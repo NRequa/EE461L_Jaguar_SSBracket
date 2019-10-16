@@ -1,6 +1,7 @@
 package xyz.ssbracket.Controller;
 
 import xyz.ssbracket.Model.Tournament;
+import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Results.ResponseWrapper;
 import xyz.ssbracket.Service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
