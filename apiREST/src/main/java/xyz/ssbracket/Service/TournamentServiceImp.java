@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @SuppressWarnings("unchecked")
 @Service
 public class TournamentServiceImp extends TournamentService {
@@ -40,8 +38,11 @@ public class TournamentServiceImp extends TournamentService {
 
     @Override
     public Tournament update( Tournament o, int id ) throws ResourceNotFoundException {
-
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
+        oldTournament.setTname( o.getTname() );
+        oldTournament.setTcreator( o.getTcreator() );
+        oldTournament.setTtype( o.getTtype() );
+        oldTournament.setTtype( o.getTtype() );
         return tournamentRepository.save( oldTournament );
     }
 

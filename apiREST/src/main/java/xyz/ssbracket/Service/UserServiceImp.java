@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @SuppressWarnings("unchecked")
 @Service
 @NoArgsConstructor
@@ -22,12 +20,12 @@ public class UserServiceImp extends UserService {
     private UserRepository userRepository;
 
     @Override
-    public Page<User> getAll(Pageable pageable ) {
+    public Page<User> getAll( Pageable pageable ) {
         return userRepository.findAll( pageable );
     }
 
     @Override
-    public User add(User o ) {
+    public User add( User o ) {
     	int id = o.getId();
     	if ( userRepository.findById( id ).isPresent() )
     		throw new DuplicateResourceFoundException( " User id = " + id + " already exists" );
@@ -37,8 +35,14 @@ public class UserServiceImp extends UserService {
 
     @Override
     public User update( User o, int id ) {
-        User user = checkIfIdIsPresentAndReturnUser( id );
-        return userRepository.save( user );
+        User oldUser = checkIfIdIsPresentAndReturnUser( id );
+        oldUser.setUsername( o.getUsername() );
+        oldUser.setNum_wins( o.getNum_wins() );
+        oldUser.setNum_games_played( o.getNum_games_played() );
+        oldUser.setNum_tournaments_created( o.getNum_tournaments_created() );
+        oldUser.setNum_tournaments_participated(o.getNum_tournaments_participated() );
+        oldUser.setNum_tournaments_won( o.getNum_tournaments_won() );
+        return userRepository.save( oldUser );
     }
 
     @Override
