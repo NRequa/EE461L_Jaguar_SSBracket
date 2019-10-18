@@ -1,0 +1,13 @@
+
+/* TODO: move common CSS to universal CSS */
+/* define common attributes such as color */
+
+body {
+	background-color: #101010;
+	color: #EEEEEE;
+}
+
+.navbar {
+	position: fixed;
+	width: 100%;
+}
