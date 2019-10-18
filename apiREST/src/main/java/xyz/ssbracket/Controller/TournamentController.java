@@ -50,10 +50,17 @@ public class TournamentController {
         return new ResponseWrapper<>( tournamentService.deleteById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "/t/{id}")
     public ResponseWrapper<Tournament> updateTournament( @Valid @RequestBody Tournament tournament,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( tournamentService.update( tournament, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.updateSelf( tournament, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
+    @PatchMapping(value = "/u/{id}")
+    public ResponseWrapper<Tournament> updateTournament( @Valid @RequestBody User user,
+                                                         @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( tournamentService.updateList( user, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }

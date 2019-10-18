@@ -51,10 +51,17 @@ public class UserController {
         return new ResponseWrapper<>( userMainService.deleteById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "/u/{id}")
     public ResponseWrapper<User> updateUser( @Valid @RequestBody User user,
                                                  @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( userMainService.update( user, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( userMainService.updateSelf( user, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
+    @PatchMapping(value = "/t/{id}")
+    public ResponseWrapper<User> updateUser( @Valid @RequestBody Tournament tournament,
+                                             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( userMainService.updateList( tournament, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }
