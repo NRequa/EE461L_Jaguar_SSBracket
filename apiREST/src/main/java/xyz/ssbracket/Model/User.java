@@ -1,8 +1,6 @@
 package xyz.ssbracket.Model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,8 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -47,4 +43,17 @@ public class User implements Serializable {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Tournament> tournaments = new HashSet<>();
+
+    public User() { }
+
+    public User(int id, String username, int num_wins,  int num_games_played, int num_tournaments_created,
+                int num_tournaments_participated, int num_tournaments_won) {
+        this.id = id;
+        this.username = username;
+        this .num_wins = num_wins;
+        this.num_games_played = num_games_played;
+        this.num_tournaments_created = num_tournaments_created;
+        this.num_tournaments_participated = num_tournaments_participated;
+        this.num_tournaments_won = num_tournaments_won;
+    }
 }

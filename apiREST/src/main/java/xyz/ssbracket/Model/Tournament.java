@@ -12,8 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "tournaments")
 public class Tournament implements Serializable {
@@ -45,4 +43,14 @@ public class Tournament implements Serializable {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> users = new HashSet<>();
+
+    public Tournament() {}
+
+    public Tournament(int id, String tname, String tcreator, int ttype, int tsize) {
+        this.id = id;
+        this.tname = tname;
+        this.tcreator = tcreator;
+        this.ttype = ttype;
+        this.tsize = tsize;
+    }
 }
