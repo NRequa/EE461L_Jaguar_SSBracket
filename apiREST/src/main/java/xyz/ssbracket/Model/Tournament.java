@@ -32,6 +32,7 @@ public class Tournament implements Serializable {
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
 
+	/*
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
@@ -43,6 +44,7 @@ public class Tournament implements Serializable {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> users = new HashSet<>();
+	*/
 
     public Tournament() {}
 

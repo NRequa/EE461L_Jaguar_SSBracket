@@ -36,6 +36,7 @@ public class User implements Serializable {
     @Column(name = "num_tournaments_won", nullable = false)
     private int num_tournaments_won;
 
+    /*
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -43,6 +44,7 @@ public class User implements Serializable {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Tournament> tournaments = new HashSet<>();
+    */
 
     public User() { }
 
@@ -50,7 +52,7 @@ public class User implements Serializable {
                 int num_tournaments_participated, int num_tournaments_won) {
         this.id = id;
         this.username = username;
-        this .num_wins = num_wins;
+        this.num_wins = num_wins;
         this.num_games_played = num_games_played;
         this.num_tournaments_created = num_tournaments_created;
         this.num_tournaments_participated = num_tournaments_participated;

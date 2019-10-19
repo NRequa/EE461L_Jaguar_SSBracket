@@ -41,7 +41,7 @@ public class UserServiceImp extends UserService {
     public User update( Tournament o, int id ) {
         User oldUser = checkIfIdIsPresentAndReturnUser( id );
         Tournament joinedTournament = checkIfIdIsPresentAndReturnTournament( o.getId() );
-        oldUser.getTournaments().add(joinedTournament);
+        //oldUser.getTournaments().add(joinedTournament);
         return userRepository.save( oldUser );
     }
 

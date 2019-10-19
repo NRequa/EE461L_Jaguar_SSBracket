@@ -40,7 +40,7 @@ public class TournamentServiceImp extends TournamentService {
     public Tournament update( User o, int id ) throws ResourceNotFoundException {
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
         User entry = checkIfIdIsPresentAndReturnUser( o.getId() );
-        oldTournament.getUsers().add(entry);
+        //oldTournament.getUsers().add(entry);
         return tournamentRepository.save( oldTournament );
     }
 
