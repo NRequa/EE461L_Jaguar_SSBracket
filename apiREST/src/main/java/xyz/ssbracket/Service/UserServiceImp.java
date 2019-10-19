@@ -38,10 +38,8 @@ public class UserServiceImp extends UserService {
     }
 
     @Override
-    public User update( Tournament o, int id ) {
+    public User update( User o, int id ) {
         User oldUser = checkIfIdIsPresentAndReturnUser( id );
-        Tournament joinedTournament = checkIfIdIsPresentAndReturnTournament( o.getId() );
-        //oldUser.getTournaments().add(joinedTournament);
         return userRepository.save( oldUser );
     }
 
