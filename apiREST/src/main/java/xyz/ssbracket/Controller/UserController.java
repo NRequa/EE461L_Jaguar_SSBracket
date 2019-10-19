@@ -52,9 +52,9 @@ public class UserController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseWrapper<User> updateUser( @Valid @RequestBody Tournament tournament,
+    public ResponseWrapper<User> updateUser( @Valid @RequestBody User user,
                                              @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( userMainService.update( tournament, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( userMainService.update( user, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }
