@@ -5,6 +5,7 @@ import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Repository.UserRepository;
+import xyz.ssbracket.Repository.TournamentRepository;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 @NoArgsConstructor
 public class UserServiceImp extends UserService {
+
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TournamentRepository tournamentRepository;
 
     @Override
     public Page<User> getAll( Pageable pageable ) {
@@ -34,14 +38,10 @@ public class UserServiceImp extends UserService {
     }
 
     @Override
-    public User update( User o, int id ) {
+    public User update( Tournament o, int id ) {
         User oldUser = checkIfIdIsPresentAndReturnUser( id );
-        oldUser.setUsername( o.getUsername() );
-        oldUser.setNum_wins( o.getNum_wins() );
-        oldUser.setNum_games_played( o.getNum_games_played() );
-        oldUser.setNum_tournaments_created( o.getNum_tournaments_created() );
-        oldUser.setNum_tournaments_participated(o.getNum_tournaments_participated() );
-        oldUser.setNum_tournaments_won( o.getNum_tournaments_won() );
+        Tournament joinedTournament = checkIfIdIsPresentAndReturnTournament( o.getId() );
+        oldUser.getTournaments().add(joinedTournament);
         return userRepository.save( oldUser );
     }
 
@@ -62,5 +62,12 @@ public class UserServiceImp extends UserService {
             throw new ResourceNotFoundException( " User id = " + id + " not found" );
         else
             return userRepository.findById( id ).get();
+    }
+
+    private Tournament checkIfIdIsPresentAndReturnTournament( int id ) {
+        if ( !tournamentRepository.findById( id ).isPresent() )
+            throw new ResourceNotFoundException( " Tournament id = " + id + " not found" );
+        else
+            return tournamentRepository.findById( id ).get();
     }
 }

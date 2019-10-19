@@ -1,0 +1,4 @@
+git pull
+./gradlew clean
+./gradlew war
+./gradlew build
