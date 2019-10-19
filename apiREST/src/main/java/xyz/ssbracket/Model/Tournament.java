@@ -3,6 +3,8 @@ package xyz.ssbracket.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,11 +34,15 @@ public class Tournament implements Serializable {
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "tournaments")
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinTable(
+            name = "user_tournaments",
+            joinColumns = { @JoinColumn(name = "tournament_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> users = new HashSet<>();
 }

@@ -27,6 +27,7 @@ public class TournamentServiceImp extends TournamentService {
         return tournamentRepository.findAll( pageable );
     }
 
+    @Override
     public Tournament add( Tournament o ) {
     	int id = o.getId();
     	if ( tournamentRepository.findById( id ).isPresent() )
@@ -36,17 +37,7 @@ public class TournamentServiceImp extends TournamentService {
     }
 
     @Override
-    public Tournament updateSelf( Tournament o, int id ) throws ResourceNotFoundException {
-        Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
-        oldTournament.setTname(o.getTname());
-        oldTournament.setTcreator(o.getTcreator());
-        oldTournament.setTtype(o.getTtype());
-        oldTournament.setTsize(o.getTsize());
-        return tournamentRepository.save( oldTournament );
-    }
-
-    @Override
-    public Tournament updateList( User o, int id ) throws ResourceNotFoundException {
+    public Tournament update( User o, int id ) throws ResourceNotFoundException {
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
         User entry = checkIfIdIsPresentAndReturnUser( o.getId() );
         oldTournament.getUsers().add(entry);
