@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<script src="../res/jquery.js"></script>
 		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
@@ -10,26 +10,40 @@
 		<title>SSBracket</title>
 	</head>
 	<body>
-	
-	<nav class="navbar navbar-default" id="fixed-nav">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Tournaments</a></li>
-      <li><a href="#">LeaderBoard</a></li>
-      <li><a href="#">About Us</a></li>
-	  <li><a href="#">Register</a></li>
-      <li class="active"><a href="#">Log In</a></li>
-    </ul>
-  </div>
-</nav>
-  
-<div class="container">
-  <h3>Basic Navbar Example</h3>
-  <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
-</div>	
+
+		<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">SSBracket</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="../../index.html">Home</a></li>
+						<li><a href="../bracket_page/index.html">Tournaments</a></li>
+						<li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+						<li><a href="../about_page/index.html">About Us</a></li>
+						<li><a href="../account_page/regPage.html">Register</a></li>
+						<li><a href="../account_page/loginPrompt.html">Log In</a></li>
+					</ul>
+				</div>
+			</nav>
+<p id="chungusTester">test</p>
+<div class="container-fluid">
+  <div class="row">
+		<div class="col">
+			<table id="charStat" class="table table-hover table-bordered table-striped">
+	    <thead>
+	      <tr>
+	        <th>Name</th>
+	        <th>Weight</th>
+					<th>Speed</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+				<!--table rows added dynamically-->
+	    </tbody>
+	  </table>
+		</div>
+	</div>
+</div>
 	</body>
 </html>

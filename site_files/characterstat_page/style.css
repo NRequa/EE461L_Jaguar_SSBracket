@@ -2,12 +2,16 @@
 /* TODO: move common CSS to universal CSS */
 /* define common attributes such as color */
 
-body {
-	background-color: #101010;
-	color: #EEEEEE;
-}
-
 .navbar {
 	position: fixed;
 	width: 100%;
+}
+
+body {
+    padding-top: 65px;
+		padding-left: 10px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #c5c7c9;
 }

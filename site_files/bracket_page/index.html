@@ -7,11 +7,33 @@
 
   	<script src="script.js"></script>
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 
     <meta charset="utf-8">
     <title>SSBracket</title>
   </head>
   <body>
-    
+    <nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">SSBracket</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="../../index.html">Home</a></li>
+						<li class="active"><a href="#">Tournaments</a></li>
+						<li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+						<li><a href="../about_page/index.html">About Us</a></li>
+						<li><a href="../account_page/regPage.html">Register</a></li>
+						<li><a href="../account_page/loginPrompt.html">Log In</a></li>
+					</ul>
+				</div>
+			</nav>
+      <h1>
+        Create a tournament or search from existing tournaments
+      </h1>
+      <button type="button" class="btn" onclick="location.href='tour_create.html';" id="bracket_btn">
+        Create a tournament
+      </button>
+      
   </body>
 </html>
