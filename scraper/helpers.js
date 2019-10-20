@@ -3,17 +3,13 @@ const cheerio = require('cheerio');
 
 function extractWeightFromHTML (html, characterData) {
   const $ = cheerio.load(html);
-  //const charTables = $('.wikitable').not('collapsed').last();
-  const characterRows = $('.wikitable tbody tr').not('.collapsed');//charTables.filter('tbody tr');////.eq(7)
+  
+  const characterRows = $('.wikitable tbody tr').not('.collapsed');
 
-  //const characters = [];
   characterRows.each((i, el) => {
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-    //let debug = $(el).text().trim();
-	//console.log($(el).children().eq(1).children().last().text().trim());
-	//console.log($(el).children().eq(1).children().last().attr('title'));
-	//let debug = $(el).children().eq(1).children().last().attr('title');
+    
     // Extract information from each row of the jobs table
     let name = $(el).children().eq(1).children().last().text().trim();
     let weight = $(el).children().eq(2).text().trim();
@@ -37,16 +33,18 @@ function extractDashFromHTML (html, characterData) {
 	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(1).children().last().text().trim();
     let dash = $(el).children().eq(3).text().trim();
-    var j = 0;
+	characterData.push({name, dash});
+	console.log(dash);
+    //var j = 0;
 	//console.log("about to start loop");
-	for(j = 0; j < characterData.length; j++) {
+	//for(j = 0; j < characterData.length; j++) {
 		//console.log(characterData[j]);
-		if(characterData[j].name === name) {
+		//if(characterData[j].name === name) {
 			//console.log("match");
-			characterData[j].dash = dash;
-			break;
-		}
-	}
+			//characterData[j].dash = dash;
+			//break;
+		//}
+	//}
   });
 
   return characterData;
@@ -56,21 +54,26 @@ function extractDashFromHTML (html, characterData) {
 
 function extractSpotdodgeFromHTML (html, characterData) {
   const $ = cheerio.load(html);
-  const characterRows = $('.wikitable tbody tr').not('.collapsed');//charTables.filter('tbody tr');////.eq(7)
-
-  //const characters = [];
+  const characterRows = $('.wikitable tbody tr').not('.collapsed');
+  
   characterRows.each((i, el) => {
-	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
-	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-    //let debug = $(el).text().trim();
-	//console.log($(el).children().eq(1).children().last().text().trim());
-	//console.log($(el).children().eq(1).children().last().attr('title'));
-	//let debug = $(el).children().eq(1).children().last().attr('title');
-    // Extract information from each row of the jobs table
-    let name = $(el).children().eq(1).children().last().text().trim();
-    let weight = $(el).children().eq(2).text().trim();
-
-    characterData.push({name, weight});
+	//console.log(el);
+	if(typeof $(el).children().eq(0).children().last().attr('title') === "undefined") {return;}
+	if($(el).children().eq(0).children().last().attr('title').toString().includes('SSBU') === false) {return;}
+	//console.log($(el).children().eq(3).text().trim());
+    let name = $(el).children().eq(0).children().last().text().trim();
+    let spotdodge = $(el).children().eq(1).text().trim();
+	console.log(spotdodge);
+	characterData.push({name, spotdodge});
+    //var j = 0;
+	//console.log("about to start loop");
+	//for(j = 0; j < characterData.length; j++) {
+		//console.log(characterData[j]);
+		//if(characterData[j].name === name) {
+			//characterData[j].spotdodge = spotdodge;
+			//break;
+		//}
+	//}
   });
 
   return characterData;
@@ -78,22 +81,27 @@ function extractSpotdodgeFromHTML (html, characterData) {
 
 function extractTractionFromHTML (html, characterData) {
   const $ = cheerio.load(html);
-  //const charTables = $('.wikitable').not('collapsed').last();
-  const characterRows = $('.wikitable tbody tr').not('.collapsed');//charTables.filter('tbody tr');////.eq(7)
+  
+  const characterRows = $('.wikitable tbody tr').not('.collapsed');
 
-  //const characters = [];
   characterRows.each((i, el) => {
+	//console.log(el);
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-    //let debug = $(el).text().trim();
-	//console.log($(el).children().eq(1).children().last().text().trim());
-	//console.log($(el).children().eq(1).children().last().attr('title'));
-	//let debug = $(el).children().eq(1).children().last().attr('title');
-    // Extract information from each row of the jobs table
+	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(1).children().last().text().trim();
-    let weight = $(el).children().eq(2).text().trim();
-
-    characterData.push({name, weight});
+    let traction = $(el).children().eq(2).text().trim();
+	console.log(traction);
+	characterData.push({name, traction});
+    //var j = 0;
+	//console.log("about to start loop");
+	//for(j = 0; j < characterData.length; j++) {
+		//console.log(characterData[j]);
+		//if(characterData[j].name === name) {
+			//characterData[j].traction = traction;
+			//break;
+		//}
+	//}
   });
 
   return characterData;
