@@ -2,8 +2,8 @@
 /* define common attributes such as color */
 
 body {
-	background-color: white;
-	color: black;
+	background-color: #373737;
+	color: white;
 	padding-top: 50px;
 }
 
@@ -22,4 +22,32 @@ body {
 #friendNumber {
 	font-size: 16px;
 	font-weight: bold;
+}
+
+#leftNav {
+	background-color: #575757;
+	margin-top: 1.5%;
+	margin-left: 2.5%;
+	border: 3px outset black;
+	padding: 15px;
+}
+
+#leftNav a {
+	margin-top: 2.5%;
+	left: -5%;
+	font-size: 16px;
+	color: white;
+}
+
+#leftNav a:hover {
+	cursor: pointer;
+	color: red;
+}
+
+#belowNav {
+	height: 400px;
+}
+
+#rightDisplay h1 {
+	color: white;
 }
