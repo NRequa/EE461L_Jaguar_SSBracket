@@ -24,26 +24,35 @@ function extractWeightFromHTML (html, characterData) {
   return characterData;
 }
 
+
+
 function extractDashFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
   
   characterRows.each((i, el) => {
+	//console.log(el);
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
+	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(1).children().last().text().trim();
-    let dash = $(el).children().eq(2).text().trim();
-
-	for(c in characterData) {
-		if(c.name === name) {
-			c.dash = dash;
+    let dash = $(el).children().eq(3).text().trim();
+    var j = 0;
+	//console.log("about to start loop");
+	for(j = 0; j < characterData.length; j++) {
+		//console.log(characterData[j]);
+		if(characterData[j].name === name) {
+			//console.log("match");
+			characterData[j].dash = dash;
+			break;
 		}
 	}
-    characterData.push({name, weight});
   });
 
   return characterData;
 }
+
+
 
 function extractSpotdodgeFromHTML (html, characterData) {
   const $ = cheerio.load(html);
