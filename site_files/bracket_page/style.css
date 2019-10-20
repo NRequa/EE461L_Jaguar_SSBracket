@@ -24,16 +24,26 @@ body {
 .bracketbox{
 	width:1000px;
 	height:250px;
+	overflow-y: scroll;
+	overflow-x: scroll;
 
 }
-#m-contain{
+#bracketbox{
+	width:1000px;
+	height:250px;
+	overflow-y: scroll;
+	overflow-x: scroll;
+
+}
+.m-contain{
 	fill:lightcoral;
 }
-#p-contain{
+.p-contain{
 	fill:khaki;
 }
 #twitter_view {
 	outline: 2px solid black;
+	padding:5%;
 	margin-top: 5%;
 	margin-bottom: 5%;
 	margin-left: 5%;

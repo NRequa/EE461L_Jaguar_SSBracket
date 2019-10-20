@@ -11,7 +11,7 @@
 
 	<title>SSBracket</title>
 </head>
-<body>
+<body onload="loading()">
 
 		<nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container-fluid">
@@ -34,128 +34,23 @@
 		<div class="row">
 
 			<div class="col-sm-8" style="background-color:;">
-				<h1 >Alpha tournament</h1>
+				<h1 class="title">Default Title</h1>
 				<div class="top">
 					<div class="col-sm-3">
 						<h3 style="text-align:left">Description:</h3>
 					</div>
 					<div class="col-sm-9">
-						<h5> My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. I don't smoke, but I occasionally drink.
-							I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up.
-							I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone.</h5>
-						</div>
+						<h5 class="desc">No Description</h5>
+					</div>
 					</div>
 					<div class="bottom">
-						<div class="bracketbox">
-
-							<div class="col-sm-4">
-								<svg width="300" height="250">
-									<svg x="0" y="5" width="200" height="50"style="background-color:green">
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
-
-									<svg x="0" y="60" width="200" height="50" style="background-color:green">
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
-
-									<svg x="0" y="115" width="200" height="50" style="background-color:green">
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
-
-									<svg x="0" y="170" width="200" height="50" style="background-color:green">
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
-									<svg id="t-svg"x="200"width="100" height="250">
-										<path d="M3 24 L60 24 L60 52 L95 52 L95 63 L60 63 L60 91 L3 91 L3 79 L48 79 L48 36 L3 36 Z" />
-										y=110
-										<path d="M3 134 L60 134 L60 162 L95 162 L95 173 L60 173 L60 201 L3 201 L3 189 L48 189 L48 146 L3 146 Z" />
-									</svg>
-								</svg>
+						<div id="bracketbox">
 
 
 
-							</div>
-							<div class="col-sm-4">
-								<svg width="300" height="250">
 
-									<svg y="32"width="200" height="50" >
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
 
-									<svg y="142"width="200" height="50" >
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
 
-									<svg x="200"width="100" height="250">
-										<path d="M3 52 L60 52 L60 107 L95 107 L95 119 L60 119 L60 173 L3 173 L3 162 L48 162 L48 63 L3 63 Z" />
-									</svg>
-
-							</div>
-							<div class="col-sm-4">
-								<svg width="200" height="250">
-
-									<svg y="90" width="200" height="50" >
-										<rect id="m-contain"x="0"y="0" width="200" height="50"></rect>
-										<g>
-										<rect id="p-contain" x="50" y="2" width="143" height="21"></rect>
-										<text x="50" y="20" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-									</g>
-									<g>
-									<rect id="p-contain" x="50" y="27" width="143" height="21"></rect>
-									<text x="50" y="45" font-family="Verdana" font-size="15" fill="blue">Hello</text>
-								</g>
-									</svg>
-
-								</svg>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -164,7 +59,7 @@
 				<div class="col-sm-4" >
 					<div id="twitter_view">
 
-						<hr>
+
 						<div id="tweets">
 							<a class="twitter-timeline" data-dnt="true" data-theme="light" href="https://twitter.com/SsBracket?ref_src=twsrc%5Etfw">Tweets by SsBracket</a>
 							<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -177,13 +72,6 @@
 
 
 		</div>
-		<script type="text/javascript">
-			var p1=document.createElementNS('http://www.w3.org/2000/svg','path')
-			var svg=svgObject.getElementById('t-svg');
-			var y=110;
-			p1.setAttributeNS(null,"d","M3 "+(y+24)+" L60 "+(y+24)+" L60 "+(y+52)+" L95 "+(y+52)+" L95 "+(y+63)+" L60 "+(y+63)+" L60 "+(y+91)+" L3 "+(y+91)+" L3 "+(y+79)+" L48 "+(y+79)+" L48 "+(y+36)+" L3 "+(y+36)+" Z");
-			svg.appendChild(p1);
-		</script>
-
+		
 	</body>
 	</html>
