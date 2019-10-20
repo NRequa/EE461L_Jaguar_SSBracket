@@ -15,8 +15,9 @@ import java.util.Set;
 @Entity
 @Table(name = "accounts")
 public class Accounts implements Serializable {
+
     @Id
-    @GenerateValued(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 

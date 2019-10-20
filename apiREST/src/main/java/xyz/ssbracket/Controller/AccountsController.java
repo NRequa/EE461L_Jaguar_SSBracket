@@ -2,8 +2,9 @@ package xyz.ssbracket.Controller;
 
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Tournament;
+import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Results.ResponseWrapper;
-import xyz.ssbracket.Service.UserService;
+import xyz.ssbracket.Repository.AccountsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
