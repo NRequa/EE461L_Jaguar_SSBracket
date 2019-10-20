@@ -7,15 +7,22 @@ function makeTable(){
   for(charNum = 0; charNum<50; charNum++){
     //get name of character
     var charName = "name";
-    //get character weight
+
     var charWeight = "weight";
-    //get character speed
+
     var charSpeed = "speed";
+
+    var spotDodge = "dodge";
+
+    var traction = "traction";
+
     var newRow = $("<tr>");
     var col = "";
     col += "<td>"+charName+" "+charNum+"</td>";
     col += "<td>"+charWeight+"</td>";
     col += "<td>"+charSpeed+"</td>"
+    col += "<td>"+spotDodge+"</td>"
+    col += "<td>"+traction+"</td>"
     col += "</tr>";
     newRow.append(col);
     $("#charStat").append(newRow);
