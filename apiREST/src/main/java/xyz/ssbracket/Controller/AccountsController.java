@@ -3,6 +3,9 @@ package xyz.ssbracket.Controller;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.Accounts;
+import xyz.ssbracket.Model.RegistrationSubmission;
+
+
 import xyz.ssbracket.Results.ResponseWrapper;
 import xyz.ssbracket.Repository.AccountsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +39,27 @@ public class AccountsController{
     public Accounts getFriends(@PathVariable String id){
         return accountsLog.findAccountsByName(id);
     } 
+
+    @PostMapping("/register")
+    public String registerAccount(@RequestBody RegistrationSubmission registerAttempt){
+        
+        // Check if the username exists
+        String username = registerAttempt.username;
+        String password = registerAttempt.password;
+        Accounts existingUser = accountsLog.findAccountsByName(username);
+
+        if(existingUser.isEmpty()){
+            // Make new user and add to table
+            Accounts newUser = new Accounts(username, password);
+            accountsLog.save(newUser);
+            return "true";
+        }
+
+        else{
+            return "false";
+        }
+
+
+    }
 
 }

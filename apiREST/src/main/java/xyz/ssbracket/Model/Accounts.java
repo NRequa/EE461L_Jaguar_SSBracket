@@ -37,5 +37,25 @@ public class Accounts implements Serializable {
     private int image_id;
 
 
+    public Accounts(String username, String password){
+        super();
+        this.username = username;
+        this.password = password;
+        num_friends = 0;
+        num_tournaments_won = 0;
+        image_id = 0;
+    }
+
+    public boolean isEmpty(){
+        if(this.username == null){
+            return true;
+        }
+
+        else{
+            return false;
+        }
+    }
+
+
 
 }
