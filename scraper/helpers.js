@@ -26,6 +26,7 @@ function extractDashFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
   
+  //console.log('dash call');
   characterRows.each((i, el) => {
 	//console.log(el);
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
@@ -34,7 +35,7 @@ function extractDashFromHTML (html, characterData) {
     let name = $(el).children().eq(1).children().last().text().trim();
     let dash = $(el).children().eq(3).text().trim();
 	characterData.push({name, dash});
-	console.log(dash);
+	//console.log(dash);
     //var j = 0;
 	//console.log("about to start loop");
 	//for(j = 0; j < characterData.length; j++) {
@@ -56,6 +57,7 @@ function extractSpotdodgeFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
   
+  //console.log('spot call');
   characterRows.each((i, el) => {
 	//console.log(el);
 	if(typeof $(el).children().eq(0).children().last().attr('title') === "undefined") {return;}
@@ -63,7 +65,7 @@ function extractSpotdodgeFromHTML (html, characterData) {
 	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(0).children().last().text().trim();
     let spotdodge = $(el).children().eq(1).text().trim();
-	console.log(spotdodge);
+	//console.log(spotdodge);
 	characterData.push({name, spotdodge});
     //var j = 0;
 	//console.log("about to start loop");
@@ -81,9 +83,9 @@ function extractSpotdodgeFromHTML (html, characterData) {
 
 function extractTractionFromHTML (html, characterData) {
   const $ = cheerio.load(html);
-  
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
 
+  //console.log('traction call');
   characterRows.each((i, el) => {
 	//console.log(el);
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
@@ -91,7 +93,7 @@ function extractTractionFromHTML (html, characterData) {
 	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(1).children().last().text().trim();
     let traction = $(el).children().eq(2).text().trim();
-	console.log(traction);
+	//console.log(traction);
 	characterData.push({name, traction});
     //var j = 0;
 	//console.log("about to start loop");
