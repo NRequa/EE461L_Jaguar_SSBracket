@@ -14,58 +14,6 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   const characterSpotdodge = [];
   const characterTraction = [];
   var jobs;
-  var tempweight;
-  var tempdash;
-  var tempspot;
-  var temptraction;
-  /*jobs = extractWeightFromHTML(get('https://www.ssbwiki.com/Weight'), characterWeight);
-  jobs = extractDashFromHTML(get('https://www.ssbwiki.com/Dash'), characterDash);
-  jobs = extractSpotdodgeFromHTML(get('https://www.ssbwiki.com/Spotdodge'), characterSpotdodge);
-  jobs = extractTractionFromHTML(get('https://www.ssbwiki.com/Traction'), characterTraction);
-  console.log(get('https://www.ssbwiki.com/Weight'));
-  console.log(characterWeight.length);
-  console.log(characterDash.length);
-  console.log(characterSpotdodge.length);
-  console.log(characterTraction.length);
-		var x;
-		for(x = 0; x < characterWeight.length; x++) {
-			let name = characterWeight[x].name;
-			let weight = characterWeight[x].weight;
-			let dash;
-			let spotdodge;
-			let traction;
-			var j;
-			//console.log('about to start dash loop');
-			for(j = 0; j < characterDash.length; j++) {
-				console.log('dash loop');
-		        //console.log(characterData[j]);
-		        if(characterDash[j].name === name) {
-		    	    dash = characterDash[j].dash;
-		    	    break;
-		        }
-			}
-			//console.log('about to start dodge loop');
-			for(j = 0; j < characterSpotdodge.length; j++) {
-				console.log('dodge loop');
-		        //console.log(characterData[j]);
-		        if(characterSpotdodge[j].name === name) {
-		    	    spotdodge = characterSpotdodge[j].spotdodge;
-		    	    break;
-		        }
-			}
-			//console.log('about to start traction loop');
-			for(j = 0; j < characterTraction.length; j++) {
-				console.log('traction loop');
-		        //console.log(characterData[j]);
-		        if(characterTraction[j].name === name) {
-		    	    traction = characterTraction[j].traction;
-		    	    break;
-		        }
-			}
-			characterData.push({name, weight, dash, spotdodge, traction});
-		}
-		console.log(characterData);
-		callback(null, {characterData});*/
   var promiseWeight = get('https://www.ssbwiki.com/Weight');
   var promiseDash = get('https://www.ssbwiki.com/Dash');
   var promiseSpotdodge = get('https://www.ssbwiki.com/Spotdodge');
@@ -82,102 +30,14 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 	  jobs = extractDashFromHTML(data1[1].data, characterDash);
 	  jobs = extractSpotdodgeFromHTML(data1[2].data, characterSpotdodge);
 	  jobs = extractTractionFromHTML(data1[3].data, characterTraction);
-	  console.log(characterWeight.length);
-      console.log(characterDash.length);
-      console.log(characterSpotdodge.length);
-      console.log(characterTraction.length);
+	  //console.log(characterWeight.length);
+      //console.log(characterDash.length);
+      //console.log(characterSpotdodge.length);
+      //console.log(characterTraction.length);
 	  characterData = combine(characterWeight, characterDash, characterSpotdodge, characterTraction);
 	console.log(characterData);
 	callback(null, {characterData});
   });
-	/*
-  request('https://www.ssbwiki.com/Weight')
-    .then(({data}) => {
-	  console.log("weight");
-      jobs = extractWeightFromHTML(data, characterWeight);
-	  //console.log(jobs);
-	  // now to add dashing
-    })
-	.then(tempdash = get('https://www.ssbwiki.com/Dash'))
-	//.then(function() {
-		//console.log("dash");
-		//request('https://www.ssbwiki.com/Dash')
-    .then(function() {
-        jobs = extractDashFromHTML(tempdash, characterDash);
-		//console.log("after dash");
-	    //console.log(jobs);
-        })
-        //.catch(callback);
-		//console.log("dash2");
-	//})
-	.then(function() {
-		console.log("spotdodge");
-		request('https://www.ssbwiki.com/Spotdodge')
-        .then(({data}) => {
-        jobs = extractSpotdodgeFromHTML(data, characterSpotdodge);
-		//console.log("after dash");
-	    //console.log(jobs);
-        })
-        .catch(callback);
-		console.log("spotdodge2");
-	})
-	.then(function() {
-		console.log("traction");
-		request('https://www.ssbwiki.com/Traction')
-        .then(({data}) => {
-        jobs = extractTractionFromHTML(data, characterTraction);
-		//console.log("after dash");
-	    //console.log(jobs);
-        })
-        .catch(callback);
-		console.log("traction2");
-	})
-    .catch(callback)
-	.finally(function() {
-		console.log("finally");
-		console.log(characterDash.length);
-		console.log(characterSpotdodge.length);
-		console.log(characterTraction.length);
-		var x;
-		for(x = 0; x < characterWeight.length; x++) {
-			let name = characterWeight[x].name;
-			let weight = characterWeight[x].weight;
-			let dash;
-			let spotdodge;
-			let traction;
-			var j;
-			//console.log('about to start dash loop');
-			for(j = 0; j < characterDash.length; j++) {
-				console.log('dash loop');
-		        //console.log(characterData[j]);
-		        if(characterDash[j].name === name) {
-		    	    dash = characterDash[j].dash;
-		    	    break;
-		        }
-			}
-			//console.log('about to start dodge loop');
-			for(j = 0; j < characterSpotdodge.length; j++) {
-				console.log('dodge loop');
-		        //console.log(characterData[j]);
-		        if(characterSpotdodge[j].name === name) {
-		    	    spotdodge = characterSpotdodge[j].spotdodge;
-		    	    break;
-		        }
-			}
-			//console.log('about to start traction loop');
-			for(j = 0; j < characterTraction.length; j++) {
-				console.log('traction loop');
-		        //console.log(characterData[j]);
-		        if(characterTraction[j].name === name) {
-		    	    traction = characterTraction[j].traction;
-		    	    break;
-		        }
-			}
-			characterData.push({name, weight, dash, spotdodge, traction});
-		}
-		console.log(characterData);
-		callback(null, {characterData});
-	});*/
 };
 
 async function getWeights() {
