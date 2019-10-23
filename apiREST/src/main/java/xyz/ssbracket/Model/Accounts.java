@@ -47,13 +47,7 @@ public class Accounts implements Serializable {
     }
 
     public boolean isEmpty(){
-        if(this.username == null){
-            return true;
-        }
-
-        else{
-            return false;
-        }
+        return this.username == null;
     }
 
 

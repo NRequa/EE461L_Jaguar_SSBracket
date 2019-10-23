@@ -1,32 +1,24 @@
 package xyz.ssbracket.Controller;
 
-import xyz.ssbracket.Model.User;
-import xyz.ssbracket.Model.Tournament;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Model.RegistrationSubmission;
-
-
-import xyz.ssbracket.Results.ResponseWrapper;
 import xyz.ssbracket.Repository.AccountsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-
-import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
-import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
 @Validated
 @RestController
 @RequestMapping("/api/v1/Accounts")
 
 public class AccountsController{
-
+    
     @Autowired
     AccountsRepository accountsLog;
 
@@ -37,29 +29,34 @@ public class AccountsController{
     // Test get request
     @GetMapping("/friends/{id}")
     public Accounts getFriends(@PathVariable String id){
+        System.out.println("String ID is : " + id);
         return accountsLog.findAccountsByName(id);
     } 
 
     @PostMapping("/register")
-    public String registerAccount(@RequestBody RegistrationSubmission registerAttempt){
-        
+    public boolean registerAccount(@RequestBody RegistrationSubmission registerAttempt){
+      //  return registerAttempt;
         // Check if the username exists
-        String username = registerAttempt.username;
-        String password = registerAttempt.password;
+        
+        String username = registerAttempt.getUsername();
+        String password = registerAttempt.getPassword();
+        System.out.println("Username: " + username + " | Password: " + password);
+        
         Accounts existingUser = accountsLog.findAccountsByName(username);
+        System.out.println("Existing user result: " + existingUser);
 
-        if(existingUser.isEmpty()){
+        if(existingUser == null){
             // Make new user and add to table
             Accounts newUser = new Accounts(username, password);
             accountsLog.save(newUser);
-            return "true";
+            return true;
         }
 
         else{
-            return "false";
+            return false;
         }
-
-
+        
+        
     }
 
 }
