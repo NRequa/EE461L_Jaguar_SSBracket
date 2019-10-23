@@ -12,28 +12,25 @@ body {
 }
 .top{
 	background-color:;
-	width:1000px;
+
 	height:150px;
 }
 .bottom{
-	width:1000px;
+
 	outline: 2px solid black;
 	background-color:white;
 }
 /*TODO Make box scale dynamically*/
 .bracketbox{
-	width:1000px;
-	height:250px;
+
 	overflow-y: scroll;
 	overflow-x: scroll;
 
 }
 #bracketbox{
-	width:1000px;
-	height:250px;
-	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	overflow-x: scroll;
-
+	white-space: nowrap;
 }
 .m-contain{
 	fill:lightcoral;
