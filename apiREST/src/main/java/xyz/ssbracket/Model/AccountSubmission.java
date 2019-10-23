@@ -1,6 +1,6 @@
 package xyz.ssbracket.Model;
 
-public class RegistrationSubmission{
+public class AccountSubmission{
     private String username;
     private String password;
 

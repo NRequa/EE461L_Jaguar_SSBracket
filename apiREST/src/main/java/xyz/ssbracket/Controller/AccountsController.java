@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import xyz.ssbracket.Model.Accounts;
-import xyz.ssbracket.Model.RegistrationSubmission;
+import xyz.ssbracket.Model.AccountSubmission;
 import xyz.ssbracket.Repository.AccountsRepository;
 
 @Validated
@@ -34,7 +34,7 @@ public class AccountsController{
     } 
 
     @PostMapping("/register")
-    public boolean registerAccount(@RequestBody RegistrationSubmission registerAttempt){
+    public boolean registerAccount(@RequestBody AccountSubmission registerAttempt){
       //  return registerAttempt;
         // Check if the username exists
         
@@ -57,6 +57,21 @@ public class AccountsController{
         }
         
         
+    }
+
+    @PostMapping("/signin")
+    public boolean signInAccount(@RequestBody AccountSubmission signInAttempt){
+        String username = signInAttempt.getUsername();
+        String password = signInAttempt.getPassword();
+
+        Accounts existingUser = accountsLog.findAccountsByName(username);
+        if(existingUser == null){
+            return false;
+        }
+
+        else{
+            return existingUser.getPassword().equals(password);
+        }
     }
 
 }

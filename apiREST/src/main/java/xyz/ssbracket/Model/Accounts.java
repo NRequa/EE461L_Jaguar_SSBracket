@@ -50,6 +50,10 @@ public class Accounts implements Serializable {
         return this.username == null;
     }
 
+    public String getPassword(){
+        return this.password;
+    }
+
 
 
 }
