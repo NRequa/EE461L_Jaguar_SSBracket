@@ -14,9 +14,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
+//@AllArgsConstructor
 //@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "tournaments")
 public class Tournament implements Serializable {
@@ -40,7 +40,9 @@ public class Tournament implements Serializable {
 
 
 //everything under this comment is new stuff
-  @ManyToMany(
+//joinColumns = { @JoinColumn(name = "tournament_id",referencedColumnName = "ID") },
+//inverseJoinColumns = { @JoinColumn(name = "user_id",referencedColumnName = "ID") }
+    @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
@@ -49,8 +51,29 @@ public class Tournament implements Serializable {
             joinColumns = { @JoinColumn(name = "tournament_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> users = new HashSet<>();
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //private Set<User> users = new HashSet<>();
+
+    public void setTname(String tname){
+      this.tname = tname;
+    }
+
+    public void setTcreator(String tcreator){
+      this.tcreator = tcreator;
+    }
+
+    public void setTtype(int ttype){
+      this.ttype = ttype;
+    }
+
+    public void setTsize(int tsize){
+      this.tsize = tsize;
+    }
+
+    public Set<User> getUsers(){
+      return this.users;
+    }
 
     public Tournament() {}
 

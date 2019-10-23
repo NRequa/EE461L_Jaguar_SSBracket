@@ -14,9 +14,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
+//@AllArgsConstructor
 //@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -46,13 +46,23 @@ public class User implements Serializable {
 
 
 //everything under this comment is new stuff
+
     @ManyToMany(
            fetch = FetchType.LAZY,
            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
            mappedBy = "users"
    )
-   @OnDelete(action = OnDeleteAction.CASCADE)
    private Set<Tournament> tournaments = new HashSet<>();
+   //@OnDelete(action = OnDeleteAction.CASCADE)
+   //private Set<Tournament> tournaments = new HashSet<>();
+
+   public Set<Tournament> getTournaments(){
+     return this.tournaments;
+   }
+
+   public int getId(){
+     return this.id;
+   }
 
    public User() { }
 
