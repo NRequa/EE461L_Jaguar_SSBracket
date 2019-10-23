@@ -66,7 +66,7 @@ public class User implements Serializable {
   //@OneToMany(mappedBy = "users")
   //private Set<UserTournament> usertournament = new HashSet<>();
       @ManyToMany(mappedBy = "users")
-      @JsonBackReference("tournaments")
+      @JsonIgnore
       private List<Tournament> tournaments = new ArrayList<>();
 
    public User() { }

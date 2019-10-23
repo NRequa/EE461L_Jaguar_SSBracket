@@ -69,7 +69,6 @@ public class Tournament implements Serializable {
         CascadeType.MERGE
     })
    @JoinTable
-   @JsonManagedReference("tournaments")
    private List<User> users = new ArrayList<>();
 
     public Tournament() {}
