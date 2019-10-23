@@ -58,12 +58,6 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-     - http:
-        path: hello
-        method: post
   scrapeSSBWiki:
     handler: handler.scrapeSSBWiki
     events:
@@ -72,15 +66,15 @@ functions:
         method: post
 resources:
   Resources:
-    ssbracketDB:
+    scrapeSSBWiki:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ssbracketDB
+        TableName: SSBracketScrape
         AttributeDefinitions:
-          - AttributeName: listingId
+          - AttributeName: date
             AttributeType: S
         KeySchema:
-          - AttributeName: listingId
+          - AttributeName: date
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -90,7 +84,7 @@ resources:
 
     DynamoDBIamPolicy: 
       Type: AWS::IAM::Policy
-      DependsOn: ssbracketDB
+      DependsOn: SSBracketScrape
       Properties:
         PolicyName: lambda-dynamodb
         PolicyDocument:
@@ -105,7 +99,7 @@ resources:
                 - dynamodb:PutItem
                 - dynamodb:UpdateItem
                 - dynamodb:DeleteItem
-              Resource: arn:aws:dynamodb:*:*:table/ssbracketDB
+              Resource: arn:aws:dynamodb:*:*:table/SSBracketScrape
         Roles:
           - Ref: IamRoleLambdaExecution
 #    The following are a few example events you can configure

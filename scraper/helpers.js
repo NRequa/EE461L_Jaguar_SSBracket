@@ -37,14 +37,6 @@ function extractDashFromHTML (html, characterData) {
 	characterData.push({name, dash});
     //var j = 0;
 	//console.log("about to start loop");
-	//for(j = 0; j < characterData.length; j++) {
-		//console.log(characterData[j]);
-		//if(characterData[j].name === name) {
-			//console.log("match");
-			//characterData[j].dash = dash;
-			//break;
-		//}
-	//}
   });
 
   return characterData;
@@ -65,13 +57,6 @@ function extractSpotdodgeFromHTML (html, characterData) {
 	characterData.push({name, spotdodge});
     //var j = 0;
 	//console.log("about to start loop");
-	//for(j = 0; j < characterData.length; j++) {
-		//console.log(characterData[j]);
-		//if(characterData[j].name === name) {
-			//characterData[j].spotdodge = spotdodge;
-			//break;
-		//}
-	//}
   });
 
   return characterData;
@@ -90,13 +75,6 @@ function extractTractionFromHTML (html, characterData) {
 	characterData.push({name, traction});
     //var j = 0;
 	//console.log("about to start loop");
-	//for(j = 0; j < characterData.length; j++) {
-		//console.log(characterData[j]);
-		//if(characterData[j].name === name) {
-			//characterData[j].traction = traction;
-			//break;
-		//}
-	//}
   });
 
   return characterData;
