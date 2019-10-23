@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 //@AllArgsConstructor
 //@NoArgsConstructor
@@ -60,8 +62,15 @@ public class Tournament implements Serializable {
     private Set<User> users = new HashSet<>();
 */
 
-  @OneToMany(fetch=FetchType.LAZY, mappedBy="tournament_id", cascade=CascadeType.ALL)
-  public List<UserTournament>usertournament = new ArrayList<UserTournament>();
+  //@OneToMany(mappedBy = "tournaments")
+  //private Set<UserTournament> usertournament = new HashSet<>();
+  @ManyToMany(cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+   @JoinTable
+   @JsonManagedReference("tournaments")
+   private List<User> users = new ArrayList<>();
 
     public Tournament() {}
 

@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 //@AllArgsConstructor
 //@NoArgsConstructor
@@ -24,7 +26,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User implements Serializable {
     @Id
-	  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	  @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
@@ -61,8 +63,11 @@ public class User implements Serializable {
    @JsonBackReference("tournaments")
    private Set<Tournament> tournaments = new HashSet<>();
 */
-  @OneToMany(fetch=FetchType.LAZY, mappedBy="user_id", cascade=CascadeType.ALL)
-  public List<UserTournament>usertournament = new ArrayList<UserTournament>();
+  //@OneToMany(mappedBy = "users")
+  //private Set<UserTournament> usertournament = new HashSet<>();
+      @ManyToMany(mappedBy = "users")
+      @JsonBackReference("tournaments")
+      private List<Tournament> tournaments = new ArrayList<>();
 
    public User() { }
 

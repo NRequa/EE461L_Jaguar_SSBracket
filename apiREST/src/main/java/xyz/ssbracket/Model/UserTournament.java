@@ -23,6 +23,23 @@ import java.util.Set;
 @Entity
 @Table(name = "user_tournaments")
 public class UserTournament implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User users;
+
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournaments;
+
+    public UserTournament(){};
+
+    public UserTournament(User user, Tournament tournament){
+      this.users = user;
+      this.tournaments = tournament;
+    }
 
 }
