@@ -48,7 +48,6 @@ public class TournamentServiceImp extends TournamentService {
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
         User newUser = checkIfIdIsPresentAndReturnUser(o.getId());
         oldTournament.getUsers().add(newUser);
-        newUser.getTournaments().add(oldTournament);
         return tournamentRepository.save( oldTournament );
     }
 

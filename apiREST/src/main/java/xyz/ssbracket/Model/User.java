@@ -11,6 +11,9 @@ import java.io.Serializable;
 //new imports
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +24,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User implements Serializable {
     @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
@@ -46,23 +49,20 @@ public class User implements Serializable {
 
 
 //everything under this comment is new stuff
-
+/*
     @ManyToMany(
            fetch = FetchType.LAZY,
            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
            mappedBy = "users"
    )
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @JsonIgnore
+   @JsonManagedReference("users")
+   @JsonBackReference("tournaments")
    private Set<Tournament> tournaments = new HashSet<>();
-   //@OnDelete(action = OnDeleteAction.CASCADE)
-   //private Set<Tournament> tournaments = new HashSet<>();
-
-   public Set<Tournament> getTournaments(){
-     return this.tournaments;
-   }
-
-   public int getId(){
-     return this.id;
-   }
+*/
+  @OneToMany(fetch=FetchType.LAZY, mappedBy="user_id", cascade=CascadeType.ALL)
+  public List<UserTournament>usertournament = new ArrayList<UserTournament>();
 
    public User() { }
 

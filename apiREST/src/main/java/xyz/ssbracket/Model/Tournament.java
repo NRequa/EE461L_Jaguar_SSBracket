@@ -11,6 +11,9 @@ import java.io.Serializable;
 //new imports
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,8 +43,7 @@ public class Tournament implements Serializable {
 
 
 //everything under this comment is new stuff
-//joinColumns = { @JoinColumn(name = "tournament_id",referencedColumnName = "ID") },
-//inverseJoinColumns = { @JoinColumn(name = "user_id",referencedColumnName = "ID") }
+/*
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
@@ -51,29 +53,15 @@ public class Tournament implements Serializable {
             joinColumns = { @JoinColumn(name = "tournament_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
+    @JsonIgnore
+    @JsonBackReference("users")
+    @JsonManagedReference("tournaments")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> users = new HashSet<>();
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //private Set<User> users = new HashSet<>();
+*/
 
-    public void setTname(String tname){
-      this.tname = tname;
-    }
-
-    public void setTcreator(String tcreator){
-      this.tcreator = tcreator;
-    }
-
-    public void setTtype(int ttype){
-      this.ttype = ttype;
-    }
-
-    public void setTsize(int tsize){
-      this.tsize = tsize;
-    }
-
-    public Set<User> getUsers(){
-      return this.users;
-    }
+  @OneToMany(fetch=FetchType.LAZY, mappedBy="tournament_id", cascade=CascadeType.ALL)
+  public List<UserTournament>usertournament = new ArrayList<UserTournament>();
 
     public Tournament() {}
 

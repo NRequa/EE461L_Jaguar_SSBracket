@@ -51,9 +51,9 @@ public class TournamentController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> updateUsersInTournament(@Valid @RequestBody User user,
+    public ResponseWrapper<Tournament> updateUsersInTournament(@Valid @RequestBody User userId,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( tournamentService.updateUsers( user, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.updateUsers( userId, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }
