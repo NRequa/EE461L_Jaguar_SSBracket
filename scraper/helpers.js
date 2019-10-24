@@ -1,4 +1,4 @@
-const cheerio = require('cheerio');
+const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
 //const moment = require('moment');
 
 function extractWeightFromHTML (html, characterData) {

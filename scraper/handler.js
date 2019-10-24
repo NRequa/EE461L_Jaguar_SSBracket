@@ -1,21 +1,22 @@
 'use strict';
 
-const get = require('axios');
+const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
 
 AWS.config.update({
 	region: "us-east-2",
-	endpoint: ""
+	//endpoint: ""
 });
 
-const dynamo = new AWS.DynamoDB.DocumentClient();
+//const dynamo = new AWS.DynamoDB.DocumentClient();
 const {extractWeightFromHTML} = require('./helpers');
 const {extractDashFromHTML} = require('./helpers');
 const {extractTractionFromHTML} = require('./helpers');
 const {extractSpotdodgeFromHTML} = require('./helpers');
 
+var characterData = [];
+
 module.exports.scrapeSSBWiki = (event, context, callback) => {
-  var characterData = [];
   const characterWeight = [];
   const characterDash = [];
   const characterSpotdodge = [];
@@ -26,19 +27,26 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   var promiseDash = get('https://www.ssbwiki.com/Dash');
   var promiseSpotdodge = get('https://www.ssbwiki.com/Spotdodge');
   var promiseTraction = get('https://www.ssbwiki.com/Traction');
-  var promiseDynamoGet = dynamo.scan({TableName: 'SSBracketScrape'}).promise();
-  var promiseDynamoDelete;
-  var promiseDynamoPut;
-  var promiseScrape = Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction]).then(function(data1) {
+  //var promiseDynamoGet = dynamo.scan({TableName: 'SSBracketScrape'}).promise();
+  //var promiseDynamoDelete;
+  //var promiseDynamoPut;
+
+  Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction]).then(function(data1) {
 	  jobs = extractWeightFromHTML(data1[0].data, characterWeight);
 	  jobs = extractDashFromHTML(data1[1].data, characterDash);
 	  jobs = extractSpotdodgeFromHTML(data1[2].data, characterSpotdodge);
 	  jobs = extractTractionFromHTML(data1[3].data, characterTraction);
 	  characterData = combine(characterWeight, characterDash, characterSpotdodge, characterTraction);
-	console.log(characterData);
-	return Promise.resolve();
-  });
-  promiseDynamoDelete = Promise.all([promiseScrape, promiseDynamoGet]).then(function(data) {
+	//console.log(characterData);
+	//console.log(JSON.stringify(characterData));
+	return Promise.resolve(characterData);
+  })
+  .then(function(data) {
+	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))
+	  })
+  .then(function(data) {callback(null, {data})})
+  .catch(callback);
+  /*promiseDynamoDelete = Promise.all([promiseScrape, promiseDynamoGet]).then(function(data) {
 	  let response = data[1].response;
 	  const toDelete = response.Items[0] ? response.Items[0].date : null;
 	  
@@ -64,7 +72,7 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   Promise.all([promiseDynamoPut]).then(function() {
 	  callback(null, {characterData});
   })
-  .catch(callback);
+  .catch(callback);*/
 };
 
 // Assumes that each array is the same length to make a well-formed result
@@ -102,4 +110,34 @@ function combine(weight, dash, spotdodge, traction) {
 		combined.push({name, tweight, tdash, tspotdodge, ttraction});
 		}
 	return combined;
+}
+
+function putIntoS3(bucket, key, data) {
+	var s3 = new AWS.S3();
+	//console.log('s31');
+	//console.log(data);
+	//console.log('s32');
+	
+	var old;
+	/*var getParams = {
+		Bucket: bucket,
+		Key: key
+	};
+	s3.deleteObject(getParams, function(err, data) {
+		if (err) console.log(err, err.stack); // an error occurred
+        else     {
+			console.log(data);           // successful response
+		}
+	});*/
+    var params = {
+        Bucket : bucket,
+        Key : key,
+        Body : data,
+	    ContentType: 'application/json'
+    }
+    s3.putObject(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     console.log(data);           // successful response
+    });
+	return Promise.resolve(data);
 }
