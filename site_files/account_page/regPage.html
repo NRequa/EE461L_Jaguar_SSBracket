@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<script src="../res/jquery.js"></script>
+        <script src="../res/jquery.js"></script>
+        <script src="../res/jquery.serializejson.js"></script>
 		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
@@ -28,15 +29,15 @@
                     </div>
                 </nav>
 
-            <form class="accountForms" oninput="confirmPassword()">
+            <form  id="regForm" class="accountForms" oninput="confirmPassword()" onsubmit="postRegistration()">
                 <div class="form-group">
                     <label for="regUserName">User Name</label>
-                    <input type="text" class="form-control" id="registerUserName" aria-describedby="emailHelp" placeholder="Enter username">
+                    <input type="text" class="form-control" id="regUserName"  placeholder="Enter username">
                 </div>
 
                 <div class="form-group">
                     <label for="regPassword">Password</label>
-                    <input type="password" class="form-control" id="regPass" placeholder="Password">
+                    <input type="password" class="form-control" id="regPass"  placeholder="Password">
                 </div>
 
                 <div class="form-group">
@@ -63,6 +64,28 @@
                 document.getElementById("submit").disabled = false;
             }    
         }
+
+        function postRegistration(){
+            
+            var formData = {
+                "username" : $('input[id=regUserName]').val(),
+                "password" : $('input[id=regPass]').val()
+            }
+        
+            var postRequest = new XMLHttpRequest();
+            postRequest.open("POST", "http://localhost:8080/api/v1/Accounts/register/", true);
+
+            postRequest.setRequestHeader("Content-Type", "application/json");
+
+            postRequest.onreadystatechange = function(){
+                if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+                    alert(this.responseText);
+                }
+            }
+
+            postRequest.send(formData);
+        }
+
     </script>
 
 </html>
