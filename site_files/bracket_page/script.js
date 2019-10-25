@@ -1,9 +1,22 @@
 var gNum;//used for tracking ids for each name element
 function loading(){
+  var parameters = location.search.substring(1);
+  var temp = parameters.split("=");
+  var id = unescape(temp[1]);
+  var playerText=[];
   gNum=0;
   //for number of people in the tournament create svg attrivutes
+  var player=1;//number of players;
+  if(id!=null){
+    console.log(getTour(id,player,playerText,callback1));
+
+    }
+    else{
+        createBracket(player,playerText);
+    }
+  }
+function createBracket(player,playerText){
   var bBox=document.getElementById("bracketbox");
-  var player=4;//number of players;
   var pRound=player;
   bBox.setAttribute("style","height: "+(136*player+5)+"px")
   //used to calculate svg pixels
@@ -58,7 +71,7 @@ function loading(){
   node.appendChild(r1);
   bBox.appendChild(node);
 
-setName();//this enables setting the player's name
+setName(playerText);//this enables setting the player's name
 
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
@@ -156,13 +169,55 @@ function setOneName(id,text){
   var arrG=document.getElementsByTagName('g');
   arrG[id].childNodes[1].innerHTML=text;
 }
-function setName(){
+function setName(pArray){
   var arrG=document.getElementsByTagName('g');
   for(i=0;i<arrG.length;i++){
     //cutNames
-    arrG[i].childNodes[1].innerHTML=i+"";
+    if(i<pArray.length){
+      arrG[i].childNodes[1].innerHTML=pArray[i];
+    }
+    else {
+      arrG[i].childNodes[1].innerHTML=i+"";
+    }
   }
 }
+function parsePlayer(pString){
+  pArray=[];
+  var lIndex=0;
+  var pIndex=0;
+  lIndex=pString.indexOf("\n");
+  i=0;
+  while(lIndex!=-1){
+    pArray[i]=pString.substring(pIndex,lIndex);
+    i++;
+    pIndex=lIndex;
+    lIndex=pString.indexOf("\n",pIndex+1);
+  }
+  return pArray;
+}
+function getTour(id,player,playerText,callback){
+  var xmlhttp = new XMLHttpRequest();
+  var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/"+id;
+  var myResponse;
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse);
+            callback(myResponse,player,playerText);
+
+        }
+  };
+  xmlhttp.open("GET", ourApi, true);
+  xmlhttp.send();
+}
+function callback1(myResponse,player,playerText){
+  document.getElementById("title").innerHTML = myResponse.data.tname;
+  document.getElementById("desc").innerHTML = myResponse.data.description;
+  playerText=parsePlayer(myResponse.data.tempplayers);
+  player= parseInt(myResponse.data.tsize)/4;
+  createBracket(player,playerText);
+}
+
 function createTour(){
   var xmlhttp = new XMLHttpRequest();
   var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
@@ -177,7 +232,8 @@ function createTour(){
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
-            console.log(myResponse)
+            console.log(myResponse);
+            window.location.href = "bracket.html?id="+myResponse.data.id;
             //document.getElementById("test").innerHTML = myResponse.data.tname;
         }
   };
@@ -194,6 +250,7 @@ function createTour(){
   })
   );
   //document.getElementById("test").style.color = "red";
+
 }
 function descClick(){
 
