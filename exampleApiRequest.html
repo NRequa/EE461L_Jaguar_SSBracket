@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title> API </title>
+	</head>
+	<body>
+    <button onclick="test()">Echo</button>
+    <br>
+    <p id="test">test</p>
+    <script>
+
+      function test(){
+        //var input = 
+        //document.getElementById("test").innerHTML = input;
+		var xmlhttp = new XMLHttpRequest();
+		var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+		var ourApi = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/39";
+
+		xmlhttp.onreadystatechange = function() {
+    			if (this.readyState == 4 && this.status == 200) {
+        			var myResponse = JSON.parse(this.responseText);
+				console.log(myResponse)
+        			document.getElementById("test").innerHTML = myResponse.data.tname;
+    			}
+		};
+		xmlhttp.open("GET", proxyUrl+ourApi, true);
+		xmlhttp.send();
+
+		//To test if button click was actually processed
+		document.getElementById("test").style.color = "blue";
+      	}
+
+    </script>
+  </body>
+</html>
