@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Model.AccountSubmission;
@@ -27,12 +28,14 @@ public class AccountsController{
    // public boolean 
 
     // Test get request
+    @CrossOrigin
     @GetMapping("/friends/{id}")
     public Accounts getFriends(@PathVariable String id){
         System.out.println("String ID is : " + id);
         return accountsLog.findAccountsByName(id);
     } 
 
+    @CrossOrigin
     @PostMapping("/register")
     public boolean registerAccount(@RequestBody AccountSubmission registerAttempt){
       //  return registerAttempt;
@@ -59,6 +62,7 @@ public class AccountsController{
         
     }
 
+    @CrossOrigin
     @PostMapping("/signin")
     public boolean signInAccount(@RequestBody AccountSubmission signInAttempt){
         String username = signInAttempt.getUsername();
