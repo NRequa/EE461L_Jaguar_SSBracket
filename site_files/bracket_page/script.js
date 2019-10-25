@@ -1,7 +1,9 @@
+var gNum;//used for tracking ids for each name element
 function loading(){
+  gNum=0;
   //for number of people in the tournament create svg attrivutes
   var bBox=document.getElementById("bracketbox");
-  var player=16;//number of players;
+  var player=4;//number of players;
   var pRound=player;
   bBox.setAttribute("style","height: "+(136*player+5)+"px")
   //used to calculate svg pixels
@@ -56,7 +58,7 @@ function loading(){
   node.appendChild(r1);
   bBox.appendChild(node);
 
-
+setName();//this enables setting the player's name
 }
 
 function createPath(svg,midpoint1,midpoint2){
@@ -72,7 +74,10 @@ function createPath(svg,midpoint1,midpoint2){
 function createPeople(svg,numPMat){
   for(i=0;i<numPMat;i++){
     var pg1=document.createElementNS('http://www.w3.org/2000/svg',"g");
-    pg1.setAttribute("onclick","rectClick()");
+    pg1.setAttribute("id",""+gNum);
+    gNum+=1;
+    pg1.setAttribute("onclick","rectClick(this.id)");
+
     var pr1=document.createElementNS('http://www.w3.org/2000/svg',"rect");
     pr1.setAttribute("x","50");
     pr1.setAttribute("y",""+(2+31*i));
@@ -117,6 +122,16 @@ function createMatch(r1,midpoint){
   r1.appendChild(m1);
   return midpoint+32
 }
-function rectClick(){
+function rectClick(g_id){//set Editable
   console.log("clicked");
+  console.log(g_id);
+  var getG=document.getElementById(g_id);
+  var cText=getG.childNodes[1];
+
+}
+function setName(){
+  var arrG=document.getElementsByTagName('g');
+  for(i=0;i<arrG.length;i++){
+    arrG[i].childNodes[1].innerHTML=i;
+  }
 }

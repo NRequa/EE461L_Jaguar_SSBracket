@@ -4,8 +4,9 @@ $(document).ready(makeTable);
 function makeTable(){
   //get number of characters
   var xmlhttp = new XMLHttpRequest();
-  var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-  var ourApi = "http://www.ssbracket.xyz/scrape/data";
+  //var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+  //var ourApi = "http://www.ssbracket.xyz/scrape/data";
+  var ourApi = "../../scrape/data"
   var myResponse;
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -38,6 +39,6 @@ function makeTable(){
             }
         }
   };
-  xmlhttp.open("GET", proxyUrl+ourApi, true);
+  xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
 }
