@@ -11,12 +11,17 @@ import java.io.Serializable;
 //new imports
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
-@AllArgsConstructor
+//@AllArgsConstructor
 //@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -46,13 +51,23 @@ public class User implements Serializable {
 
 
 //everything under this comment is new stuff
+/*
     @ManyToMany(
            fetch = FetchType.LAZY,
            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
            mappedBy = "users"
    )
    @OnDelete(action = OnDeleteAction.CASCADE)
+   @JsonIgnore
+   @JsonManagedReference("users")
+   @JsonBackReference("tournaments")
    private Set<Tournament> tournaments = new HashSet<>();
+*/
+  //@OneToMany(mappedBy = "users")
+  //private Set<UserTournament> usertournament = new HashSet<>();
+      @ManyToMany(mappedBy = "users")
+      @JsonIgnore
+      private List<Tournament> tournaments = new ArrayList<>();
 
    public User() { }
 
