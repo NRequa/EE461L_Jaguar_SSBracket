@@ -24,6 +24,7 @@ public class TournamentController {
     @Autowired
     private TournamentService tournamentService;
 
+    @CrossOrigin
     @GetMapping(value = "/{id}")
     public ResponseWrapper<Tournament> getTournamentById(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
@@ -31,18 +32,21 @@ public class TournamentController {
         return new ResponseWrapper<>( tournamentService.getById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @GetMapping()
     public ResponseWrapper<Page<Tournament>> getTournamentAll( Pageable pageable )
     {
         return new ResponseWrapper<>( tournamentService.getAll( pageable ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseWrapper<Tournament> createTournament( @Valid @RequestBody Tournament tournament )
     {
         return new ResponseWrapper<>( tournamentService.add( tournament ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public ResponseWrapper<Tournament> deleteTournament(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
@@ -50,10 +54,11 @@ public class TournamentController {
         return new ResponseWrapper<>( tournamentService.deleteById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @PatchMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> updateTournament( @Valid @RequestBody Tournament tournament,
+    public ResponseWrapper<Tournament> updateUsersInTournament(@Valid @RequestBody User userId,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( tournamentService.update( tournament, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.updateUsers( userId, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }

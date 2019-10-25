@@ -25,6 +25,7 @@ public class UserController {
     @Autowired
     private UserService userMainService;
 
+    @CrossOrigin
     @GetMapping(value = "/{id}")
     public ResponseWrapper<User> getUserByID(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
@@ -32,18 +33,21 @@ public class UserController {
         return new ResponseWrapper<>( userMainService.getById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @GetMapping()
     public ResponseWrapper<Page<User>> getUserAll( Pageable pageable )
     {
         return new ResponseWrapper<>( userMainService.getAll( pageable ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseWrapper<User> createUser( @Valid @RequestBody User user )
     {
         return new ResponseWrapper<>( userMainService.add( user ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public ResponseWrapper<User> deleteUser(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
@@ -51,6 +55,7 @@ public class UserController {
         return new ResponseWrapper<>( userMainService.deleteById( Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
+    @CrossOrigin
     @PatchMapping(value = "/{id}")
     public ResponseWrapper<User> updateUser( @Valid @RequestBody User user,
                                              @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
