@@ -73,3 +73,26 @@ function getPicture(buttonNum) {
 		default: return null;
 	}
 }
+
+function showTopUsers() {
+	console.log("showing top users");
+	var Http = new XMLHttpRequest();
+	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user";
+	Http.open("GET", url);
+	Http.send();
+	
+	Http.onreadystatechange = (e) => {
+		var obj = JSON.parse(Http.responseText);
+		var holder = new Map();
+		
+		var i;
+		var user;
+		// TODO: do not hard code length
+		for (i = 0; i < 6; i++) {
+			user = obj.data.content[i];
+			holder.set(user.username, user.num_games_played / user.num_wins);
+		}
+		
+		console.log(holder.get("Yungus"));
+	}
+}
