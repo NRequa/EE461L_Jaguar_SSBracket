@@ -68,14 +68,18 @@ describe('wiki tests', function() {
 				assert.equal(truth, true);
 			}
 		});
-		/*it('should return true for every reasonable spotdodge excepting Hero and Joker (see github issue)', function() {
+		it('should return true for every reasonable spotdodge excepting Hero and Joker (see github issue)', function() {
 			var i;
 			for(i = 0; i < dataArray.length; i++) {
 				if(dataArray[i].name == 'Hero' || dataArray[i].name == 'Joker') continue;
-				let truth = dataArray[i].tspotdodge > 61 && dataArray[i].tspotdodge < 135;
+				let truth = dataArray[i].tspotdodge == '3-14'
+				         || dataArray[i].tspotdodge == '3-16'
+						 || dataArray[i].tspotdodge == '3-17'
+						 || dataArray[i].tspotdodge == '6-17'
+						 || dataArray[i].tspotdodge == '3-18';
 				assert.equal(truth, true);
 			}
-		});*/
+		});
 		it('should return true for every reasonable traction', function() {
 			var i;
 			for(i = 0; i < dataArray.length; i++) {
@@ -85,13 +89,4 @@ describe('wiki tests', function() {
 			}
 		});
     });
-});
-
-
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal([1, 2, 3].indexOf(4), -1);
-    });
-  });
 });
