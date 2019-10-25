@@ -163,6 +163,38 @@ function setName(){
     arrG[i].childNodes[1].innerHTML=i+"";
   }
 }
+function createTour(){
+  var xmlhttp = new XMLHttpRequest();
+  var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
+  var myResponse;
+  var tName = document.getElementById("tournament_name").value;
+  var tDesc = document.getElementById("tournament_desc").value;
+  var tCreator = "Wungus";
+  var tType = 1;
+  var tSize = parseInt(document.getElementById("tournament_numP").value);
+  var tPlayers =document.getElementById("tournament_players").value;
+
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse)
+            //document.getElementById("test").innerHTML = myResponse.data.tname;
+        }
+  };
+
+  xmlhttp.open("POST", ourApi, true);
+  xmlhttp.setRequestHeader("Content-type", "application/json");
+  xmlhttp.send(JSON.stringify({
+    "tname":tName,
+    "tcreator":tCreator,
+    "ttype":tType,
+    "tsize":tSize,
+    "description":tDesc,
+    "tempplayers":tPlayers
+  })
+  );
+  //document.getElementById("test").style.color = "red";
+}
 function descClick(){
 
 }
