@@ -59,6 +59,11 @@ function loading(){
   bBox.appendChild(node);
 
 setName();//this enables setting the player's name
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
 }
 
 function createPath(svg,midpoint1,midpoint2){
@@ -127,11 +132,72 @@ function rectClick(g_id){//set Editable
   console.log(g_id);
   var getG=document.getElementById(g_id);
   var cText=getG.childNodes[1];
+  var mod=document.getElementsByClassName("modal-title");
+  mod.innerHTML="Edit Player";
+  mod=document.getElementsByClassName("modal-text");
+  mod.innerHTML="Enter Player Name";
+  mod=document.getElementById("modal-ta");
+  mod.innerHTML=cText.innerHTML;
+  mod.setAttribute("rows","1");
+  mod.setAttribute("cols","50");
+  mod=document.getElementsByClassName("modal-data");
+  mod.innerHTML=""+g_id;
+  $("#myModal").modal();
+}
+function modalEnter(){
+  var mod=document.getElementsByClassName("modal-data");
+  var data=mod.innerHTML;
+  mod=document.getElementById("modal-ta");
+  setOneName(data,mod.value);
 
+}
+function setOneName(id,text){
+  //parsing for length of text
+  var arrG=document.getElementsByTagName('g');
+  arrG[id].childNodes[1].innerHTML=text;
 }
 function setName(){
   var arrG=document.getElementsByTagName('g');
   for(i=0;i<arrG.length;i++){
-    arrG[i].childNodes[1].innerHTML=i;
+    //cutNames
+    arrG[i].childNodes[1].innerHTML=i+"";
   }
+}
+function createTour(){
+  var xmlhttp = new XMLHttpRequest();
+  var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
+  var myResponse;
+  var tName = document.getElementById("tournament_name").value;
+  var tDesc = document.getElementById("tournament_desc").value;
+  var tCreator = "Wungus";
+  var tType = 1;
+  var tSize = parseInt(document.getElementById("tournament_numP").value);
+  var tPlayers =document.getElementById("tournament_players").value;
+
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse)
+            //document.getElementById("test").innerHTML = myResponse.data.tname;
+        }
+  };
+
+  xmlhttp.open("POST", ourApi, true);
+  xmlhttp.setRequestHeader("Content-type", "application/json");
+  xmlhttp.send(JSON.stringify({
+    "tname":tName,
+    "tcreator":tCreator,
+    "ttype":tType,
+    "tsize":tSize,
+    "description":tDesc,
+    "tempplayers":tPlayers
+  })
+  );
+  //document.getElementById("test").style.color = "red";
+}
+function descClick(){
+
+}
+function titleClick(){
+
 }

@@ -11,12 +11,17 @@ import java.io.Serializable;
 //new imports
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
-@AllArgsConstructor
+//@AllArgsConstructor
 //@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -28,31 +33,41 @@ public class User implements Serializable {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "num_wins", nullable = false)
-    private int num_wins;
+    @Column(name = "numwins", nullable = false)
+    private int numwins;
 
-    @Column(name = "num_games_played", nullable = false)
-    private int num_games_played;
+    @Column(name = "numgamesplayed", nullable = false)
+    private int numgamesplayed;
 
-    @Column(name = "num_tournaments_created", nullable = false)
-    private int num_tournaments_created;
+    @Column(name = "numtournamentscreated", nullable = false)
+    private int numtournamentscreated;
 
-    @Column(name = "num_tournaments_participated", nullable = false)
-    private int num_tournaments_participated;
+    @Column(name = "numtournamentsparticipated", nullable = false)
+    private int numtournamentsparticipated;
 
-    @Column(name = "num_tournaments_won", nullable = false)
-    private int num_tournaments_won;
+    @Column(name = "numtournamentswon", nullable = false)
+    private int numtournamentswon;
 
 
 
 //everything under this comment is new stuff
+/*
     @ManyToMany(
            fetch = FetchType.LAZY,
            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
            mappedBy = "users"
    )
    @OnDelete(action = OnDeleteAction.CASCADE)
+   @JsonIgnore
+   @JsonManagedReference("users")
+   @JsonBackReference("tournaments")
    private Set<Tournament> tournaments = new HashSet<>();
+*/
+  //@OneToMany(mappedBy = "users")
+  //private Set<UserTournament> usertournament = new HashSet<>();
+      @ManyToMany(mappedBy = "users")
+      @JsonIgnore
+      private List<Tournament> tournaments = new ArrayList<>();
 
    public User() { }
 
@@ -60,10 +75,10 @@ public class User implements Serializable {
                int num_tournaments_participated, int num_tournaments_won) {
        this.id = id;
        this.username = username;
-       this .num_wins = num_wins;
-       this.num_games_played = num_games_played;
-       this.num_tournaments_created = num_tournaments_created;
-       this.num_tournaments_participated = num_tournaments_participated;
-       this.num_tournaments_won = num_tournaments_won;
+       this .numwins = num_wins;
+       this.numgamesplayed = num_games_played;
+       this.numtournamentscreated = num_tournaments_created;
+       this.numtournamentsparticipated = num_tournaments_participated;
+       this.numtournamentswon = num_tournaments_won;
    }
 }

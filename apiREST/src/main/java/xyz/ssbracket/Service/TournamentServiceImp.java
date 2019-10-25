@@ -36,9 +36,18 @@ public class TournamentServiceImp extends TournamentService {
     		return tournamentRepository.save( o );
     }
 
+    //maybe changes are needed
     @Override
     public Tournament update( Tournament o, int id ) throws ResourceNotFoundException {
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
+        return tournamentRepository.save( oldTournament );
+    }
+
+    @Override
+    public Tournament updateUsers( User o, int id ) throws ResourceNotFoundException {
+        Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
+        User newUser = checkIfIdIsPresentAndReturnUser(o.getId());
+        oldTournament.getUsers().add(newUser);
         return tournamentRepository.save( oldTournament );
     }
 
@@ -50,6 +59,7 @@ public class TournamentServiceImp extends TournamentService {
     @Override
     public Tournament deleteById( int id ) throws ResourceNotFoundException {
         Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
+        tournament.getUsers().clear();
         tournamentRepository.deleteById( id );
         return tournament;
     }

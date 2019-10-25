@@ -4,5 +4,5 @@ import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 
 public abstract class TournamentService implements MainService<Tournament> {
-
+  public abstract Tournament updateUsers( User o, int id );
 }

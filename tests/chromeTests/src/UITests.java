@@ -195,5 +195,82 @@ class UITests {
 		}
 		
 	}
+	
+	@Test
+	public void testLogInSuccess() {
+		WebDriver driver = new ChromeDriver();
+		
+		try {
+			driver.get(logInPageURL);
+			
+			WebElement username = driver.findElement(By.id("logInUserName"));
+			WebElement pass = driver.findElement(By.id("logInPass"));
+			WebElement submit = driver.findElement(By.id("submit"));
+			
+			username.sendKeys("Nick");
+			pass.sendKeys("password");
+			submit.click();
+			
+			String currentURL = driver.getCurrentUrl();
+			assertEquals(currentURL, accountPageURL);
+		
+		}catch(Exception e) {
+			
+		} finally {
+			driver.close();
+		}
+				
+	}
 
+	@Test
+	public void testLogInFail() {
+		WebDriver driver = new ChromeDriver();
+		
+		try {
+		driver.get(logInPageURL);
+		
+		WebElement username = driver.findElement(By.id("logInUserName"));
+		WebElement pass = driver.findElement(By.id("logInPass"));
+		WebElement submit = driver.findElement(By.id("submit"));
+		
+		username.sendKeys("invalid");
+		pass.sendKeys("indvalid");
+		submit.click();
+		
+		String currentURL = driver.getCurrentUrl();
+		assertEquals(currentURL, logInPageURL);
+		}
+		catch(Exception e) {
+			
+		}finally {
+			driver.close();
+		}
+				
+	}
+	@Test
+	public void testRegistrationFail() {
+		WebDriver driver = new ChromeDriver();
+		
+		try {
+		driver.get(regPageURL);
+		
+		WebElement username = driver.findElement(By.id("regUserName"));
+		WebElement pass = driver.findElement(By.id("regPass"));
+		WebElement confirmPass = driver.findElement(By.id("confirmPass"));
+		WebElement submitBtn = driver.findElement(By.id("submit"));
+		
+		username.sendKeys("Nick");
+		pass.sendKeys("password");
+		confirmPass.sendKeys("password");
+		
+		String currentURL = driver.getCurrentUrl();
+		assertEquals(currentURL, regPageURL);
+		}
+		catch(Exception e) {
+			
+		}finally {
+			driver.close();
+		}
+				
+	}
 }

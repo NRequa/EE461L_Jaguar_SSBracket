@@ -13,7 +13,7 @@ body {
 .top{
 	background-color:;
 
-	height:150px;
+	height:200px;
 }
 .bottom{
 
@@ -21,11 +21,9 @@ body {
 	background-color:white;
 }
 /*TODO Make box scale dynamically*/
-.bracketbox{
-
-	overflow-y: scroll;
-	overflow-x: scroll;
-
+.title{
+	background-color:;
+	height:;
 }
 #bracketbox{
 	-webkit-overflow-scrolling: touch;
