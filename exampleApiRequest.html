@@ -8,6 +8,8 @@
     <button onclick="testGet()">Get Request</button>
     <br>
     <button onclick="testPost()">Post Request</button>
+		<br>
+    <button onclick="testGetReturn()">Nicer Get Request</button>
     <p id="test">chungus tester</p>
     <script>
 
@@ -64,6 +66,31 @@
 		document.getElementById("test").style.color = "red";
 	};
 
+	function testGetReturn(){
+		var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/39";
+		//callback1 is the function that is called that uses the json response
+		getGetJson(ourApi, callback1);
+	}
+
+	function getGetJson(url, callback){
+	var xmlhttp = new XMLHttpRequest();
+	var ourApi = url;
+	var myResponse;
+	xmlhttp.open("GET", ourApi, true);
+	xmlhttp.send();
+  xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+					myResponse = JSON.parse(this.responseText);
+					console.log(myResponse);
+					callback(myResponse);
+			}
+	};
+	};
+
+	function callback1(jsonResponse){
+		//do stuff with JSON
+		document.getElementById("test").innerHTML = jsonResponse.data.users.length;
+	}
     </script>
   </body>
 </html>
