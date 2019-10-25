@@ -35,9 +35,16 @@ function grabCommits() {
             // Grab username of we're at
             var userName = jsonObjectCommits[i]["author"]["login"];
             var totalCommits = jsonObjectCommits[i]["total"];
-
+            
+            // Handle case with two different user names t osame person
+            if(userName == "ttak007"){
+                userName = "up1007";
+            }
+            
             // Grab total commits of current author and put into table
-            document.getElementById(userName + "Commits").innerHTML = jsonObjectCommits[i]["total"];
+            var currCommits = parseInt(document.getElementById(userName + "Commits").innerHTML);
+            var usersCommits = totalCommits + currCommits;
+            document.getElementById(userName + "Commits").innerHTML = usersCommits;
 
             // Add commits to running total
             sumCommits += totalCommits;
@@ -87,4 +94,4 @@ function grabCommits() {
         }
     }
 
-    window.onload = runGETS;
+    // window.onload = runGETS;
