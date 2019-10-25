@@ -43,6 +43,7 @@ function swapPage(pageName){
     }
 }
 
+/*
 function getFriendNumber() {
 	var Http = new XMLHttpRequest();
 	var url = "https://api.myip.com";
@@ -52,4 +53,4 @@ function getFriendNumber() {
 	Http.onreadystatechange = (e) => {
 		console.log(Http.responseText)
 	}
-}
+} */

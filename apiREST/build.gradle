@@ -58,6 +58,10 @@ dependencies {
 	//compile group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-sql-postgresql'
 }
 
+bootJar {
+	mainClassName = 'xyz.ssbracket.ApiRestApplication'
+}
+
 //appengine {  // App Engine tasks configuration
 //  deploy {   // deploy configuration
 //	 projectId = 'GCLOUD_CONFIG'
