@@ -45,8 +45,8 @@ public class Tournament implements Serializable {
   @Column(name = "description", nullable = false)
   private String description;
 
-  @Column(name = "temp_players", nullable = false)
-  private String temp_players;
+  @Column(name = "tempplayers", nullable = false)
+  private String tempplayers;
 
 
 
