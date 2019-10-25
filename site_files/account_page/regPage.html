@@ -12,7 +12,7 @@
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
 	</head>
-	
+
     <body class="text-center">
 
             <nav class="navbar navbar-default navbar-fixed-top">
@@ -24,6 +24,7 @@
                             <li><a href="../../index.html">Home</a></li>
                             <li><a href="../bracket_page/index.html">Tournaments</a></li>
                             <li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+														<li><a href="../characterstat_page/index.html">Character Stat</a></li>
                             <li><a href="../about_page/index.html">About Us</a></li>
                             <li class="active"><a href="regPage.html">Register</a></li>
                             <li><a href="loginPrompt.html">Log In</a></li>
@@ -50,8 +51,10 @@
                 <div class="form-group">
                     <output id="passwordOK"></output>
                 </div>
+
                 <button id="submit" disabled="true" type="submit" class="btn btn-primary" onclick="postRegistration()">Submit</button>
             </div>
+
 
     </body>
 
@@ -64,7 +67,7 @@
             else{
                 document.getElementById("passwordOK").value = "";
                 document.getElementById("submit").disabled = false;
-            }    
+            }
         }
 
         function postRegistration(){
