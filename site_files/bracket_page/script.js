@@ -235,6 +235,26 @@ function createTour(){
   var tSize = parseInt(document.getElementById("tournament_numP").value);
   var tPlayers =document.getElementById("tournament_players").value;
 
+  var mod;
+  if(tName==""){
+    mod=document.getElementById("modal-text");
+    mod.innerHTML="Tournament Name must have some text.";
+    $("#myModal").modal();
+    //break;
+  }
+  else if(tDesc==""){
+    mod=document.getElementById("modal-text");
+    mod.innerHTML="Tornament Description must have some text.";
+    $("#myModal").modal();
+  // break;
+  }
+  else if(tSize!='4'&&tSize!= '8'&&tSize!= '16'&&tSize!= '32'&&tSize!= '64'&&tSize!= '128'&&tSize!= '256'){
+    mod=document.getElementById("modal-text");
+    mod.innerHTML="Invalid player size";
+    $("#myModal").modal();
+  //  break;
+  }
+  else{
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
@@ -256,5 +276,5 @@ function createTour(){
   })
   );
   //document.getElementById("test").style.color = "red";
-
+  }
 }
