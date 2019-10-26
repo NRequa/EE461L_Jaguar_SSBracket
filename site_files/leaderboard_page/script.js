@@ -103,6 +103,8 @@ function showTopUsers() {
 		var j;
 		var n = holder.length;
 		
+		
+		// insertion sort
 		for (i = 1; i < n; i++) {  
 			key = holder[i];  
 			j = i - 1;  
@@ -114,23 +116,21 @@ function showTopUsers() {
 			holder[j + 1] = key;  
 		} 
 		
-		console.log(holder);
+		$("#top_list1").empty();
+		var list = document.getElementById("top_list1");
 		
-		/*
-		var j;
-		var nextTop = -1;
-		var topIndex;
-		// display sorted players on leader board
+		
+		var name;
+		var val;
+		var entry;
 		for (i = 0; i < obj.data.content.length; i++) {
-			for(j = 0; i < holder.length; i++) {
-				if (holder[i][1] > nextTop) {
-					nextTop = holder[i][1]
-					topIndex = j;
-				}
-			}
-			console.log(nextTop);
-			holder.splice(topIndex, 1);
-			nextTop = -1;
-		} */
+			entry = document.createElement("li");
+			
+			name = holder[obj.data.content.length - 1 - i][0];
+			val = holder[obj.data.content.length - 1 - i][1];
+			
+			entry.appendChild(document.createTextNode(name + ": " + val));
+			list.appendChild(entry);
+		}
 	}
 }
