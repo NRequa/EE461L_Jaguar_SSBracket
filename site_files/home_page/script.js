@@ -21,6 +21,7 @@ $(document).ready(function() {
 			tourney = obj.data.content[i];
 			tmp.push(tourney.tname);
 			tmp.push(tourney.description);
+			tmp.push(tourney.id);
 			tmp.push(tourney.visits);
 			holder.push(tmp)
 		}
@@ -46,8 +47,9 @@ $(document).ready(function() {
 		
 		var tname;
 		var description;
+		var id;
 		var visits;
-		var header;
+		var a;
 		var para;
 		var entry;
 		for (i = 0; i < obj.data.content.length; i++) {
@@ -55,10 +57,12 @@ $(document).ready(function() {
 			
 			tname = holder[obj.data.content.length - 1 - i][0];
 			description = holder[obj.data.content.length - 1 - i][1];
+			id = holder[obj.data.content.length - 1 - i][2];
 			
-			header = document.createElement("h4")
-			header.innerHTML = tname;
-			entry.appendChild(header);
+			a = document.createElement("a")
+			a.innerHTML = tname;
+			a.href = "www.ssbracket.xyz/site_files/bracket_page/bracket.html?id=" + id;
+			entry.appendChild(a);
 			
 			para = document.createElement("p");
 			para.innerHTML = description;
