@@ -10,6 +10,10 @@ body {
 	margin: auto;
 }
 
+.carousel-indicators li {
+	visibility: hidden; 
+}
+
 #col1 {
 	height: 937px;
 }

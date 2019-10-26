@@ -1,4 +1,5 @@
 toggleOn = false;
+topThree = [];
 
 $(document).ready(function() {
 	var Http = new XMLHttpRequest();
@@ -52,6 +53,7 @@ $(document).ready(function() {
 		var a;
 		var para;
 		var entry;
+		var count = 3;
 		for (i = 0; i < obj.data.content.length; i++) {
 			entry = document.createElement("div");
 			
@@ -68,12 +70,18 @@ $(document).ready(function() {
 			para.innerHTML = description;
 			entry.appendChild(para);
 			
+			if (count >= 1) {
+				topThree.push(description);
+				count = count - 1;
+			}
+			
 			popular.appendChild(entry);
 		}
 	}
 	
 	$('#myCarousel').on('slide.bs.carousel', function () {
-		console.log($('#myCarousel').slide);
+		console.log(topThree);
+		$("#scrollerText").innerHTML = topThree[0];
 	})
 });
 
