@@ -48,6 +48,9 @@ public class Tournament implements Serializable {
   @Column(name = "tempplayers", nullable = false)
   private String tempplayers;
 
+  @Column(name = "visits", nullable = false)
+  private int visits;
+
 
 
 //everything under this comment is new stuff
