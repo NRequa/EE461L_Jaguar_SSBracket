@@ -38,6 +38,7 @@ function showTopUsers() {
 	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user";
 
 	Http.onreadystatechange = (e) => {
+		
 		var obj = JSON.parse(Http.responseText);
 		var holder = [];
 

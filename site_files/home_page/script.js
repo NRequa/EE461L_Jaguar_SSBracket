@@ -1,12 +1,13 @@
 toggleOn = false;
 
-$(document).ready(function() {
-	var Http = new XMLHttpRequest();
-	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament";
+function loading() {
+	var xmlHttp = new XMLHttpRequest();
+	var url = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
 
 
-	Http.onreadystatechange = (e) => {
-		var obj = JSON.parse(Http.responseText);
+	xmlHttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+		var obj = JSON.parse(this.responseText);
 
 		var holder = [];
 
@@ -71,9 +72,10 @@ $(document).ready(function() {
 			popular.appendChild(entry);
 		}
 	}
-	Http.open("GET", url,true);
-	Http.send();
-});
+	}
+	xmlHttp.open("GET", url,true);
+	xmlHttp.send();
+};
 
 function showContactInfo() {
 	$("#contact_btn").css({"display": "none"});
