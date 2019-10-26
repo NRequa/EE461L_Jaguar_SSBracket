@@ -77,7 +77,6 @@ function showTopUsers() {
 		$("#top_list1").empty();
 		var list = document.getElementById("top_list1");
 		
-		
 		var name;
 		var val;
 		var entry;
