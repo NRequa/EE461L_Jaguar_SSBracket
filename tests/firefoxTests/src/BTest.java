@@ -17,7 +17,7 @@ class BTest {
 	static String leaderboardURL = "http://www.ssbracket.xyz/site_files/leaderboard_page/index.html";
 	static String homepageURL = "http://www.ssbracket.xyz/index.html";
 	static String bracketURL = "http://www.ssbracket.xyz/site_files/bracket_page/index.html";
-	
+
 	static WebDriver driver;
 	@BeforeAll
 	public static void setUp(){
@@ -39,6 +39,21 @@ class BTest {
 			}
 		}
 	}
-	
+	@Test
+	void buttonTest(){
+		try{
+		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		driver.navigate().back();
+		}
+		finally{
+			driver.quit();
+		}
+
+	}
+	@AfterAll
+	public static void tearDown() {
+		driver.close();
+	}
+
 
 }
