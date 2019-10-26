@@ -1,5 +1,6 @@
 toggleOn = false;
 topThree = [];
+index = 1;
 
 function loading() {
 	var xmlHttp = new XMLHttpRequest();
@@ -78,12 +79,21 @@ function loading() {
 
 			popular.appendChild(entry);
 		}
+		document.getElementById("scroller_text").innerHTML = topThree[0];
 	}
 	}
 	$('#myCarousel').on('slide.bs.carousel', function () {
 		console.log(topThree);
-		$("#scrollerText").innerHTML = topThree[0];
-	})
+		document.getElementById("scroller_text").innerHTML = topThree[index];
+		
+		index = index + 1;
+		if (index > 2) {
+			index = 0;
+		}
+	});
+	
+
+	
 	xmlHttp.open("GET", url,true);
 	xmlHttp.send();
 };
