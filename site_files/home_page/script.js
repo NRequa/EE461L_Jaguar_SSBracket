@@ -12,7 +12,7 @@ function loading() {
 		var holder = [];
 
 		var i;
-		var user;
+		var tourney;
 		var tmp;
 
 		// 2D array holds player associated with win rate
@@ -37,7 +37,7 @@ function loading() {
 			key = holder[i];
 			j = i - 1;
 
-			while (j >= 0 && holder[j][2] > key[2]) {
+			while (j >= 0 && holder[j][3] > key[3]) {
 				holder[j + 1] = holder[j];
 				j = j - 1;
 			}
@@ -62,7 +62,7 @@ function loading() {
 
 			a = document.createElement("a")
 			a.innerHTML = tname;
-			a.href = "www.ssbracket.xyz/site_files/bracket_page/bracket.html?id=" + id;
+			a.href = "site_files/bracket_page/bracket.html?id=" + id;
 			entry.appendChild(a);
 
 			para = document.createElement("p");
@@ -73,6 +73,9 @@ function loading() {
 		}
 	}
 	}
+	$('#myCarousel').on('slide.bs.carousel', function () {
+		console.log($('#myCarousel').slide);
+	})
 	xmlHttp.open("GET", url,true);
 	xmlHttp.send();
 };
