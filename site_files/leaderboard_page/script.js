@@ -83,16 +83,54 @@ function showTopUsers() {
 	
 	Http.onreadystatechange = (e) => {
 		var obj = JSON.parse(Http.responseText);
-		var holder = new Map();
+		var holder = [];
 		
 		var i;
 		var user;
-		// TODO: do not hard code length
-		for (i = 0; i < 6; i++) {
+		var tmp;
+		
+		// 2D array holds player associated with win rate
+		for (i = 0; i < obj.data.content.length; i++) {
+			tmp = [];
 			user = obj.data.content[i];
-			holder.set(user.username, user.num_games_played / user.num_wins);
+			tmp.push(user.username);
+			tmp.push(user.numgamesplayed / user.numwins);
+			holder.push(tmp)
 		}
 		
-		console.log(holder.get("Yungus"));
+		console.log(holder);
+		
+		var j;
+		var n = holder.length;
+		
+		for (i = 1; i < n; i++) {  
+			key = holder[i];  
+			j = i - 1;  
+  
+			while (j >= 0 && holder[j][1] > key[1]) {  
+				holder[j + 1] = holder[j];  
+				j = j - 1;  
+			}  
+			holder[j + 1] = key;  
+		} 
+		
+		console.log(holder);
+		
+		/*
+		var j;
+		var nextTop = -1;
+		var topIndex;
+		// display sorted players on leader board
+		for (i = 0; i < obj.data.content.length; i++) {
+			for(j = 0; i < holder.length; i++) {
+				if (holder[i][1] > nextTop) {
+					nextTop = holder[i][1]
+					topIndex = j;
+				}
+			}
+			console.log(nextTop);
+			holder.splice(topIndex, 1);
+			nextTop = -1;
+		} */
 	}
 }
