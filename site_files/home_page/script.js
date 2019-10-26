@@ -12,7 +12,7 @@ $(document).ready(function() {
 		var holder = [];
 		
 		var i;
-		var user;
+		var tourney;
 		var tmp;
 		
 		// 2D array holds player associated with win rate
@@ -36,7 +36,7 @@ $(document).ready(function() {
 			key = holder[i];  
 			j = i - 1;  
   
-			while (j >= 0 && holder[j][2] > key[2]) {  
+			while (j >= 0 && holder[j][3] > key[3]) {  
 				holder[j + 1] = holder[j];  
 				j = j - 1;  
 			}  
@@ -73,7 +73,7 @@ $(document).ready(function() {
 	}
 	
 	$('#myCarousel').on('slide.bs.carousel', function () {
-		console.log("test");
+		console.log($('#myCarousel').slide);
 	})
 });
 
