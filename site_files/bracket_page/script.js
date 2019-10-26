@@ -71,7 +71,7 @@ function createBracket(player,playerText){
   node.appendChild(r1);
   bBox.appendChild(node);
 
-setName(playerText);//this enables setting the player's name
+setName(playerText,player);//this enables setting the player's name
 
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
@@ -145,12 +145,15 @@ function rectClick(g_id){//set Editable
   console.log(g_id);
   var getG=document.getElementById(g_id);
   var cText=getG.childNodes[1];
-  var mod=document.getElementsByClassName("modal-title");
+  var mod=document.getElementById("modal-title");
   mod.innerHTML="Edit Player";
-  mod=document.getElementsByClassName("modal-text");
+  mod=document.getElementById("modal-text");
   mod.innerHTML="Enter Player Name";
   mod=document.getElementById("modal-ta");
-  mod.innerHTML=cText.innerHTML;
+  mod.value="";
+  console.log(g_id);
+  console.log(cText.innerHTML);
+  mod.value=cText.innerHTML;
   mod.setAttribute("rows","1");
   mod.setAttribute("cols","50");
   mod=document.getElementsByClassName("modal-data");
@@ -169,15 +172,18 @@ function setOneName(id,text){
   var arrG=document.getElementsByTagName('g');
   arrG[id].childNodes[1].innerHTML=text;
 }
-function setName(pArray){
+function setName(pArray,player){
   var arrG=document.getElementsByTagName('g');
   for(i=0;i<arrG.length;i++){
     //cutNames
     if(i<pArray.length){
       arrG[i].childNodes[1].innerHTML=pArray[i];
     }
+    else if(i<player*4){
+      arrG[i].childNodes[1].innerHTML="Bye";//implement proper bye
+    }
     else {
-      arrG[i].childNodes[1].innerHTML=i+"";
+      arrG[i].childNodes[1].innerHTML="";
     }
   }
 }
@@ -190,8 +196,8 @@ function parsePlayer(pString){
   while(lIndex!=-1){
     pArray[i]=pString.substring(pIndex,lIndex);
     i++;
-    pIndex=lIndex;
-    lIndex=pString.indexOf("\n",pIndex+1);
+    pIndex=lIndex+1;
+    lIndex=pString.indexOf("\n",pIndex);
   }
   return pArray;
 }
@@ -250,11 +256,5 @@ function createTour(){
   })
   );
   //document.getElementById("test").style.color = "red";
-
-}
-function descClick(){
-
-}
-function titleClick(){
 
 }
