@@ -61,7 +61,7 @@ $(document).ready(function() {
 			
 			a = document.createElement("a")
 			a.innerHTML = tname;
-			a.href = "www.ssbracket.xyz/site_files/bracket_page/bracket.html?id=" + id;
+			a.href = "site_files/bracket_page/bracket.html?id=" + id;
 			entry.appendChild(a);
 			
 			para = document.createElement("p");
@@ -71,6 +71,10 @@ $(document).ready(function() {
 			popular.appendChild(entry);
 		}
 	}
+	
+	$('#myCarousel').on('slide.bs.carousel', function () {
+		console.log("test");
+	})
 });
 
 function showContactInfo() {
