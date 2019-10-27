@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,8 +24,6 @@ public class PageTestHomeAPI {
 	static String homepageURL = "http://www.ssbracket.xyz/index.html";
 	
 	static WebDriver driver;
-	
-	private ArrayList<ArrayList> popContent;
 	
 	@BeforeAll
 	public static void setup() {
@@ -55,24 +54,29 @@ public class PageTestHomeAPI {
         
         JSONObject data = (JSONObject) obj.get("data");
         JSONArray content = (JSONArray) data.get("content");
+        System.out.println(content.get(0));
         
-        popContent = getPopList(content);
+        String[] popContent = getPopList(content);
         // check if API get was successful
-        assertEquals(content.size(), popContent.size());
+        assertEquals(content.size(), popContent.length/2);
+        
+        WebElement popDiv = driver.findElement(By.id("popular"));
+		// split div contents by 'new line'
+		String lines[] = popDiv.getText().split("\\r?\\n");
+		
+		System.out.println(Arrays.toString(popContent));
 	}
 	
-	private ArrayList getPopList(JSONArray content) {
-		ArrayList<ArrayList> holder = new ArrayList();
-		ArrayList<String> tmp = new ArrayList();
+	private String[] getPopList(JSONArray content) {
+		String[] holder = new String[content.size()*2];
 		JSONObject tourney;
 		
-		for (int i = 0; i < content.size(); i++) {
+		// TODO: sort
+		int i;
+		for (i = 0; i < content.size(); i++) {
 			tourney = (JSONObject) content.get(i);
-			tmp.add(tourney.get("tname").toString());
-			tmp.add(tourney.get("description").toString());
-			tmp.add(tourney.get("id").toString());
-			tmp.add(tourney.get("visits").toString());
-			holder.add(tmp);
+			holder[i*2] = tourney.get("tname").toString();
+			holder[i*2+1] = tourney.get("description").toString();
 		}
 		
 		return holder;
