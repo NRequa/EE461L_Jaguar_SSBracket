@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,6 +23,8 @@ public class PageTestHomeAPI {
 	static String homepageURL = "http://www.ssbracket.xyz/index.html";
 	
 	static WebDriver driver;
+	
+	private ArrayList<ArrayList> popContent;
 	
 	@BeforeAll
 	public static void setup() {
@@ -53,12 +56,26 @@ public class PageTestHomeAPI {
         JSONObject data = (JSONObject) obj.get("data");
         JSONArray content = (JSONArray) data.get("content");
         
-        System.out.println(content.get(0));
+        popContent = getPopList(content);
+        // check if API get was successful
+        assertEquals(content.size(), popContent.size());
 	}
 	
-	private String[][] getPopList(JSONArray content) {
+	private ArrayList getPopList(JSONArray content) {
+		ArrayList<ArrayList> holder = new ArrayList();
+		ArrayList<String> tmp = new ArrayList();
+		JSONObject tourney;
 		
-		return null;
+		for (int i = 0; i < content.size(); i++) {
+			tourney = (JSONObject) content.get(i);
+			tmp.add(tourney.get("tname").toString());
+			tmp.add(tourney.get("description").toString());
+			tmp.add(tourney.get("id").toString());
+			tmp.add(tourney.get("visits").toString());
+			holder.add(tmp);
+		}
+		
+		return holder;
 	}
 	
 	@AfterAll
