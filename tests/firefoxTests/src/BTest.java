@@ -27,6 +27,7 @@ class BTest {
 		driver = new FirefoxDriver();
 		driver.get(localBracketURL);
 	}
+
 	@Test
 	void bracketNavBarTest() {
 		String[] navBarLinks = {"Home", "LeaderBoard", "About Us", "Register", "Log In"};
@@ -40,6 +41,7 @@ class BTest {
 			}
 		}
 	}
+
 	@Test
 	void buttonTest(){
 		try{
@@ -47,25 +49,88 @@ class BTest {
 		createBtn.click();
 		driver.navigate().back();
 		}
-		finally{
-			
+		catch(Exception e){
+			fail();
 		}
 
 	}
-	@Test 
+
+	@Test
 	void emptyTourTest() {
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
-		
-		WebElement bracketBtn=driver.findElement(By.linkText("Create Bracket!"));
+
+		WebElement bracketBtn=driver.findElement(By.id("create-tour"));
 		bracketBtn.click();
 		//empty test bracket
-		
+
 		WebElement modMess=driver.findElement(By.id("modal-text"));
 		assertEquals("Tournament Name must have some text.",modMess.getText());
-		
-		
 	}
+
+	@Test
+	void emptyDescTest() {
+		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		createBtn.click();
+
+		WebElement tourName=driver.findElement(By.id("tournament_name"));
+		tourName.sendKeys("Test Tour");
+
+		WebElement bracketBtn=driver.findElement(By.id("create-tour"));
+		bracketBtn.click();
+		//empty description
+
+		WebElement modMess=driver.findElement(By.id("modal-text"));
+		assertEquals("Tournament Description must have some text.",modMess.getText());
+	}
+
+	@Test
+	void emptyPlayerTest() {
+		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		createBtn.click();
+
+		WebElement tourName=driver.findElement(By.id("tournament_name"));
+		tourName.sendKeys("Test Tour");
+
+		WebElement tourDesc=driver.findElement(By.id("tournament_desc"));
+		tourDesc.sendKeys("Test Description");
+
+		WebElement bracketBtn=driver.findElement(By.id("create-tour"));
+		bracketBtn.click();
+		//empty player
+
+		WebElement modMess=driver.findElement(By.id("modal-text"));
+		assertEquals("Invalid player size",modMess.getText());
+	}
+
+	@Test
+	void invalidPlayerTest() {
+		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		createBtn.click();
+
+		WebElement tourName=driver.findElement(By.id("tournament_name"));
+		tourName.sendKeys("Test Tour");
+
+		WebElement tourDesc=driver.findElement(By.id("tournament_desc"));
+		tourDesc.sendKeys("Test Description");
+
+		WebElement tourPlay=driver.findElement(By.id("tournament_players"));
+		tourPlay.sendKeys("Test Players");
+
+		WebElement bracketBtn=driver.findElement(By.id("create-tour"));
+		bracketBtn.click();
+
+		WebElement modMess=driver.findElement(By.id("modal-text"));
+		assertEquals("Invalid player size",modMess.getText());
+
+		tourPlay.clear();
+		tourPlay.sendKeys("2");
+		bracketBtn.click();
+
+		WebElement modMess=driver.findElement(By.id("modal-text"));
+		assertEquals("Invalid player size",modMess.getText());
+	}
+
 	@AfterAll
 	public static void tearDown() {
 		driver.close();
