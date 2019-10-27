@@ -16,9 +16,9 @@ class BTest {
 
 	static String leaderboardURL = "http://www.ssbracket.xyz/site_files/leaderboard_page/index.html";
 	static String homepageURL = "http://www.ssbracket.xyz/index.html";
-	static String bracketURL = "http://www.ssbracket.xyz/site_files/bracket_page/index.html";
+	static String bracketURL = "file:///home/up1007/461l/jaguar/EE461L_Jaguar_SSBracket/site_files/bracket_page/index.html";
 	static String localBracketURL="file:///home/up1007/461l/jaguar/EE461L_Jaguar_SSBracket/site_files/bracket_page/index.html";
-	static String testTourURL= "http://www.ssbracket.xyz/site_files/bracket_page/bracket.html?id=146";
+	static String testTourURL= "file:///home/up1007/461l/jaguar/EE461L_Jaguar_SSBracket/site_files/bracket_page/bracket.html?id=146";
 
 	static WebDriver driver;
 	@BeforeAll
@@ -31,6 +31,7 @@ class BTest {
 
 	@Test
 	void bracketNavBarTest() {
+		driver.get(bracketURL);
 		String[] navBarLinks = {"Home", "LeaderBoard", "About Us", "Register", "Log In"};
 		for( int i = 0; i < navBarLinks.length; i++) {
 			try {
@@ -45,6 +46,7 @@ class BTest {
 
 	@Test
 	void buttonTest(){
+		driver.get(bracketURL);
 		try{
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
@@ -58,6 +60,7 @@ class BTest {
 
 	@Test
 	void emptyTourTest() {
+		driver.get(bracketURL);
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
 
@@ -71,6 +74,7 @@ class BTest {
 
 	@Test
 	void emptyDescTest() {
+		driver.get(bracketURL);
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
 
@@ -82,11 +86,12 @@ class BTest {
 		//empty description
 
 		WebElement modMess=driver.findElement(By.id("modal-text"));
-		assertEquals("Tournament Description must have some text.",modMess.getText());
+		assertEquals("Tornament Description must have some text.",modMess.getText());
 	}
 
 	@Test
 	void emptyPlayerTest() {
+		driver.get(bracketURL);
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
 
@@ -106,6 +111,7 @@ class BTest {
 
 	@Test
 	void invalidPlayerTest() {
+		driver.get(bracketURL);
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
 
@@ -123,17 +129,21 @@ class BTest {
 
 		WebElement modMess=driver.findElement(By.id("modal-text"));
 		assertEquals("Invalid player size",modMess.getText());
+		
+		WebElement modBut=driver.findElement(By.id("modal-but"));
+		modBut.click();
 
 		tourPlay.clear();
 		tourPlay.sendKeys("2");
 		bracketBtn.click();
 
-		WebElement modMess=driver.findElement(By.id("modal-text"));
+		modMess=driver.findElement(By.id("modal-text"));
 		assertEquals("Invalid player size",modMess.getText());
 	}
 
 	@Test
 	void validTourTest() {
+		driver.get(bracketURL);
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
 		createBtn.click();
 
@@ -148,12 +158,12 @@ class BTest {
 
 		WebElement bracketBtn=driver.findElement(By.id("create-tour"));
 		bracketBtn.click();
-
-		WebElement tourTitle=driver.findElement(By.id("title"));
-		assertEquals("Test Tour",tourTitle.getText());
-
-		WebElement tourD=driver.findElement(By.id("desc"));
-		assertEquals("Test Description",tourD.getText());
+		try {
+		driver.navigate().back();
+		}
+		catch(Exception e) {
+			fail();
+		}
 
 	}
 
@@ -165,8 +175,8 @@ class BTest {
 		WebElement modEnt;
 		WebElement modCanc;
 		String text;
-		List <WebElement> playerText=driver.findElements(By.class("p-contain"));
-		for(int i=0;i<30;i++){
+		List <WebElement> playerText=driver.findElements(By.className("p-contain"));
+		for(int i=0;i<playerText.size();i++){
 			text=playerText.get(i).getText();
 			player=driver.findElement(By.id(""+i));
 			player.click();
@@ -175,6 +185,7 @@ class BTest {
 			modCanc=driver.findElement(By.id("modal-cancel"));
 			modCanc.click();
 		}
+		
 	}
 
 	@Test
@@ -185,8 +196,8 @@ class BTest {
 		WebElement modEnt;
 		WebElement modCanc;
 		String text;
-		List <WebElement> playerText=driver.findElements(By.class("p-contain"));
-		for(int i=0;i<30;i++){
+		List <WebElement> playerText=driver.findElements(By.className("p-contain"));
+		for(int i=0;i<playerText.size();i++){
 			player=driver.findElement(By.id(""+i));
 			player.click();
 			modTa=driver.findElement(By.id("modal-ta"));
