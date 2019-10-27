@@ -18,6 +18,7 @@ class BTest {
 	static String homepageURL = "http://www.ssbracket.xyz/index.html";
 	static String bracketURL = "http://www.ssbracket.xyz/site_files/bracket_page/index.html";
 	static String localBracketURL="file:///home/up1007/461l/jaguar/EE461L_Jaguar_SSBracket/site_files/bracket_page/index.html";
+	static String testTourURL= "http://www.ssbracket.xyz/site_files/bracket_page/bracket.html?id=146";
 
 	static WebDriver driver;
 	@BeforeAll
@@ -25,7 +26,7 @@ class BTest {
 		//this is for linux:for windows add .exe after geckodriver
 		System.setProperty("webdriver.gecko.driver", "geckodriver");
 		driver = new FirefoxDriver();
-		driver.get(localBracketURL);
+		driver.get(bracketURL);
 	}
 
 	@Test
@@ -129,6 +130,72 @@ class BTest {
 
 		WebElement modMess=driver.findElement(By.id("modal-text"));
 		assertEquals("Invalid player size",modMess.getText());
+	}
+
+	@Test
+	void validTourTest() {
+		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		createBtn.click();
+
+		WebElement tourName=driver.findElement(By.id("tournament_name"));
+		tourName.sendKeys("Test Tour");
+
+		WebElement tourDesc=driver.findElement(By.id("tournament_desc"));
+		tourDesc.sendKeys("Test Description");
+
+		WebElement tourPlay=driver.findElement(By.id("tournament_players"));
+		tourPlay.sendKeys("4");
+
+		WebElement bracketBtn=driver.findElement(By.id("create-tour"));
+		bracketBtn.click();
+
+		WebElement tourTitle=driver.findElement(By.id("title"));
+		assertEquals("Test Tour",tourTitle.getText());
+
+		WebElement tourD=driver.findElement(By.id("desc"));
+		assertEquals("Test Description",tourD.getText());
+
+	}
+
+	@Test
+	void bracketNameEqualTest(){
+		driver.get(testTourURL);
+		WebElement player;
+		WebElement modTa;
+		WebElement modEnt;
+		WebElement modCanc;
+		String text;
+		List <WebElement> playerText=driver.findElements(By.class("p-contain"));
+		for(int i=0;i<30;i++){
+			text=playerText.get(i).getText();
+			player=driver.findElement(By.id(""+i));
+			player.click();
+			modTa=driver.findElement(By.id("modal-ta"));
+			assertTrue(text.equals(modTa.getText()));
+			modCanc=driver.findElement(By.id("modal-cancel"));
+			modCanc.click();
+		}
+	}
+
+	@Test
+	void bracketNameChangeTest(){
+		driver.get(testTourURL);
+		WebElement player;
+		WebElement modTa;
+		WebElement modEnt;
+		WebElement modCanc;
+		String text;
+		List <WebElement> playerText=driver.findElements(By.class("p-contain"));
+		for(int i=0;i<30;i++){
+			player=driver.findElement(By.id(""+i));
+			player.click();
+			modTa=driver.findElement(By.id("modal-ta"));
+			modTa.sendKeys(""+i);
+			modEnt=driver.findElement(By.id("modal-enter"));
+			modEnt.click();
+			text=playerText.get(i).getText();
+			assertEquals(""+i,text);
+		}
 	}
 
 	@AfterAll
