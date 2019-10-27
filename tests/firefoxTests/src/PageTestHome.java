@@ -1,5 +1,4 @@
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -21,7 +20,6 @@ class PageTestHome {
 		driver = new FirefoxDriver();
 		driver.get(homepageURL);
 	}
-
 	
 	@Test
 	void homePageButtons() {
