@@ -17,6 +17,7 @@ class BTest {
 	static String leaderboardURL = "http://www.ssbracket.xyz/site_files/leaderboard_page/index.html";
 	static String homepageURL = "http://www.ssbracket.xyz/index.html";
 	static String bracketURL = "http://www.ssbracket.xyz/site_files/bracket_page/index.html";
+	static String localBracketURL="file:///home/up1007/461l/jaguar/EE461L_Jaguar_SSBracket/site_files/bracket_page/index.html";
 
 	static WebDriver driver;
 	@BeforeAll
@@ -24,7 +25,7 @@ class BTest {
 		//this is for linux:for windows add .exe after geckodriver
 		System.setProperty("webdriver.gecko.driver", "geckodriver");
 		driver = new FirefoxDriver();
-		driver.get(bracketURL);
+		driver.get(localBracketURL);
 	}
 	@Test
 	void bracketNavBarTest() {
@@ -43,12 +44,27 @@ class BTest {
 	void buttonTest(){
 		try{
 		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		createBtn.click();
 		driver.navigate().back();
 		}
 		finally{
-			driver.quit();
+			
 		}
 
+	}
+	@Test 
+	void emptyTourTest() {
+		WebElement createBtn=driver.findElement(By.id("bracket_btn"));
+		createBtn.click();
+		
+		WebElement bracketBtn=driver.findElement(By.linkText("Create Bracket!"));
+		bracketBtn.click();
+		//empty test bracket
+		
+		WebElement modMess=driver.findElement(By.id("modal-text"));
+		assertEquals("Tournament Name must have some text.",modMess.getText());
+		
+		
 	}
 	@AfterAll
 	public static void tearDown() {
