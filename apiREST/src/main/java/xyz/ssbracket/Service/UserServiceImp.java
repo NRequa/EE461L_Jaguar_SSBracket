@@ -4,8 +4,10 @@ import xyz.ssbracket.Exception.ResourceNotFoundException;
 import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
+import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
+import xyz.ssbracket.Repository.AccountsRepository;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class UserServiceImp extends UserService {
     private UserRepository userRepository;
     @Autowired
     private TournamentRepository tournamentRepository;
+    @Autowired
+    private AccountsRepository accountsRepository;
 
     @Override
     public Page<User> getAll( Pageable pageable ) {
@@ -56,6 +60,11 @@ public class UserServiceImp extends UserService {
         List<Tournament> tournaments = user.getTournaments();
         for(Tournament tournament : tournaments){
           tournament.getUsers().remove(user);
+        }
+        Accounts myUser = user.getAccount();
+        if(myUser != null){
+          myUser.setMyuser(null);
+          accountsRepository.deleteById(myUser.getId());
         }
         userRepository.deleteById( id );
         return user;

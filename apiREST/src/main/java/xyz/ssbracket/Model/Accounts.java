@@ -36,6 +36,9 @@ public class Accounts implements Serializable {
     @Column(name = "timageID", nullable = false)
     private int image_id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
+    private User myuser;
 
     public Accounts(String username, String password){
         super();
@@ -44,6 +47,17 @@ public class Accounts implements Serializable {
         num_friends = 0;
         num_tournaments_won = 0;
         image_id = 0;
+    }
+
+    public Accounts(String username, String password, User myuser){
+      super();
+      this.username = username;
+      this.password = password;
+      num_friends = 0;
+      num_tournaments_won = 0;
+      image_id = 0;
+      this.myuser = myuser;
+      this.myuser.setAccount(this);
     }
 
     public boolean isEmpty(){

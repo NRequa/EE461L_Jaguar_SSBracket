@@ -69,11 +69,14 @@ public class User implements Serializable {
       @JsonIgnore
       private List<Tournament> tournaments = new ArrayList<>();
 
+      @OneToOne(mappedBy = "myuser")
+      @JsonIgnore
+      private Accounts account;
+
    public User() { }
 
-   public User(int id, String username, int num_wins,  int num_games_played, int num_tournaments_created,
+   public User(String username, int num_wins,  int num_games_played, int num_tournaments_created,
                int num_tournaments_participated, int num_tournaments_won) {
-       this.id = id;
        this.username = username;
        this .numwins = num_wins;
        this.numgamesplayed = num_games_played;
