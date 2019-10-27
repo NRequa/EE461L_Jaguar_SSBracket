@@ -26,7 +26,7 @@ import java.util.List;
 @Table(name = "users")
 public class User implements Serializable {
     @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
