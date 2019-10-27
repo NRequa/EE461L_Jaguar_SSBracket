@@ -42,6 +42,15 @@ public class Tournament implements Serializable {
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
 
+  @Column(name = "description", nullable = false)
+  private String description;
+
+  @Column(name = "tempplayers", nullable = false)
+  private String tempplayers;
+
+  @Column(name = "visits", nullable = false)
+  private int visits;
+
 
 
 //everything under this comment is new stuff
@@ -73,11 +82,13 @@ public class Tournament implements Serializable {
 
     public Tournament() {}
 
-    public Tournament(int id, String tname, String tcreator, int ttype, int tsize) {
+    public Tournament(int id, String tname, String tcreator, int ttype, int tsize, String description, String tempplayers) {
         this.id = id;
         this.tname = tname;
         this.tcreator = tcreator;
         this.ttype = ttype;
         this.tsize = tsize;
+        this.description = description;
+        this.tempplayers = tempplayers;
     }
 }

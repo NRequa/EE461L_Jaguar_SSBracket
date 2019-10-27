@@ -2,7 +2,6 @@ package xyz.ssbracket.Service;
 
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
-import xyz.ssbracket.Model.UserTournament;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Exception.ResourceNotFoundException;
@@ -48,9 +47,6 @@ public class TournamentServiceImp extends TournamentService {
     public Tournament updateUsers( User o, int id ) throws ResourceNotFoundException {
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
         User newUser = checkIfIdIsPresentAndReturnUser(o.getId());
-        //UserTournament addNew = new UserTournament(newUser, oldTournament);
-        //System.out.println(addNew);
-        //oldTournament.getUsertournament().add(addNew);
         oldTournament.getUsers().add(newUser);
         return tournamentRepository.save( oldTournament );
     }
@@ -63,6 +59,7 @@ public class TournamentServiceImp extends TournamentService {
     @Override
     public Tournament deleteById( int id ) throws ResourceNotFoundException {
         Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
+        tournament.getUsers().clear();
         tournamentRepository.deleteById( id );
         return tournament;
     }

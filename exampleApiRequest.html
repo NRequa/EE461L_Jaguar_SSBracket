@@ -5,32 +5,92 @@
 		<title> API </title>
 	</head>
 	<body>
-    <button onclick="test()">Echo</button>
+    <button onclick="testGet()">Get Request</button>
     <br>
-    <p id="test">test</p>
+    <button onclick="testPost()">Post Request</button>
+		<br>
+    <button onclick="testGetReturn()">Nicer Get Request</button>
+    <p id="test">chungus tester</p>
     <script>
 
-      function test(){
-        //var input = 
-        //document.getElementById("test").innerHTML = input;
+      function testGet(){
+				document.getElementById("test").innerHTML = "rungus tester";
 		var xmlhttp = new XMLHttpRequest();
-		var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-		var ourApi = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/39";
-
+		var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/39";
+		var myResponse;
 		xmlhttp.onreadystatechange = function() {
     			if (this.readyState == 4 && this.status == 200) {
-        			var myResponse = JSON.parse(this.responseText);
-				console.log(myResponse)
-        			document.getElementById("test").innerHTML = myResponse.data.tname;
+        			myResponse = JSON.parse(this.responseText);
+							console.log(myResponse)
+        			document.getElementById("test").innerHTML = myResponse.data.users.length;
     			}
 		};
-		xmlhttp.open("GET", proxyUrl+ourApi, true);
+		xmlhttp.open("GET", ourApi, true);
 		xmlhttp.send();
 
 		//To test if button click was actually processed
 		document.getElementById("test").style.color = "blue";
-      	}
+	};
 
+	function testPost() {
+		document.getElementById("test").innerHTML = "rungus tester";
+		var xmlhttp = new XMLHttpRequest();
+		var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
+		var myResponse;
+		var tName = "My Tournament";
+		var tCreator = "Hungus";
+		var tType = 1;
+		var tSize = 16;
+
+		xmlhttp.onreadystatechange = function() {
+    			if (this.readyState == 4 && this.status == 200) {
+        			myResponse = JSON.parse(this.responseText);
+							console.log(myResponse)
+        			document.getElementById("test").innerHTML = myResponse.data.tname;
+    			}
+		};
+
+		xmlhttp.open("POST", ourApi, true);
+		xmlhttp.setRequestHeader("Content-type", "application/json");
+		xmlhttp.send(JSON.stringify({
+			"tname":tName,
+			"tcreator":tCreator,
+			"ttype":tType,
+			"tsize":tSize,
+			"description":"hi",
+			"tempplayers":"player1"
+		})
+		);
+
+		//To test if button click was actually processed
+		document.getElementById("test").style.color = "red";
+	};
+
+	function testGetReturn(){
+		var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/39";
+		//callback1 is the function that is called that uses the json response
+		getGetJson(ourApi, callback1);
+	}
+
+	function getGetJson(url, callback){
+	var xmlhttp = new XMLHttpRequest();
+	var ourApi = url;
+	var myResponse;
+	xmlhttp.open("GET", ourApi, true);
+	xmlhttp.send();
+  xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+					myResponse = JSON.parse(this.responseText);
+					console.log(myResponse);
+					callback(myResponse);
+			}
+	};
+	};
+
+	function callback1(jsonResponse){
+		//do stuff with JSON
+		document.getElementById("test").innerHTML = jsonResponse.data.users.length;
+	}
     </script>
   </body>
 </html>

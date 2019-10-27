@@ -9,7 +9,7 @@
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
 		<body>
-	
+
 			<nav class="navbar navbar-default navbar-fixed-top">
 					<div class="container-fluid">
 						<div class="navbar-header">
@@ -19,38 +19,35 @@
 							<li><a href="../../index.html">Home</a></li>
 							<li><a href="../bracket_page/index.html">Tournaments</a></li>
 							<li class="active"><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+							<li><a href="../characterstat_page/index.html">Character Stat</a></li>
 							<li><a href="../about_page/index.html">About Us</a></li>
 							<li><a href="../account_page/regPage.html">Register</a></li>
 							<li><a href="../account_page/loginPrompt.html">Log In</a></li>
 						</ul>
 					</div>
 				</nav>
-		
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-4" id="leader_col">
-					<div id="sections">
-						<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(2);" id="btn2">BY CHARACTER</button>
-						<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(1);" id="btn1">OVERALL</button>
-						<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(3);" id="btn3">BY REGION</button>
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4" id="leader_col">
+						<div id="sections">
+							<button type="button" class="btn btn-primary btn-lg" onClick="showBoard(1);" id="btn1">TOP WINRATES<button>
+						</div>
 					</div>
+					<div class="col-sm-4" style="background-color:lavender;"></div>
 				</div>
-				<div class="col-sm-4" style="background-color:lavender;"></div>
 			</div>
-		</div>
-		
-		<div class="container-fluid">
-			<div class="row"">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-4" id="content_row">
-					<ol id="top_list1"></ol>
-					<ol id="top_list2"></ol>
-					<ol id="top_list3"></ol>
+
+			<div class="container-fluid">
+				<div class="row"">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4" id="content_row">
+						<ol id="top_list1"></ol>
+					</div>
+					<div class="col-sm-4"></div>
 				</div>
-				<div class="col-sm-4"></div>
 			</div>
-		</div>
-		
+
 	</body>
 </html>

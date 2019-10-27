@@ -9,8 +9,7 @@ body {
 
 /* using 32%, find a better fix for 3 buttons vs small resolution */
 #sections button {
-	display: inline-block;
-	width: 32%;
+	width: 100%;
 	color: black;
 	font-weight: bold;
 	background-color: rgb(255, 191, 128);
@@ -32,9 +31,7 @@ body {
 }
 
 #content_row li {
-	text-align: left;
-	margin-left: 15%;
-	padding-left: 25px;
+	text-align: center;
 }
 
 #content_row img {

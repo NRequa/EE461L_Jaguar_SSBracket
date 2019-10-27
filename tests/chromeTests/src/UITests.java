@@ -16,6 +16,7 @@ class UITests {
 	String logInPageURL = "http://www.ssbracket.xyz.s3-website.us-east-2.amazonaws.com/site_files/account_page/loginPrompt.html";
 	String regPageURL = "http://www.ssbracket.xyz.s3-website.us-east-2.amazonaws.com/site_files/account_page/regPage.html";
 	String accountPageURL = "http://www.ssbracket.xyz/site_files/account_page/accountDataPage.html";
+	String leaderBoardURL = "file:///E:/University%20of%20Texas/UT%20Fall%202019/EE461L_Jaguar_SSBracket/site_files/leaderboard_page/index.html";
 	
 	@BeforeAll
 	static void setUpWebdriver() {
@@ -23,7 +24,6 @@ class UITests {
 		
 	}
 	
-
 	@Test 
 	void testHomePageNavBars() {
 		WebDriver driver = new ChromeDriver();
@@ -177,22 +177,60 @@ class UITests {
 			for(int i = 0; i < btnIds.length; i++) {
 				WebElement btn = driver.findElement(By.id(btnIds[i]));
 				btn.click();
-				
-				WebElement charSection = driver.findElement(By.id(sectIds[0]));
-				WebElement friendSection = driver.findElement(By.id(sectIds[1]));
-				WebElement settingsSection = driver.findElement(By.id(sectIds[2]));
-				
-				// Check if div sections expected are dispalayed as expected
-				assertEquals(visibility.get(i)[0], charSection.isDisplayed());
-				assertEquals(visibility.get(i)[1], friendSection.isDisplayed());			
-				assertEquals(visibility.get(i)[2], settingsSection.isDisplayed());			
-
+				WebElement divSection = driver.findElement(By.id(sectIds[i]));
+				// 
+				assertEquals(visibility.get(i)[0], divSection.isDisplayed());			
 			}
 		}
 		
 		finally {
 			driver.quit();
 		}
+		
+	}
+
+	@Test
+	void testLeaderboards() throws InterruptedException {
+		// Get URL
+		WebDriver driver = new ChromeDriver();
+		driver.get(leaderBoardURL);
+		Thread.sleep(1000);
+		// Build leaderboard top users
+		WebElement usersList = driver.findElement(By.id("top_list1"));
+		
+		// Split into sorted array
+		String fullString = usersList.getText();
+		String[] splitString = fullString.split("[:\n]");
+		
+		// Build 2D array to sort like JSON return
+		int length = (splitString.length / 2);
+		String[][] siteOrder = new String[length][2];
+		double prevWinPct = 0;
+		double currWinPct;
+		
+		for(int i = 0; i < splitString.length - 2; i = i + 2) {
+			String name = splitString[i];
+			String winPct = splitString[i + 1].trim();
+			
+			siteOrder[i / 2][0] = name;
+			siteOrder[i / 2][1] = winPct;
+			
+			
+			
+			if(i == 0) {
+				prevWinPct = Double.parseDouble(winPct);
+			}
+			
+			else {
+				currWinPct = Double.parseDouble(winPct);
+				
+				assertTrue(prevWinPct >= currWinPct);
+				
+				prevWinPct = currWinPct;
+			}
+			
+		}
+		
 		
 	}
 

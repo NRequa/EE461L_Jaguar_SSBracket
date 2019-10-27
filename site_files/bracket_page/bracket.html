@@ -22,6 +22,7 @@
 						<li><a href="../../index.html">Home</a></li>
 						<li class="active"><a href="#">Tournaments</a></li>
 						<li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
+						<li><a href="../characterstat_page/index.html">Character Stat</a></li>
 						<li><a href="../about_page/index.html">About Us</a></li>
 						<li><a href="../account_page/regPage.html">Register</a></li>
 						<li><a href="../account_page/loginPrompt.html">Log In</a></li>
@@ -34,22 +35,24 @@
 		<div class="row">
 
 			<div class="col-sm-8" style="background-color:;">
-				<h1 class="title">Default Title</h1>
+				<div class="col-sm-1">
+				</div>
+				<div class="col-sm-11">
+					<h1 id="title">Default Title</h1>
+				</div>
+
 				<div class="top">
 					<div class="col-sm-3">
 						<h3 style="text-align:left">Description:</h3>
 					</div>
-					<div class="col-sm-9">
-						<h5 class="desc">No Description</h5>
+					<div class="col-sm-9" onclick="descClick()">
+						<h5 id="desc">Click to enter a description!</h5>
 					</div>
 					</div>
 					<div class="bottom">
 						<div id="bracketbox">
 
-
-
-
-
+							<!-- THE BRACKET GOES HERE onload-->
 
 						</div>
 					</div>
@@ -61,8 +64,8 @@
 
 
 						<div id="tweets">
-							<a class="twitter-timeline" data-dnt="true" data-theme="light" href="https://twitter.com/SsBracket?ref_src=twsrc%5Etfw">Tweets by SsBracket</a>
-							<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+							<a class="twitter-timeline" href="https://twitter.com/tytak007?ref_src=twsrc%5Etfw">Tweets by tytak007</a>
+							 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 						</div>
 					</div>
 				</div>
@@ -72,6 +75,28 @@
 
 
 		</div>
-		
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 id="modal-title">Enter Text</h4>
+						<p class="modal-data" hidden></p>
+					</div>
+					<div class="modal-body">
+						<p id="modal-text">Some text in the modal.</p>
+						<textarea id="modal-ta" rows="8" cols="80"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalEnter()">Enter</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
 	</body>
 	</html>
