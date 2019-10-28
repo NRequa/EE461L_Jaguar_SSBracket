@@ -65,6 +65,9 @@ public class PageTestHomeAPI {
 		String lines[] = popDiv.getText().split("\\r?\\n");
 		
 		System.out.println(Arrays.toString(popContent));
+		
+		// currently checking if length of JSON and web page elements the same
+		assertEquals(lines.length, popContent.length);
 	}
 	
 	private String[] getPopList(JSONArray content) {
