@@ -18,7 +18,7 @@ function loading(){
 function createBracket(player,playerText){
   var bBox=document.getElementById("bracketbox");
   var pRound=player;
-  bBox.setAttribute("style","height: "+(136*player+5)+"px")
+  bBox.setAttribute("style","height: "+(136*player+5+26)+"px")
   //used to calculate svg pixels
   var mIndex=[];//array for midpoints of each match
   for(a=0;a<player*2;a++){
