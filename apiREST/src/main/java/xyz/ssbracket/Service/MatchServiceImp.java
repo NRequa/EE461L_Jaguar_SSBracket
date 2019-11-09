@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 import xyz.ssbracket.Exception.ResourceNotFoundException;
 import xyz.ssbracket.Model.MatchResult;
+import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Repository.MatchResultRepository;
+import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.UserRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class MatchServiceImp extends MatchService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TournamentRepository tournamentRepository;
 
     @Override
     public Page<MatchResult> getAll(Pageable pageable ) {
@@ -32,6 +37,7 @@ public class MatchServiceImp extends MatchService {
             throw new DuplicateResourceFoundException( " MatchResult id = " + id + " already exists" );
         else {
             o.setUser(checkIfIdIsPresentAndReturnUser(o.getPlayer()));
+            Tournament t = checkIfIdIsPresentAndReturnTournament(o.getTournament());
             MatchResult returnMatchResult = matchResultRepository.save(o);
             return returnMatchResult;
         }
@@ -67,5 +73,13 @@ public class MatchServiceImp extends MatchService {
             throw new ResourceNotFoundException( " User id = " + id + " not found" );
         else
             return userRepository.findById( id ).get();
+    }
+
+    private Tournament checkIfIdIsPresentAndReturnTournament( int id ){
+        if ( !tournamentRepository.findById( id ).isPresent() ){
+            throw new ResourceNotFoundException( " Tournament id =  " + id + " not found" );
+        } else {
+            return tournamentRepository.findById( id ).get();
+        }
     }
 }

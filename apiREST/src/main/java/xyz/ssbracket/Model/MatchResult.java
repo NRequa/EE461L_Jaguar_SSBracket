@@ -30,12 +30,20 @@ public class MatchResult implements Serializable {
     @Column(name = "player")
     private int player;
 
+    @Column(name = "tournamet")
+    private int tournament;
+
+    @Column(name = "round")
+    private int round;
+
     public MatchResult() { }
 
-    public MatchResult(String characterplayed, boolean win, User user, int player) {
+    public MatchResult(String characterplayed, boolean win, User user, int player, int tournament, int round) {
         this.characterplayed = characterplayed;
         this.win = win;
         this.user = user;
         this.player = player;
+        this.tournament = tournament;
+        this.round = round;
     }
 }
