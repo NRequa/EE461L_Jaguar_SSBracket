@@ -48,19 +48,22 @@ public class User implements Serializable {
     @Column(name = "numtournamentswon", nullable = false)
     private int numtournamentswon;
 
-      @ManyToMany(mappedBy = "users")
-      @JsonIgnore
-      private List<Tournament> tournaments = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    @JsonIgnore
+    private List<Tournament> tournaments = new ArrayList<>();
 
-      //separate array of tournaments to avoid infinite loops when getting JSON
-      @ManyToMany(mappedBy = "usersarray")
-       private List<TournamentArray> mytournaments = new ArrayList<>();
+    //separate array of tournaments to avoid infinite loops when getting JSON
+    @ManyToMany(mappedBy = "usersarray")
+    private List<TournamentArray> mytournaments = new ArrayList<>();
 
-      @OneToOne(mappedBy = "myuser")
-      @JsonIgnore
-      private Accounts account;
+    @OneToOne(mappedBy = "myuser")
+    @JsonIgnore
+    private Accounts account;
 
-   public User() { }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<MatchResult> matchResults = new ArrayList<>();
+
+    public User() { }
 
    public User(String username, int num_wins,  int num_games_played, int num_tournaments_created,
                int num_tournaments_participated, int num_tournaments_won) {
