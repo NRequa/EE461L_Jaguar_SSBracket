@@ -51,28 +51,6 @@ public class Tournament implements Serializable {
   @Column(name = "visits", nullable = false)
   private int visits;
 
-
-
-//everything under this comment is new stuff
-/*
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-            name = "user_tournaments",
-            joinColumns = { @JoinColumn(name = "tournament_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
-    @JsonIgnore
-    @JsonBackReference("users")
-    @JsonManagedReference("tournaments")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<User> users = new HashSet<>();
-*/
-
-  //@OneToMany(mappedBy = "tournaments")
-  //private Set<UserTournament> usertournament = new HashSet<>();
   @ManyToMany(cascade = {
         CascadeType.PERSIST,
         CascadeType.MERGE

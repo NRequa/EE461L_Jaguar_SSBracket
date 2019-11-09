@@ -48,26 +48,13 @@ public class User implements Serializable {
     @Column(name = "numtournamentswon", nullable = false)
     private int numtournamentswon;
 
-
-
-//everything under this comment is new stuff
-/*
-    @ManyToMany(
-           fetch = FetchType.LAZY,
-           cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-           mappedBy = "users"
-   )
-   @OnDelete(action = OnDeleteAction.CASCADE)
-   @JsonIgnore
-   @JsonManagedReference("users")
-   @JsonBackReference("tournaments")
-   private Set<Tournament> tournaments = new HashSet<>();
-*/
-  //@OneToMany(mappedBy = "users")
-  //private Set<UserTournament> usertournament = new HashSet<>();
       @ManyToMany(mappedBy = "users")
       @JsonIgnore
       private List<Tournament> tournaments = new ArrayList<>();
+
+      //separate array of tournaments to avoid infinite loops when getting JSON
+      @ManyToMany(mappedBy = "usersarray")
+       private List<TournamentArray> mytournaments = new ArrayList<>();
 
       @OneToOne(mappedBy = "myuser")
       @JsonIgnore

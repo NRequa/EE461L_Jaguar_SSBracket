@@ -5,6 +5,7 @@ import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Accounts;
+import xyz.ssbracket.Model.TournamentArray;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.AccountsRepository;
@@ -57,10 +58,20 @@ public class UserServiceImp extends UserService {
     @Override
     public User deleteById( int id ) {
         User user = checkIfIdIsPresentAndReturnUser( id );
+
+        //delete many to many between tournament and users
         List<Tournament> tournaments = user.getTournaments();
         for(Tournament tournament : tournaments){
           tournament.getUsers().remove(user);
         }
+
+        //delete many to many between storage tournament and users that was made to avoid infinite loop
+        List<TournamentArray> tournamentArray = user.getMytournaments();
+        for(TournamentArray myTournament : tournamentArray){
+          myTournament.getUsersarray().remove(user);
+        }
+
+        //delete one to one relationship between users and account
         Accounts myUser = user.getAccount();
         if(myUser != null){
           myUser.setMyuser(null);
