@@ -196,7 +196,8 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 				if(!success) {return;}
 			}	
 			let object = {};
-			selected.forEach((i, prop) => {
+			selected.forEach((prop) => {
+				console.log(prop);
 				object[prop.name] = prop.prop;
 			});
 			console.log(object);

@@ -39,7 +39,7 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 
   Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction]).then(function(data1) {
 	  console.log("promise.log");
-	  extractDataFromHTML(data1[0].data, characterData, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getWeightTitleCond}, {name: "wtitle2", fn: getWeightTitleCond}, {name: "wname", fn: getWeightName}, {name: "wweight", fn: getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[0].data, characterData, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getWeightTitleCond}, {name: "wtitle2", fn: getWeightTitleCond}, {name: "name", fn: getWeightName}, {name: "tweight", fn: getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
 	  console.log('extracted');
 	  jobs = extractWeightFromHTML(data1[0].data, characterWeight);
 	  jobs = extractDashFromHTML(data1[1].data, characterDash);
