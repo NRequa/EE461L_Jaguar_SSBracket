@@ -13,6 +13,12 @@ const {extractWeightFromHTML} = require('./helpers');
 const {extractDashFromHTML} = require('./helpers');
 const {extractTractionFromHTML} = require('./helpers');
 const {extractSpotdodgeFromHTML} = require('./helpers');
+const {extractDataFromHTML} = require('./helpers');
+// function chains
+const {getWeightTitleCond} = require('./helpers');
+const {getWeightName} = require('./helpers');
+const {getWeightWeight} = require('./helpers');
+
 
 var characterData = [];
 
@@ -32,6 +38,9 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   //var promiseDynamoPut;
 
   Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction]).then(function(data1) {
+	  console.log("promise.log");
+	  extractDataFromHTML(data1[0].data, characterData, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getWeightTitleCond}, {name: "wtitle2", fn: getWeightTitleCond}, {name: "wname", fn: getWeightName}, {name: "wweight", fn: getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  console.log('extracted');
 	  jobs = extractWeightFromHTML(data1[0].data, characterWeight);
 	  jobs = extractDashFromHTML(data1[1].data, characterDash);
 	  jobs = extractSpotdodgeFromHTML(data1[2].data, characterSpotdodge);
@@ -41,38 +50,13 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 	//console.log(JSON.stringify(characterData));
 	return Promise.resolve(characterData);
   })
+//  .then(function(data) {
+//	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))
+//	  })
   .then(function(data) {
-	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))
-	  })
-  .then(function(data) {callback(null, {data})})
-  .catch(callback);
-  /*promiseDynamoDelete = Promise.all([promiseScrape, promiseDynamoGet]).then(function(data) {
-	  let response = data[1].response;
-	  const toDelete = response.Items[0] ? response.Items[0].date : null;
-	  
-	  // delete the old jobs
-	  if(toDelete) {
-		  return dynamo.delete({
-			  TableName: 'SSBracketScrape',
-			  Key: {
-				  date: toDelete
-			  }
-	      }).promise();
-	  } else return Promise.resolve(42); // so we can make sure that either way, a promise is resolved
-  });
-  promiseDynamoPut = Promise.all([promiseDynamoDelete]).then(function() {
-	  return dynamo.put({
-		  TableName: 'SSBracketScrape',
-		  Item: {
-			  date: new Date().toString(),
-			  data: characterData
-		  }
-	  }).promise();
-  });
-  Promise.all([promiseDynamoPut]).then(function() {
-	  callback(null, {characterData});
+	  callback(null, {data})
   })
-  .catch(callback);*/
+  .catch(callback);
 };
 
 // Assumes that each array is the same length to make a well-formed result

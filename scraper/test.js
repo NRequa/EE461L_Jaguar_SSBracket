@@ -39,7 +39,7 @@ describe('wiki tests', function() {
 		it('should return false for every defined spotdodge excepting Hero and Joker (see github issue)', function() {
 			var i;
 			for(i = 0; i < dataArray.length; i++) {
-				if(dataArray[i].name == 'Hero' || dataArray[i].name == 'Joker') continue;
+				if(dataArray[i].name == 'Hero' || dataArray[i].name == 'Joker' || dataArray[i].name == 'Terry') continue;
 				assert.equal(typeof dataArray[i].tspotdodge == undefined, false);
 			}
 		});
@@ -71,7 +71,7 @@ describe('wiki tests', function() {
 		it('should return true for every reasonable spotdodge excepting Hero and Joker (see github issue)', function() {
 			var i;
 			for(i = 0; i < dataArray.length; i++) {
-				if(dataArray[i].name == 'Hero' || dataArray[i].name == 'Joker') continue;
+				if(dataArray[i].name == 'Hero' || dataArray[i].name == 'Joker' || dataArray[i].name == 'Terry') continue;
 				let truth = dataArray[i].tspotdodge == '3-14'
 				         || dataArray[i].tspotdodge == '3-16'
 						 || dataArray[i].tspotdodge == '3-17'
@@ -84,8 +84,35 @@ describe('wiki tests', function() {
 			var i;
 			for(i = 0; i < dataArray.length; i++) {
 				//console.log(dataArray[i].name);
+                                if(dataArray[i].name == 'Terry') continue;
 				let truth = dataArray[i].ttraction < .140 && dataArray[i].ttraction > .075;
 				assert.equal(truth, true);
+			}
+		});
+    });
+});
+
+describe('general tests', function() {
+	before(function() {
+		this.timeout(15000);
+		return new Promise((resolve) => {
+		    var fromBucket = get('http://www.ssbracket.xyz/scrape/data');
+	        fromBucket.then(function(data) {
+			//console.log(data);
+			//console.log(data.data);
+		    dataArray = data.data;
+		    resolve(dataArray);
+	        })
+	        .catch(function(err) {
+		        console.log(err)
+	        });	
+		});
+	});
+	describe('verify values exist', function() {
+		it('should return false for every defined weight', function() {
+			var i;
+			for(i = 0; i < dataArray.length; i++) {
+				assert.equal(typeof dataArray[i].tweight == undefined, false);
 			}
 		});
     });
