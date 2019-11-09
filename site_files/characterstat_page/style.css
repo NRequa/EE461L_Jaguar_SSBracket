@@ -9,9 +9,23 @@
 
 body {
     padding-top: 65px;
-		padding-left: 10px;
+	padding-left: 10px;
+	background-color: lavender;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #c5c7c9;
+}
+
+.table tbody, thead{
+	border: black solid 1px;
+}
+
+.table tr, th, td{
+	border: black solid 1px;
+}
+
+
+.table {
+	border: black solid 1px;
 }
