@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "friends")
 public class Friends implements Serializable {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", unique = true, nullable = false)
