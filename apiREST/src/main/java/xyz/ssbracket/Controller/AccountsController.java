@@ -10,22 +10,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Model.AccountSubmission;
 import xyz.ssbracket.Repository.AccountsRepository;
+import xyz.ssbracket.Repository.UserRepository;
 
 @Validated
 @RestController
 @RequestMapping("/api/v1/Accounts")
 
 public class AccountsController{
-    
+
     @Autowired
     AccountsRepository accountsLog;
+    @Autowired
+    UserRepository userRepository;
 
     // Login check
    // @PostMapping("/login")
-   // public boolean 
+   // public boolean
 
     // Test get request
     @CrossOrigin
@@ -33,33 +37,52 @@ public class AccountsController{
     public Accounts getFriends(@PathVariable String id){
         System.out.println("String ID is : " + id);
         return accountsLog.findAccountsByName(id);
-    } 
+    }
 
     @CrossOrigin
     @PostMapping("/register")
     public boolean registerAccount(@RequestBody AccountSubmission registerAttempt){
       //  return registerAttempt;
         // Check if the username exists
-        
+
         String username = registerAttempt.getUsername();
         String password = registerAttempt.getPassword();
         System.out.println("Username: " + username + " | Password: " + password);
-        
+
         Accounts existingUser = accountsLog.findAccountsByName(username);
         System.out.println("Existing user result: " + existingUser);
 
         if(existingUser == null){
-            // Make new user and add to table
-            Accounts newUser = new Accounts(username, password);
-            accountsLog.save(newUser);
+            User newUser = new User(username, 1,1,0,1,1);
+            Accounts newAccount = new Accounts(username, password, newUser);
+            accountsLog.save(newAccount);
             return true;
         }
 
         else{
             return false;
         }
-        
-        
+
+
+    }
+
+    @CrossOrigin
+    @PostMapping("/test")
+    public Accounts debuggingMethod(@RequestBody AccountSubmission signInAttempt){
+        String username = signInAttempt.getUsername();
+        String password = signInAttempt.getPassword();
+
+        Accounts existingUser = accountsLog.findAccountsByName(username);
+        if(existingUser == null){
+            User newUser = new User(username, 1,1,0,1,1);
+            Accounts newAccount = new Accounts(username, password, newUser);
+            accountsLog.save(newAccount);
+            return newAccount;
+        }
+
+        else{
+            return existingUser;
+        }
     }
 
     @CrossOrigin

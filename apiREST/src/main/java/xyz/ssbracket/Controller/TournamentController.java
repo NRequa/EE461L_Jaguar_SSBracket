@@ -55,10 +55,18 @@ public class TournamentController {
     }
 
     @CrossOrigin
-    @PatchMapping(value = "/{id}")
-    public ResponseWrapper<Tournament> updateUsersInTournament(@Valid @RequestBody User userId,
+    @PatchMapping(value = "/addUser/{id}")
+    public ResponseWrapper<Tournament> addUsersInTournament(@Valid @RequestBody User userId,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( tournamentService.updateUsers( userId, Integer.parseInt( id ) ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.addUsers( userId, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
+    @PatchMapping(value = "/deleteUser/{id}")
+    public ResponseWrapper<Tournament> deleteUsersInTournament(@Valid @RequestBody User userId,
+                                               @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( tournamentService.deleteUsers( userId, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }
