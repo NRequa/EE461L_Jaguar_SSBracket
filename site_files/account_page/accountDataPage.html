@@ -5,7 +5,7 @@
 		<script src="../res/jquery.js"></script>
 		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="accountDataStyle.css">
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
 		<style>
@@ -25,7 +25,7 @@
 						<li class="active"><a href="../../index.html">Home</a></li>
 						<li><a href="../bracket_page/index.html">Tournaments</a></li>
 						<li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
-						<li><a href="../characterstat_page/index.html">Character Stat</a></li>
+						<li><a href="../characterstat_page/index.html">Character Stats</a></li>
 						<li><a href="../about_page/index.html">About Us</a></li>
 						<li><a href="regPage.html">Register</a></li>
 						<li><a href="loginPrompt.html">Log In</a></li>
@@ -34,7 +34,7 @@
 			</nav>
 
 		<!-- TODO: proper sizing outside of full screen -->
-
+<!----
 		<ul class="nav nav-list col-md-2" id=leftNav>
 			<li class="nav-header" style="font-size: 20px; font-weight: bold; margin-bottom: 5%;">Account Name</li>
 			<li><img id=usesrAvatar class="center" src="images/userImage.png" alt="Profile Pic" width="120" height="120"></li>
@@ -46,49 +46,48 @@
 			<li><a onclick="swapPage(3)">Settings</a></li>
 			<li><a href="loginPrompt.html">Log Out</a></li>
 		</ul>
-
-	<!--Building account page based on Dashboard bootstrap example
-	----located at: https://getbootstrap.com/docs/4.3/examples/dashboard/#
-	<div class="container-fluid">
-		<div class="row">
-			<nav class="col-md-2">
-				<div class="sidebar-sticky">
-					<h3>Account Navigation</h3>
-					<h4 id=userName>User Name</h4>
-					<ul class="nav flex-coulmn">
-						<li><img id=usesrAvatar class="center" src="images/userImage.png" alt="Profile Pic" width="120" height="120"></li>
-						<li class="nav-item">
-							<button id="tournStats" onclick="swapPage(0)">Tournament Stats</button>
-						</li>
-
-						<li class="nav-item">
-							<button id="showChar" onclick="swapPage(1)">Character Stats</button>
-						</li>
-
-						<li class="nav-item">
-							<button id="showFriend" onclick="swapPage(2)">Friend Stats</button>
-						</li>
-
-						<li class="nav-item">
-							<button id="showSettings" onclick="swapPage(3)">Settings</button>
-						</li>
-
-						<li class="Log Out">
-							<a id="logOutBtn" href="loginPrompt.html">
-								Log Out
-							</a>
-
-						</li>
-					</ul>
+	-->
+		<div class="siderbar-wrapper col-md-2">
+			<nav id="sidebar">
+				<div id="sidebar-header">
+					<h3>Account Name</h3>
+					<img id="Avatar" src="images/userImage.png">
 				</div>
-			</nav> -->
+
+				<ul class="list-unstyled">
+					<li><a onclick="swapPage(0)">Tournament Stats</a></li>
+					<li><a onclick="swapPage(1)">Character Stats</a></li>
+					<li><a onclick="swapPage(2)">Friend Stats</a></li>
+					<li><a onclick="swapPage(3)">Settings</a></li>
+					<li><a href="loginPrompt.html">Log Out</a></li>
+				</ul>
+
+			</nav>
+
+		</div>
+
 
 			<main class="col-md-9 bg-light" id=rightDisplay>
 				<div class="table-responsive">
 
+					<div id=homeStats>
+						<h1>Overview</h1>
+						<table id="overviewTable" class="table table-md table-striped">
+							<tr>
+								<th>Username</th>
+								<th>Total Wins</th>
+								<th>Total Games</th>
+								<th>Tournaments Created</th>
+								<th>Tournaments Participated In</th>
+								<th>Tournaments Won</th>
+							</tr>
+						</table>
+						
+					</div>
+
 					<div id=charSect>
 						<h1>Stats By Character</h1>
-						<table id="charTable" class="table table-md">
+						<table id="charTable" class="table table-striped">
 							<tr>
 								<th>Character</th>
 								<th>Games Played</th>
@@ -117,26 +116,12 @@
 
 					<div id=settingsSect>
 						<h1>Adjust Settings</h1>
-						<table id="settingsTable" class="table">
-							<tr>
-								<td><a href="#">Reset password</a></td>
-							</tr>
-
-							<tr>
-								<td>Peach</td>
-								<td>25</td>
-							</tr>
-
-							<tr>
-								<td>Link</td>
-								<td>2</td>
-							</tr>
-						</table>
+						<button id="passReset">Reset Password</button>
 					</div>
 
 					<div id=tournSect>
 						<h1>Data by Tournament</h1>
-						<table id="tournTable" class="table">
+						<table id="tournTable" class="table table-striped">
 							<tr>
 								<th>Tournament</th>
 								<th>Place</th>
@@ -148,7 +133,7 @@
 						<h1>Friends Stats</h1>
 						<p id=friendNumber>null</p>
 						<button onclick="getFriendNumber();" style="color: black;">Get friend number</button>
-						<table id="friendTable" class="table">
+						<table id="friendTable" class="table table-striped">
 							<tr>
 								<th>Friend Name</th>
 								<th>Total Wins</th>

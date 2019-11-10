@@ -1,4 +1,6 @@
 var gNum;//used for tracking ids for each name element
+var closed;//used for if the tournament is closed for
+
 function loading(){
   var parameters = location.search.substring(1);
   var temp = parameters.split("=");
@@ -15,69 +17,71 @@ function loading(){
         createBracket(player,playerText);
     }
   }
+
 function createBracket(player,playerText){
-  var bBox=document.getElementById("bracketbox");
-  var pRound=player;
-  bBox.setAttribute("style","height: "+(136*player+5+26)+"px")
-  //used to calculate svg pixels
-  var mIndex=[];//array for midpoints of each match
-  for(a=0;a<player*2;a++){
-    mIndex[a]=(4+68*a);
-  }
-  //loop according to number of rounds
-  while(!(pRound<1)){
-    var node=document.createElement("DIV");
-    node.setAttribute("style","width: 400px;");
+    var bBox=document.getElementById("bracketbox");
+    var pRound=player;
+    bBox.setAttribute("style","height: "+(136*player+5+26)+"px")
+    //used to calculate svg pixels
+    var mIndex=[];//array for midpoints of each match
+    for(a=0;a<player*2;a++){
+      mIndex[a]=(4+68*a);
+    }
+    //loop according to number of rounds
+    while(!(pRound<1)){
+      var node=document.createElement("DIV");
+      node.setAttribute("style","width: 400px;");
 
-    node.setAttribute("style","display: inline-block;");
-    bBox.appendChild(node);
-    //http://xahlee.info/js/js_scritping_svg_basics.html
-    var r1=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    r1.setAttribute("width","300");
-    r1.setAttribute("height",""+(136*player+5));//make the height scale
-    var ps1=document.createElementNS('http://www.w3.org/2000/svg',"svg");
-    ps1.setAttribute("x","200");
-    ps1.setAttribute("y",""+0);
-    ps1.setAttribute("width","100");
-    ps1.setAttribute("height",(136*player+5));
-    for(p=0;p<pRound;p++){
-      var top=[];
+      node.setAttribute("style","display: inline-block;");
+      bBox.appendChild(node);
+      //http://xahlee.info/js/js_scritping_svg_basics.html
+      var r1=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      r1.setAttribute("width","300");
+      r1.setAttribute("height",""+(136*player+5));//make the height scale
+      var ps1=document.createElementNS('http://www.w3.org/2000/svg',"svg");
+      ps1.setAttribute("x","200");
+      ps1.setAttribute("y",""+0);
+      ps1.setAttribute("width","100");
+      ps1.setAttribute("height",(136*player+5));
+      for(p=0;p<pRound;p++){
+        var top=[];
 
-      //loop according to number of players/2
-      //height 68-64&4 margin
+        //loop according to number of players/2
+        //height 68-64&4 margin
 
-      for(j=0;j<2;j++){
-        top[j]=createMatch(r1,mIndex[p*2+j]);
+        for(j=0;j<2;j++){
+          top[j]=createMatch(r1,mIndex[p*2+j]);
+        }
+
+        mIndex[p]=(createPath(ps1,top[0],top[1])-32);////chenge when more players
+        r1.appendChild(ps1);
+
       }
 
-      mIndex[p]=(createPath(ps1,top[0],top[1])-32);////chenge when more players
-      r1.appendChild(ps1);
-
+      node.appendChild(r1);
+      pRound=pRound/2;
     }
-
-    node.appendChild(r1);
-    pRound=pRound/2;
-  }
-  //create the final match
-  var node=document.createElement("DIV");
-  var att = document.createAttribute("class");
-  node.setAttribute("style","width:400px;");
+    //create the final match
+    var node=document.createElement("DIV");
+    var att = document.createAttribute("class");
+    node.setAttribute("style","width:400px;");
     node.setAttribute("style","display: inline-block;");
 
-  var r1=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  r1.setAttribute("width","300");
-  r1.setAttribute("height",""+(136*player+5));
-  createMatch(r1,mIndex[0]);
-  node.appendChild(r1);
-  bBox.appendChild(node);
+    var r1=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    r1.setAttribute("width","300");
+    r1.setAttribute("height",""+(136*player+5));
+    createMatch(r1,mIndex[0]);
+    node.appendChild(r1);
+    bBox.appendChild(node);
 
-setName(playerText,player);//this enables setting the player's name
+    setName(playerText,player);//this enables setting the player's name
 
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();
-});
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 
-}
+  }
+
 
 function createPath(svg,midpoint1,midpoint2){
   var p1=document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -97,25 +101,41 @@ function createPeople(svg,numPMat){
     pg1.setAttribute("onclick","rectClick(this.id)");
 
     var pr1=document.createElementNS('http://www.w3.org/2000/svg',"rect");
-    pr1.setAttribute("x","50");
+    pr1.setAttribute("x","20");
     pr1.setAttribute("y",""+(2+31*i));
-    pr1.setAttribute("width","143");
+    pr1.setAttribute("width","138");
     pr1.setAttribute("height","28");
     pr1.setAttribute("class","p-contain");
+    var pr2=document.createElementNS('http://www.w3.org/2000/svg',"rect");
+    pr2.setAttribute("x","160");
+    pr2.setAttribute("y",""+(2+31*i));
+    pr2.setAttribute("width","38");
+    pr2.setAttribute("height","28");
+    pr2.setAttribute("class","p-s-contain");
 
 
     var pt1=document.createElementNS('http://www.w3.org/2000/svg',"text");
-    pt1.setAttribute("x","50");
+    pt1.setAttribute("x","20");
     pt1.setAttribute("y",""+(20+30*i));
     pt1.setAttribute("font-family","Verdana");
     pt1.setAttribute("font-size","15");
     pt1.setAttribute("fill","blue");
     pt1.setAttribute("class","p-text");
     pt1.innerHTML='Player'+(j*2+p*4+i);
+    var pt2=document.createElementNS('http://www.w3.org/2000/svg',"text");
+    pt2.setAttribute("x","175");
+    pt2.setAttribute("y",""+(20+30*i));
+    pt2.setAttribute("font-family","Verdana");
+    pt2.setAttribute("font-size","15");
+    pt2.setAttribute("fill","blue");
+    pt2.setAttribute("class","p-s-text");
+    pt2.innerHTML="-";
 
 
     pg1.appendChild(pr1);
     pg1.appendChild(pt1);
+    pg1.appendChild(pr2);
+    pg1.appendChild(pt2);
     svg.appendChild(pg1);
   }
 }
@@ -141,14 +161,17 @@ function createMatch(r1,midpoint){
   return midpoint+32
 }
 function rectClick(g_id){//set Editable
+
   console.log("clicked");
   console.log(g_id);
+
+  if(closed=false){
   var getG=document.getElementById(g_id);
   var cText=getG.childNodes[1];
   var mod=document.getElementById("modal-title");
   mod.innerHTML="Edit Player";
   mod=document.getElementById("modal-text");
-  mod.innerHTML="Enter Player Name";
+  mod.innerHTML="Enter Player Name (To edit score first close the tournament)";
   mod=document.getElementById("modal-ta");
   mod.value="";
   console.log(g_id);
@@ -159,7 +182,13 @@ function rectClick(g_id){//set Editable
   mod=document.getElementsByClassName("modal-data");
   mod.innerHTML=""+g_id;
   $("#myModal").modal();
+  }
+  else{
+    //TODO change stuff
+  }
 }
+
+
 function modalEnter(){
   var mod=document.getElementsByClassName("modal-data");
   var data=mod.innerHTML;
@@ -187,6 +216,11 @@ function setName(pArray,player){
     }
   }
 }
+
+function closeTour(){
+  //seteditable rectClick==match
+  //send tournament closed
+}
 function parsePlayer(pString){
   pArray=[];
   var lIndex=0;
@@ -198,6 +232,10 @@ function parsePlayer(pString){
     i++;
     pIndex=lIndex+1;
     lIndex=pString.indexOf("\n",pIndex);
+  }
+  end=pString.substring(pIndex);
+  if(!(end=="")){
+    pArray[i]=end;
   }
   return pArray;
 }
@@ -221,6 +259,8 @@ function callback1(myResponse,player,playerText){
   document.getElementById("desc").innerHTML = myResponse.data.description;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
+  //TODO implement tourmanet closed
+  //closed=true;
   createBracket(player,playerText);
 }
 
@@ -263,6 +303,28 @@ function createTour(){
             //document.getElementById("test").innerHTML = myResponse.data.tname;
         }
   };
+  playerText=parsePlayer(tPlayers);
+  seed=seeding(tSize);
+  size=playerText.length;
+  for(i=0;i<tSize/2;i++){
+    sd1=seed[i*2];
+    sd2=seed[i*2+1];
+    if(sd1<=size){
+      player1=playerText[sd1-1];
+    }
+    else{
+      player1="";
+    }
+
+    if(sd2<=size){
+      player2=playerText[sd2-1];
+    }
+    else{
+      player2="";
+    }
+    //add match
+
+  }
 
   xmlhttp.open("POST", ourApi, true);
   xmlhttp.setRequestHeader("Content-type", "application/json");
@@ -276,5 +338,22 @@ function createTour(){
   })
   );
   //document.getElementById("test").style.color = "red";
+  }
+  function seeding(numPlayers){
+  var rounds = Math.log(numPlayers)/Math.log(2)-1;
+  var pls = [1,2];
+  for(var i=0;i<rounds;i++){
+    pls = nextLayer(pls);
+  }
+  return pls;
+  function nextLayer(pls){
+    var out=[];
+    var length = pls.length*2+1;
+    pls.forEach(function(d){
+      out.push(d);
+      out.push(length-d);
+    });
+    return out;
+  }
   }
 }

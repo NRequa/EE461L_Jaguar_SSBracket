@@ -3,6 +3,8 @@
 
 body {
 	padding-top: 50px;
+	background-color: lavender;
+	color: black;
 }
 
 .navbar {
@@ -10,3 +12,12 @@ body {
 	width: 100%;
 }
 
+.table {
+	border: black solid 2px;
+}
+.table td{
+	border: black solid 2px;
+}
+.table th{
+	border: black solid 2px;
+}
