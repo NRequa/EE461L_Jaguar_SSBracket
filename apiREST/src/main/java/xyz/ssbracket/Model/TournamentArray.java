@@ -32,6 +32,9 @@ public class TournamentArray implements Serializable {
   	@Column(name = "tournamentname", nullable = false)
     private String tournamentname;
 
+    @Column(name = "championname", nullable = false)
+    private String championname;
+
     @ManyToMany(cascade = {
           CascadeType.PERSIST,
           CascadeType.MERGE
