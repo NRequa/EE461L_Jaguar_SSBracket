@@ -48,21 +48,29 @@ public class User implements Serializable {
     @Column(name = "numtournamentswon", nullable = false)
     private int numtournamentswon;
 
-      @ManyToMany(mappedBy = "users")
-      @JsonIgnore
-      private List<Tournament> tournaments = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private List<Tournament> tournaments = new ArrayList<>();
 
-      //separate array of tournaments to avoid infinite loops when getting JSON
-      @ManyToMany(mappedBy = "usersarray")
-       private List<TournamentArray> mytournaments = new ArrayList<>();
+    //separate array of tournaments to avoid infinite loops when getting JSON
+    @ManyToMany(mappedBy = "usersarray")
+    private List<TournamentArray> mytournaments = new ArrayList<>();
 
-      @OneToOne(mappedBy = "myuser")
-      @JsonIgnore
-      private Accounts account;
+    @OneToOne(mappedBy = "myuser")
+    @JsonIgnore
+    private Accounts account;
 
-   public User() { }
 
-   public User(String username, int num_wins,  int num_games_played, int num_tournaments_created,
+    @ManyToMany(cascade = {
+          CascadeType.PERSIST,
+          CascadeType.MERGE
+      })
+     @JoinTable
+     private List<Friends> myfriends = new ArrayList<>();
+
+    public User() { }
+
+    public User(String username, int num_wins,  int num_games_played, int num_tournaments_created,
                int num_tournaments_participated, int num_tournaments_won) {
        this.username = username;
        this .numwins = num_wins;
@@ -70,5 +78,5 @@ public class User implements Serializable {
        this.numtournamentscreated = num_tournaments_created;
        this.numtournamentsparticipated = num_tournaments_participated;
        this.numtournamentswon = num_tournaments_won;
-   }
+     }
 }

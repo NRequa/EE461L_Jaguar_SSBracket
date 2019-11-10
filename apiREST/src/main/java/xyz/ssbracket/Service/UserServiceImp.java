@@ -6,9 +6,11 @@ import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Model.TournamentArray;
+import xyz.ssbracket.Model.Friends;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.AccountsRepository;
+import xyz.ssbracket.Repository.FriendRepository;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class UserServiceImp extends UserService {
     private TournamentRepository tournamentRepository;
     @Autowired
     private AccountsRepository accountsRepository;
+    @Autowired
+    private FriendRepository friendRepository;
 
     @Override
     public Page<User> getAll( Pageable pageable ) {
@@ -71,6 +75,14 @@ public class UserServiceImp extends UserService {
           myTournament.getUsersarray().remove(user);
         }
 
+        /*List<Friends> myFriends = user.getMyfriends();
+        for(Friends friendRemoved : myFriends){
+          User friendUser = checkIfIdIsPresentAndReturnUser(friendRemoved.getFriendsid());
+          friendRepository.save(deleteUserFriendFromUser(user, friendUser));
+        }
+        //myFriends.
+        */
+
         //delete one to one relationship between users and account
         Accounts myUser = user.getAccount();
         if(myUser != null){
@@ -79,6 +91,26 @@ public class UserServiceImp extends UserService {
         }
         userRepository.deleteById( id );
         return user;
+    }
+
+    @Override
+    public User addFriend( User friend, int id ) {
+        User ownerUser = checkIfIdIsPresentAndReturnUser( id );
+        User friendUser = checkIfIdIsPresentAndReturnUser(friend.getId());
+        ownerUser = addUserFriendToUser(friendUser, ownerUser);
+        friendUser = addUserFriendToUser(ownerUser,friendUser);
+        userRepository.save(friendUser);
+        return userRepository.save( ownerUser );
+    }
+
+    @Override
+    public User deleteFriend( User friend, int id ) {
+        User ownerUser = checkIfIdIsPresentAndReturnUser( id );
+        User friendUser = checkIfIdIsPresentAndReturnUser( friend.getId() );
+        ownerUser = deleteUserFriendFromUser(friendUser, ownerUser);
+        friendUser = deleteUserFriendFromUser(ownerUser, friendUser);
+        userRepository.save(friendUser);
+        return userRepository.save( ownerUser );
     }
 
     private User checkIfIdIsPresentAndReturnUser( int id ) {
@@ -93,5 +125,46 @@ public class UserServiceImp extends UserService {
             throw new ResourceNotFoundException( " Tournament id = " + id + " not found" );
         else
             return tournamentRepository.findById( id ).get();
+    }
+
+    private Friends checkIfIdIsPresentAndReturnFriend( int id ) {
+        if ( !friendRepository.findById( id ).isPresent() )
+            throw new ResourceNotFoundException( " Friend relation id = " + id + " not found" );
+        else
+            return friendRepository.findById( id ).get();
+    }
+
+    private User addUserFriendToUser(User friendUser, User ownerUser){
+      if(!isAlreadyFriends(ownerUser, friendUser.getUsername())){
+        Friends newFriend = new Friends(friendUser.getId(),friendUser.getUsername());
+        Friends storingFriend = friendRepository.save(newFriend);
+        ownerUser.getMyfriends().add(storingFriend);
+      }
+      return ownerUser;
+    }
+
+    private User deleteUserFriendFromUser(User friendUser, User ownerUser){
+      List<Friends> friendsList = ownerUser.getMyfriends();
+      List<Friends> friendToRemove = new ArrayList<>();
+      for (Friends myFriend : friendsList){
+        if(myFriend.getFriendsname().equals(friendUser.getUsername())){
+          friendToRemove.add(myFriend);
+          friendRepository.deleteById(myFriend.getId());
+        }
+      }
+      for(Friends removedFriend : friendToRemove){
+        friendsList.remove(removedFriend);
+      }
+      return ownerUser;
+    }
+
+    private boolean isAlreadyFriends( User ownerUser, String friendname ) {
+      List<Friends> friendList = ownerUser.getMyfriends();
+      for (Friends myFriend : friendList){
+        if(myFriend.getFriendsname().equals(friendname)){
+          return true;
+        }
+      }
+      return false;
     }
 }
