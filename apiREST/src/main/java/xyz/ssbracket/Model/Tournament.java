@@ -51,6 +51,9 @@ public class Tournament implements Serializable {
   @Column(name = "visits", nullable = false)
   private int visits;
 
+  @Column(name = "championname", nullable = false)
+  private String championname;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<MatchResult> matchResults = new ArrayList<>();
 
