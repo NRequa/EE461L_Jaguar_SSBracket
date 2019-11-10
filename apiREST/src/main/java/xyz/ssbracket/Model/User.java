@@ -63,8 +63,6 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MatchResult> matchResults = new ArrayList<>();
 
-    public User() { }
-
     @ManyToMany(cascade = {
           CascadeType.PERSIST,
           CascadeType.MERGE
