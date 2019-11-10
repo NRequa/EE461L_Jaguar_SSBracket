@@ -36,7 +36,8 @@ public class MatchServiceImp extends MatchService {
         if ( matchResultRepository.findById( id ).isPresent() )
             throw new DuplicateResourceFoundException( " MatchResult id = " + id + " already exists" );
         else {
-            o.setUser(checkIfIdIsPresentAndReturnUser(o.getPlayer()));
+            o.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
+            o.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
             o.setTournament(checkIfIdIsPresentAndReturnTournament(o.getEvent()));
             MatchResult returnMatchResult = matchResultRepository.save(o);
             return returnMatchResult;
@@ -46,6 +47,10 @@ public class MatchServiceImp extends MatchService {
     @Override
     public MatchResult update( MatchResult o, int id ) throws ResourceNotFoundException {
         MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        oldMatchResult.setP1win(o.isP1win());
+        oldMatchResult.setCompleted(o.isCompleted());
+        oldMatchResult.setP1roundswon(o.getP1roundswon());
+        oldMatchResult.setP2roundswon(o.getP2roundswon());
         return matchResultRepository.save( oldMatchResult );
     }
 

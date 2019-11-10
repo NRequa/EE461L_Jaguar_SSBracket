@@ -42,6 +42,9 @@ public class Tournament implements Serializable {
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
 
+    @Column(name = "closed", nullable = false)
+    private boolean closed;
+
   @Column(name = "description", nullable = false)
   private String description;
 

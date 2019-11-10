@@ -16,19 +16,39 @@ public class MatchResult implements Serializable {
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "characterplayed", nullable = false)
-    private String characterplayed;
+    @Column(name = "completed", nullable = false)
+    private boolean completed;
 
-    @Column(name = "win", nullable = false)
-    private boolean win;
+    @Column(name = "p1win", nullable = false)
+    private boolean p1win;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "higherseed_id")
     @JsonIgnore
-    private User user;
+    private User higherseed;
 
-    @Column(name = "player")
-    private int player;
+    @Column(name = "player1")
+    private int player1;
+
+    @Column(name = "p1characterplayed", nullable = false)
+    private String p1characterplayed;
+
+    @Column(name = "p1roundswon")
+    private int p1roundswon;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "lowerseed_id")
+    @JsonIgnore
+    private User lowerseed;
+
+    @Column(name = "player2")
+    private int player2;
+
+    @Column(name = "p2characterplayed", nullable = false)
+    private String p2characterplayed;
+
+    @Column(name = "p2roundswon")
+    private int p2roundswon;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tournament_id")
@@ -38,18 +58,24 @@ public class MatchResult implements Serializable {
     @Column(name = "event")
     private int event;
 
-    @Column(name = "round")
-    private int round;
+    @Column(name = "level")
+    private int level;
 
     public MatchResult() { }
 
-    public MatchResult(String characterplayed, boolean win, User user, int player, Tournament tournament, int event, int round) {
-        this.characterplayed = characterplayed;
-        this.win = win;
-        this.user = user;
-        this.player = player;
+    public MatchResult(boolean completed, boolean p1win, User higherseed, int player1, String p1characterplayed, int p1roundswon, User lowerseed, int player2, String p2characterplayed, int p2roundswon, Tournament tournament, int event, int level) {
+        this.completed = completed;
+        this.p1win = p1win;
+        this.higherseed = higherseed;
+        this.player1 = player1;
+        this.p1characterplayed = p1characterplayed;
+        this.p1roundswon = p1roundswon;
+        this.lowerseed = lowerseed;
+        this.player2 = player2;
+        this.p2characterplayed = p2characterplayed;
+        this.p2roundswon = p2roundswon;
         this.tournament = tournament;
         this.event = event;
-        this.round = round;
+        this.level = level;
     }
 }
