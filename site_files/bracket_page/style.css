@@ -36,6 +36,9 @@ body {
 .p-contain{
 	fill:khaki;
 }
+.p-s-contain{
+	fill:khaki;
+}
 #twitter_view {
 	outline: 2px solid black;
 	padding:5%;
