@@ -73,13 +73,14 @@ public class UserServiceImp extends UserService {
           myTournament.getUsersarray().remove(user);
         }
 
-        /*List<Friends> myFriends = user.getMyfriends();
+        List<Friends> myFriends = user.getMyfriends();
         for(Friends friendRemoved : myFriends){
           User friendUser = checkIfIdIsPresentAndReturnUser(friendRemoved.getFriendsid());
-          friendRepository.save(deleteUserFriendFromUser(user, friendUser));
+          friendUser = deleteUserFriendFromUser(user, friendUser);
+          userRepository.save(friendUser);
         }
-        //myFriends.
-        */
+        myFriends.clear();
+
 
         //delete one to one relationship between users and account
         Accounts myUser = user.getAccount();
