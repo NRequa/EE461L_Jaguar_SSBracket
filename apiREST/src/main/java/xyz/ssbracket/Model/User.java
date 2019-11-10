@@ -48,8 +48,8 @@ public class User implements Serializable {
     @Column(name = "numtournamentswon", nullable = false)
     private int numtournamentswon;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "users")
+    @JsonIgnore
     private List<Tournament> tournaments = new ArrayList<>();
 
     //separate array of tournaments to avoid infinite loops when getting JSON
@@ -60,6 +60,10 @@ public class User implements Serializable {
     @JsonIgnore
     private Accounts account;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MatchResult> matchResults = new ArrayList<>();
+
+    public User() { }
 
     @ManyToMany(cascade = {
           CascadeType.PERSIST,

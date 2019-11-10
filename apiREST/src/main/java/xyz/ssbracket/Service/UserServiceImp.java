@@ -2,11 +2,15 @@ package xyz.ssbracket.Service;
 
 import xyz.ssbracket.Exception.ResourceNotFoundException;
 import xyz.ssbracket.Exception.DuplicateResourceFoundException;
+<<<<<<< HEAD
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Model.TournamentArray;
 import xyz.ssbracket.Model.Friends;
+=======
+import xyz.ssbracket.Model.*;
+>>>>>>> 86d6a95848cdddd4f68b166abfb10d96cbf836ea
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.AccountsRepository;
@@ -111,6 +115,13 @@ public class UserServiceImp extends UserService {
         friendUser = deleteUserFriendFromUser(ownerUser, friendUser);
         userRepository.save(friendUser);
         return userRepository.save( ownerUser );
+    }
+
+    @Override
+    public User addMatch(MatchResult matchResult, int id) {
+        User oldUser = checkIfIdIsPresentAndReturnUser( id );
+        oldUser.getMatchResults().add(matchResult);
+        return userRepository.save( oldUser );
     }
 
     private User checkIfIdIsPresentAndReturnUser( int id ) {

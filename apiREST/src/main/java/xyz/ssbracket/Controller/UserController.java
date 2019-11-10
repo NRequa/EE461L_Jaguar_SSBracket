@@ -1,7 +1,7 @@
 package xyz.ssbracket.Controller;
 
+import xyz.ssbracket.Model.MatchResult;
 import xyz.ssbracket.Model.User;
-import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Results.ResponseWrapper;
 import xyz.ssbracket.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +77,11 @@ public class UserController {
                                              @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
         return new ResponseWrapper<>( userMainService.deleteFriend( friend, Integer.parseInt( id ) ), HttpStatus.OK );
+      }
+    @PatchMapping(value = "/addMatch/{id}")
+    public ResponseWrapper<User> addMatchToUser(@Valid @RequestBody MatchResult rm,
+                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( userMainService.addMatch( rm, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 }
