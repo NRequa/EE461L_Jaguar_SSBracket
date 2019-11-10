@@ -112,13 +112,6 @@ public class UserServiceImp extends UserService {
         return userRepository.save( ownerUser );
     }
 
-    @Override
-    public User addMatch(MatchResult matchResult, int id) {
-        User oldUser = checkIfIdIsPresentAndReturnUser( id );
-        oldUser.getMatchResults().add(matchResult);
-        return userRepository.save( oldUser );
-    }
-
     private User checkIfIdIsPresentAndReturnUser( int id ) {
         if ( !userRepository.findById( id ).isPresent() )
             throw new ResourceNotFoundException( " User id = " + id + " not found" );
