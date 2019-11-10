@@ -30,20 +30,26 @@ public class MatchResult implements Serializable {
     @Column(name = "player")
     private int player;
 
-    @Column(name = "tournamet")
-    private int tournament;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "tournament_id")
+    @JsonIgnore
+    private Tournament tournament;
+
+    @Column(name = "event")
+    private int event;
 
     @Column(name = "round")
     private int round;
 
     public MatchResult() { }
 
-    public MatchResult(String characterplayed, boolean win, User user, int player, int tournament, int round) {
+    public MatchResult(String characterplayed, boolean win, User user, int player, Tournament tournament, int event, int round) {
         this.characterplayed = characterplayed;
         this.win = win;
         this.user = user;
         this.player = player;
         this.tournament = tournament;
+        this.event = event;
         this.round = round;
     }
 }
