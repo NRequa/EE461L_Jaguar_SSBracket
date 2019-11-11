@@ -2,8 +2,10 @@ package xyz.ssbracket.Service;
 
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
+import xyz.ssbracket.Model.TournamentArray;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
+import xyz.ssbracket.Repository.TournamentArrayRepository;
 import xyz.ssbracket.Exception.ResourceNotFoundException;
 import xyz.ssbracket.Exception.DuplicateResourceFoundException;
 
@@ -21,6 +23,8 @@ public class TournamentServiceImp extends TournamentService {
     private TournamentRepository tournamentRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TournamentArrayRepository tournamentArrayRepository;
 
     @Override
     public Page<Tournament> getAll( Pageable pageable ) {
@@ -30,10 +34,16 @@ public class TournamentServiceImp extends TournamentService {
     @Override
     public Tournament add( Tournament o ) {
     	int id = o.getId();
+      String tname = o.getTname();
     	if ( tournamentRepository.findById( id ).isPresent() )
     		throw new DuplicateResourceFoundException( " Tournament id = " + id + " already exists" );
-    	else
-    		return tournamentRepository.save( o );
+    	else {
+        Tournament returnTournament = tournamentRepository.save(o);
+        TournamentArray storingTournament = new TournamentArray(returnTournament.getId(), tname, returnTournament.getChampionname());
+        tournamentArrayRepository.save(storingTournament);
+        return returnTournament;
+      }
+
     }
 
     //maybe changes are needed
@@ -44,12 +54,31 @@ public class TournamentServiceImp extends TournamentService {
     }
 
     @Override
-    public Tournament updateUsers( User o, int id ) throws ResourceNotFoundException {
+    public Tournament addUsers( User o, int id ) throws ResourceNotFoundException {
         Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
         User newUser = checkIfIdIsPresentAndReturnUser(o.getId());
-        oldTournament.getUsers().add(newUser);
+        TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(id);
+        if(!oldTournament.getUsers().contains(newUser)){
+          storingTournament.getUsersarray().add(newUser);
+          oldTournament.getUsers().add(newUser);
+        }
+        tournamentArrayRepository.save(storingTournament);
         return tournamentRepository.save( oldTournament );
     }
+
+    @Override
+    public Tournament deleteUsers( User o, int id ) throws ResourceNotFoundException {
+        Tournament oldTournament = checkIfIdIsPresentAndReturnTournament( id );
+        User removalUser = checkIfIdIsPresentAndReturnUser(o.getId());
+        TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(id);
+        if(oldTournament.getUsers().contains(removalUser)){
+            storingTournament.getUsersarray().remove(removalUser);
+            oldTournament.getUsers().remove(removalUser);
+        }
+        tournamentArrayRepository.save(storingTournament);
+        return tournamentRepository.save( oldTournament );
+    }
+
 
     @Override
     public Tournament getById( int id ) throws ResourceNotFoundException {
@@ -59,9 +88,19 @@ public class TournamentServiceImp extends TournamentService {
     @Override
     public Tournament deleteById( int id ) throws ResourceNotFoundException {
         Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
+        TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(id);
+        storingTournament.getUsersarray().clear();
+        tournamentArrayRepository.deleteById(id);
         tournament.getUsers().clear();
         tournamentRepository.deleteById( id );
         return tournament;
+    }
+
+    @Override
+    public Tournament addVisit(int id) throws ResourceNotFoundException{
+      Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
+      tournament.setVisits(tournament.getVisits()+1);
+      return tournamentRepository.save(tournament);
     }
 
     private Tournament checkIfIdIsPresentAndReturnTournament( int id ) {
@@ -76,5 +115,13 @@ public class TournamentServiceImp extends TournamentService {
             throw new ResourceNotFoundException( " User id = " + id + " not found" );
         else
             return userRepository.findById( id ).get();
+    }
+
+    private TournamentArray checkIfIdIsPresentAndReturnArrayTournament( int id ){
+      if ( !tournamentArrayRepository.findById( id ).isPresent() ){
+          throw new ResourceNotFoundException( "This tournament may have been made before changes to database and might not have necessary data associated." );
+      } else {
+          return tournamentArrayRepository.findById( id ).get();
+      }
     }
 }

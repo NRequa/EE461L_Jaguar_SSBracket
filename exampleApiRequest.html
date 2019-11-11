@@ -10,19 +10,81 @@
     <button onclick="testPost()">Post Request</button>
 		<br>
     <button onclick="testGetReturn()">Nicer Get Request</button>
+    <br>
+    <button onclick="testPatchAddUserToTournament()">Patch Request(add user to tournament)</button>
+		<br>
+    <button onclick="testPatchDeleteUserFromTournament()">Patch Request(delete user from tournament)</button>
     <p id="test">chungus tester</p>
     <script>
+
+		function testPatchAddUserToTournament(){
+			document.getElementById("test").innerHTML = "rungus tester";
+			var xmlhttp = new XMLHttpRequest();
+			var tournamentId = 293;
+			var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/addUser/"+tournamentId;
+			//var ourApi = "http://localhost:8080/api/v1/user/113"
+			var myResponse;
+			var userid = 192;
+
+			xmlhttp.onreadystatechange = function() {
+	    			if (this.readyState == 4 && this.status == 200) {
+	        			myResponse = JSON.parse(this.responseText);
+								console.log(myResponse)
+	        			document.getElementById("test").innerHTML = myResponse.data.tname;
+	    			}
+			};
+
+			xmlhttp.open("PATCH", ourApi, true);
+			xmlhttp.setRequestHeader("Content-type", "application/json");
+			xmlhttp.send(JSON.stringify({
+				"id":userid
+			})
+			);
+
+			//To test if button click was actually processed
+			document.getElementById("test").style.color = "red";
+		}
+
+		function testPatchDeleteUserFromTournament(){
+			document.getElementById("test").innerHTML = "rungus tester";
+			var xmlhttp = new XMLHttpRequest();
+			var tournamentId = 293;
+			var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/deleteUser/"+tournamentId;
+			//var ourApi = "http://localhost:8080/api/v1/user/113"
+			var myResponse;
+			var userid = 192;
+
+			xmlhttp.onreadystatechange = function() {
+	    			if (this.readyState == 4 && this.status == 200) {
+	        			myResponse = JSON.parse(this.responseText);
+								console.log(myResponse)
+	        			document.getElementById("test").innerHTML = myResponse.data.tname;
+	    			}
+			};
+
+			xmlhttp.open("PATCH", ourApi, true);
+			xmlhttp.setRequestHeader("Content-type", "application/json");
+			xmlhttp.send(JSON.stringify({
+				"id":userid
+			})
+			);
+
+			//To test if button click was actually processed
+			document.getElementById("test").style.color = "red";
+		}
+
 
       function testGet(){
 				document.getElementById("test").innerHTML = "rungus tester";
 		var xmlhttp = new XMLHttpRequest();
-		var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/39";
+		//var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/113";
+		var ourApi = "http://localhost:8080/api/v1/user/113"
 		var myResponse;
 		xmlhttp.onreadystatechange = function() {
     			if (this.readyState == 4 && this.status == 200) {
         			myResponse = JSON.parse(this.responseText);
 							console.log(myResponse)
-        			document.getElementById("test").innerHTML = myResponse.data.users.length;
+        			document.getElementById("test").innerHTML = myResponse.data.tournaments;
     			}
 		};
 		xmlhttp.open("GET", ourApi, true);
@@ -78,7 +140,7 @@
 	var myResponse;
 	xmlhttp.open("GET", ourApi, true);
 	xmlhttp.send();
-  xmlhttp.onreadystatechange = function() {
+  	xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 					myResponse = JSON.parse(this.responseText);
 					console.log(myResponse);

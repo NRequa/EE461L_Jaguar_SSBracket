@@ -26,7 +26,7 @@ import java.util.List;
 @Table(name = "users")
 public class User implements Serializable {
     @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
@@ -48,37 +48,40 @@ public class User implements Serializable {
     @Column(name = "numtournamentswon", nullable = false)
     private int numtournamentswon;
 
+    @ManyToMany(mappedBy = "users")
+    @JsonIgnore
+    private List<Tournament> tournaments = new ArrayList<>();
 
+    //separate array of tournaments to avoid infinite loops when getting JSON
+    @ManyToMany(mappedBy = "usersarray")
+    private List<TournamentArray> mytournaments = new ArrayList<>();
 
-//everything under this comment is new stuff
-/*
-    @ManyToMany(
-           fetch = FetchType.LAZY,
-           cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-           mappedBy = "users"
-   )
-   @OnDelete(action = OnDeleteAction.CASCADE)
-   @JsonIgnore
-   @JsonManagedReference("users")
-   @JsonBackReference("tournaments")
-   private Set<Tournament> tournaments = new HashSet<>();
-*/
-  //@OneToMany(mappedBy = "users")
-  //private Set<UserTournament> usertournament = new HashSet<>();
-      @ManyToMany(mappedBy = "users")
-      @JsonIgnore
-      private List<Tournament> tournaments = new ArrayList<>();
+    @OneToOne(mappedBy = "myuser")
+    @JsonIgnore
+    private Accounts account;
 
-   public User() { }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "higherseed", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MatchResult> higherSeedMatchResults = new ArrayList<>();
 
-   public User(int id, String username, int num_wins,  int num_games_played, int num_tournaments_created,
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lowerseed", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MatchResult> lowerSeedMatchResults = new ArrayList<>();
+
+    @ManyToMany(cascade = {
+          CascadeType.PERSIST,
+          CascadeType.MERGE
+      })
+     @JoinTable
+     private List<Friends> myfriends = new ArrayList<>();
+
+    public User() { }
+
+    public User(String username, int num_wins,  int num_games_played, int num_tournaments_created,
                int num_tournaments_participated, int num_tournaments_won) {
-       this.id = id;
        this.username = username;
        this .numwins = num_wins;
        this.numgamesplayed = num_games_played;
        this.numtournamentscreated = num_tournaments_created;
        this.numtournamentsparticipated = num_tournaments_participated;
        this.numtournamentswon = num_tournaments_won;
-   }
+     }
 }

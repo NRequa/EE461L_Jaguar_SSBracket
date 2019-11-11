@@ -42,6 +42,9 @@ public class Tournament implements Serializable {
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
 
+    @Column(name = "closed", nullable = false)
+    private boolean closed;
+
   @Column(name = "description", nullable = false)
   private String description;
 
@@ -51,28 +54,12 @@ public class Tournament implements Serializable {
   @Column(name = "visits", nullable = false)
   private int visits;
 
+  @Column(name = "championname", nullable = true)
+  private String championname;
 
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<MatchResult> matchResults = new ArrayList<>();
 
-//everything under this comment is new stuff
-/*
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-            name = "user_tournaments",
-            joinColumns = { @JoinColumn(name = "tournament_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
-    @JsonIgnore
-    @JsonBackReference("users")
-    @JsonManagedReference("tournaments")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<User> users = new HashSet<>();
-*/
-
-  //@OneToMany(mappedBy = "tournaments")
-  //private Set<UserTournament> usertournament = new HashSet<>();
   @ManyToMany(cascade = {
         CascadeType.PERSIST,
         CascadeType.MERGE
@@ -82,7 +69,7 @@ public class Tournament implements Serializable {
 
     public Tournament() {}
 
-    public Tournament(int id, String tname, String tcreator, int ttype, int tsize, String description, String tempplayers) {
+    public Tournament(int id, String tname, String tcreator, int ttype, int tsize, String description, String tempplayers, String championname) {
         this.id = id;
         this.tname = tname;
         this.tcreator = tcreator;
@@ -90,5 +77,6 @@ public class Tournament implements Serializable {
         this.tsize = tsize;
         this.description = description;
         this.tempplayers = tempplayers;
+        this.championname = championname;
     }
 }

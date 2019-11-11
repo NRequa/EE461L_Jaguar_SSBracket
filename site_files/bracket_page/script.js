@@ -11,11 +11,28 @@ function loading(){
   var player=1;//number of players;
   if(id!=null){
     console.log(getTour(id,player,playerText,callback1));
+    addVisitToTournament(id);
 
     }
     else{
         createBracket(player,playerText);
     }
+  }
+
+  function addVisitToTournament(tournamentId){
+    var xmlhttp = new XMLHttpRequest();
+    var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/addvisit/"+tournamentId;
+    //var ourApi = "http://localhost:8080/api/v1/user/113"
+    var myResponse;
+
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              myResponse = JSON.parse(this.responseText);
+              console.log(myResponse)
+          }
+    };
+    xmlhttp.open("PATCH", ourApi, true);
+    xmlhttp.send();
   }
 
 function createBracket(player,playerText){
@@ -334,7 +351,8 @@ function createTour(){
     "ttype":tType,
     "tsize":tSize,
     "description":tDesc,
-    "tempplayers":tPlayers
+    "tempplayers":tPlayers,
+    "championname":""
   })
   );
   //document.getElementById("test").style.color = "red";
