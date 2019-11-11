@@ -96,6 +96,13 @@ public class TournamentServiceImp extends TournamentService {
         return tournament;
     }
 
+    @Override
+    public Tournament addVisit(int id) throws ResourceNotFoundException{
+      Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
+      tournament.setVisits(tournament.getVisits()+1);
+      return tournamentRepository.save(tournament);
+    }
+
     private Tournament checkIfIdIsPresentAndReturnTournament( int id ) {
         if ( !tournamentRepository.findById( id ).isPresent() )
             throw new ResourceNotFoundException( " Tournament id = " + id + " not found" );

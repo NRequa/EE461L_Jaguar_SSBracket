@@ -69,4 +69,12 @@ public class TournamentController {
     {
         return new ResponseWrapper<>( tournamentService.deleteUsers( userId, Integer.parseInt( id ) ), HttpStatus.OK );
     }
+
+    @CrossOrigin
+    @PatchMapping(value = "/addvisit/{id}")
+    public ResponseWrapper<Tournament> addVisits(
+            @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( tournamentService.addVisit( Integer.parseInt( id ) ), HttpStatus.OK );
+    }
 }
