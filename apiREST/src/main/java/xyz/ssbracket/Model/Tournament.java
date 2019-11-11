@@ -54,7 +54,7 @@ public class Tournament implements Serializable {
   @Column(name = "visits", nullable = false)
   private int visits;
 
-  @Column(name = "championname", nullable = false)
+  @Column(name = "championname", nullable = true)
   private String championname;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -69,7 +69,7 @@ public class Tournament implements Serializable {
 
     public Tournament() {}
 
-    public Tournament(int id, String tname, String tcreator, int ttype, int tsize, String description, String tempplayers) {
+    public Tournament(int id, String tname, String tcreator, int ttype, int tsize, String description, String tempplayers, String championname) {
         this.id = id;
         this.tname = tname;
         this.tcreator = tcreator;
@@ -77,5 +77,6 @@ public class Tournament implements Serializable {
         this.tsize = tsize;
         this.description = description;
         this.tempplayers = tempplayers;
+        this.championname = championname;
     }
 }

@@ -32,7 +32,7 @@ public class TournamentArray implements Serializable {
   	@Column(name = "tournamentname", nullable = false)
     private String tournamentname;
 
-    @Column(name = "championname", nullable = false)
+    @Column(name = "championname", nullable = true)
     private String championname;
 
     @ManyToMany(cascade = {
@@ -46,8 +46,9 @@ public class TournamentArray implements Serializable {
 
     public TournamentArray() {}
 
-    public TournamentArray(int id, String tournamentname) {
+    public TournamentArray(int id, String tournamentname, String championname) {
         this.id = id;
         this.tournamentname = tournamentname;
+        this.championname = championname;
     }
 }

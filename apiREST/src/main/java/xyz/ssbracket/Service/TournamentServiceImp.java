@@ -39,7 +39,7 @@ public class TournamentServiceImp extends TournamentService {
     		throw new DuplicateResourceFoundException( " Tournament id = " + id + " already exists" );
     	else {
         Tournament returnTournament = tournamentRepository.save(o);
-        TournamentArray storingTournament = new TournamentArray(returnTournament.getId(), tname);
+        TournamentArray storingTournament = new TournamentArray(returnTournament.getId(), tname, returnTournament.getChampionname());
         tournamentArrayRepository.save(storingTournament);
         return returnTournament;
       }
