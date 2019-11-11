@@ -334,7 +334,8 @@ function createTour(){
     "ttype":tType,
     "tsize":tSize,
     "description":tDesc,
-    "tempplayers":tPlayers
+    "tempplayers":tPlayers,
+    "championname":""
   })
   );
   //document.getElementById("test").style.color = "red";
