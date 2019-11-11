@@ -95,20 +95,24 @@ public class UserServiceImp extends UserService {
     @Override
     public User addFriend( User friend, int id ) {
         User ownerUser = checkIfIdIsPresentAndReturnUser( id );
-        User friendUser = checkIfIdIsPresentAndReturnUser(friend.getId());
-        ownerUser = addUserFriendToUser(friendUser, ownerUser);
-        friendUser = addUserFriendToUser(ownerUser,friendUser);
-        userRepository.save(friendUser);
+        User friendUser = userRepository.findUserByName(friend.getUsername());
+        if(friendUser!=null){
+          ownerUser = addUserFriendToUser(friendUser, ownerUser);
+          friendUser = addUserFriendToUser(ownerUser,friendUser);
+          userRepository.save(friendUser);
+        }
         return userRepository.save( ownerUser );
     }
 
     @Override
     public User deleteFriend( User friend, int id ) {
         User ownerUser = checkIfIdIsPresentAndReturnUser( id );
-        User friendUser = checkIfIdIsPresentAndReturnUser( friend.getId() );
-        ownerUser = deleteUserFriendFromUser(friendUser, ownerUser);
-        friendUser = deleteUserFriendFromUser(ownerUser, friendUser);
-        userRepository.save(friendUser);
+        User friendUser = userRepository.findUserByName(friend.getUsername());
+        if(friendUser!=null){
+          ownerUser = deleteUserFriendFromUser(friendUser, ownerUser);
+          friendUser = deleteUserFriendFromUser(ownerUser, friendUser);
+          userRepository.save(friendUser);
+        }
         return userRepository.save( ownerUser );
     }
 
