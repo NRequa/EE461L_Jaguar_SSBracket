@@ -15,6 +15,10 @@ function getWeightWeight(row) {
 	return row.children().eq(2).text().trim();
 }
 
+function getSSBWorldCharURL(row) {
+	return "https://ssbworld.com" + row.attr('href');//.toString();
+}
+
 //extractDataFromHTML(html, characterData, '.wikitable tbody tr', '.collapsed', [getWeightTitleCond, getWeightTitleCond, getWeightName, getWeightWeight], []);
 
 function extractWeightFromHTML (html, characterData) {
@@ -115,7 +119,7 @@ function extractTractionFromHTML (html, characterData) {
 */
 function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
 	console.log("extracting data from html. These are the arguments:");
-	//console.log(html);
+	console.log(html);
 	console.log("the array:");
 	console.log(array);
 	console.log(rowsDefinition);
@@ -133,13 +137,13 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 		if(rowsNotDefinition != null) {
 			console.log("row exclusion found");
 			rows = $(rowsDefinition).not(rowsNotDefinition);
-			console.log("the rows:");
-			//console.log(rows);
 		}
 		else {
 			console.log("no row exclusion found");
 			rows = $(rowsDefinition);
 		}
+		console.log("the rows:");
+		console.log(rows);
 	}
 	else {
 		rows = null;
@@ -247,6 +251,7 @@ module.exports = {
   getWeightTitleCond,
   getWeightName,
   getWeightWeight,
+  getSSBWorldCharURL,
   extractWeightFromHTML,
   extractDashFromHTML,
   extractSpotdodgeFromHTML,

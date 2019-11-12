@@ -8,7 +8,8 @@ AWS.config.update({
 	//endpoint: ""
 });
 
-//const dynamo = new AWS.DynamoDB.DocumentClient();
+// Run locally with: node -e "require('./handler').scrapeSSBWiki(null, {}, console.log)"
+
 const {extractWeightFromHTML} = require('./helpers');
 const {extractDashFromHTML} = require('./helpers');
 const {extractTractionFromHTML} = require('./helpers');
@@ -18,6 +19,7 @@ const {extractDataFromHTML} = require('./helpers');
 const {getWeightTitleCond} = require('./helpers');
 const {getWeightName} = require('./helpers');
 const {getWeightWeight} = require('./helpers');
+const {getSSBWorldCharURL} = require('./helpers');
 
 
 var characterData = [];
@@ -27,28 +29,36 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   const characterDash = [];
   const characterSpotdodge = [];
   const characterTraction = [];
+  const characterSSBWorldURLs = [];
+  const characterSSBWorldPages = [];
   var jobs; // dummy variable to hold temp results
   // for the promises to synch calls
   var promiseWeight = get('https://www.ssbwiki.com/Weight');
   var promiseDash = get('https://www.ssbwiki.com/Dash');
   var promiseSpotdodge = get('https://www.ssbwiki.com/Spotdodge');
   var promiseTraction = get('https://www.ssbwiki.com/Traction');
+  var promiseSSBWorldChars = get('https://ssbworld.com/characters/');
   //var promiseDynamoGet = dynamo.scan({TableName: 'SSBracketScrape'}).promise();
   //var promiseDynamoDelete;
   //var promiseDynamoPut;
 
-  Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction]).then(function(data1) {
+  Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction, promiseSSBWorldChars]).then(function(data1) {
 	  console.log("promise.log");
-	  extractDataFromHTML(data1[0].data, characterData, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getWeightTitleCond}, {name: "wtitle2", fn: getWeightTitleCond}, {name: "name", fn: getWeightName}, {name: "tweight", fn: getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  //extractDataFromHTML(data1[0].data, characterData, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getWeightTitleCond}, {name: "wtitle2", fn: getWeightTitleCond}, {name: "name", fn: getWeightName}, {name: "tweight", fn: getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
 	  console.log('extracted');
-	  jobs = extractWeightFromHTML(data1[0].data, characterWeight);
-	  jobs = extractDashFromHTML(data1[1].data, characterDash);
-	  jobs = extractSpotdodgeFromHTML(data1[2].data, characterSpotdodge);
-	  jobs = extractTractionFromHTML(data1[3].data, characterTraction);
-	  characterData = combine(characterWeight, characterDash, characterSpotdodge, characterTraction);
+	  //jobs = extractWeightFromHTML(data1[0].data, characterWeight);
+	  //jobs = extractDashFromHTML(data1[1].data, characterDash);
+	  //jobs = extractSpotdodgeFromHTML(data1[2].data, characterSpotdodge);
+	  //jobs = extractTractionFromHTML(data1[3].data, characterTraction);
+	  jobs = extractDataFromHTML(data1[4].data, characterSSBWorldURLs, '.players-list div a', null, [{name: "url", fn: getSSBWorldCharURL}], null);
+	  //characterData = combine(characterWeight, characterDash, characterSpotdodge, characterTraction);
+	  characterSSBWorldURLs.forEach(function(el) {
+		  characterSSBWorldPages.push(get(el.url));
+		  console.log(el);
+	  });
 	//console.log(characterData);
 	//console.log(JSON.stringify(characterData));
-	return Promise.resolve(characterData);
+	return Promise.resolve(characterData); // maybe replace this with a promise all for the ssbworld pages
   })
 //  .then(function(data) {
 //	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))
