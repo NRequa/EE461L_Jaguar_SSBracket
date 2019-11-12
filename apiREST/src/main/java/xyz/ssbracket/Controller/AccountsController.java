@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.Accounts;
+import xyz.ssbracket.Model.LogInResult;
 import xyz.ssbracket.Model.AccountSubmission;
 import xyz.ssbracket.Repository.AccountsRepository;
 import xyz.ssbracket.Repository.UserRepository;
@@ -87,17 +88,25 @@ public class AccountsController{
 
     @CrossOrigin
     @PostMapping("/signin")
-    public boolean signInAccount(@RequestBody AccountSubmission signInAttempt){
+    public LogInResult signInAccount(@RequestBody AccountSubmission signInAttempt){
         String username = signInAttempt.getUsername();
         String password = signInAttempt.getPassword();
 
         Accounts existingUser = accountsLog.findAccountsByName(username);
+        System.out.println(existingUser);
         if(existingUser == null){
-            return false;
+            return new LogInResult(-1, false);
+            
         }
 
         else{
-            return existingUser.getPassword().equals(password);
+            boolean attemptStatus = existingUser.getPassword().equals(password);
+            // Get associated User object
+            User linkedUser = userRepository.findUserByName(username);
+            System.out.println(linkedUser);
+            return new LogInResult(1, attemptStatus);
+            
+
         }
     }
 

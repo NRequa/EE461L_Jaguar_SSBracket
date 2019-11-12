@@ -84,4 +84,17 @@ public class User implements Serializable {
        this.numtournamentsparticipated = num_tournaments_participated;
        this.numtournamentswon = num_tournaments_won;
      }
+
+     public int getId(){
+       return this.id;
+     }
+
+     public String getUsername(){
+       return this.username;
+     }
+
+     @Override
+     public String toString(){
+      return String.valueOf(this.id);
+     }
 }

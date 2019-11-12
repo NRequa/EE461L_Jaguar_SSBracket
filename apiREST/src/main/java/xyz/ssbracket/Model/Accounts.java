@@ -68,6 +68,10 @@ public class Accounts implements Serializable {
         return this.password;
     }
 
+    public User getUser(){
+        return this.myuser;
+    }
+
 
 
 }
