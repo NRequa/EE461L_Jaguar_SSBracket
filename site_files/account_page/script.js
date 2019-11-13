@@ -49,11 +49,10 @@ function swapPage(pageName){
     }
 }
 
-function displayOverview(){
+function populateTables(){
     var userID = sessionStorage.getItem("userId");
-        var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-       // var apiCall = "http://localhost:8090/api/v1/user/" + userID;
-    
+       // var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
+        var apiCall = "http://localhost:8090/api/v1/user/" + userID;
       
         
         var xmlhttp = new XMLHttpRequest();
@@ -64,14 +63,10 @@ function displayOverview(){
                 var response = JSON.parse(this.responseText);
                 if(response["status"] == "OK"){
 
-                    var username = response["data"]["username"];
-                    var totWins = response["data"]["numwins"];
-                    var totGames = response["data"]["numgamesplayed"];
-                    var tournCreated = response["data"]["numtournamentscreated"];
-                    var tournPart = response["data"]["numtournamentsparticipated"];
-                    var tournWon = response["data"]["numtournamentswon"];
-
-                    $("#overviewTable").append("<tr><td>" + username + "</td>" + "<td>" + totWins + "</td>" + "<td>" + totGames + "</td>" + "<td>" + tournCreated + "</td>" + "<td>" + tournPart + "</td>" + "<td>" + tournWon + "</td></tr>");                   
+                    populateOverview(response);
+                    populateTournTable(response);
+                    populateCharTable(response);
+                    populateFriendTable(response);                 
                 }
                 else{
                     console.log("something wrong with getting ID");
@@ -83,7 +78,47 @@ function displayOverview(){
         xmlhttp.send();
 }
 
-window.onload = displayOverview;
+function populateOverview(response){
+
+    var username = response["data"]["username"];
+    var totWins = response["data"]["numwins"];
+    var totGames = response["data"]["numgamesplayed"];
+    var tournCreated = response["data"]["numtournamentscreated"];
+    var tournPart = response["data"]["numtournamentsparticipated"];
+    var tournWon = response["data"]["numtournamentswon"];
+
+     $("#overviewTable").append("<tr><td>" + username + "</td>" + "<td>" + totWins + "</td>" + "<td>" + totGames + "</td>" + "<td>" + tournCreated + "</td>" + "<td>" + tournPart + "</td>" + "<td>" + tournWon + "</td></tr>");
+
+}
+ function populateTournTable(response){
+    var tournArray = response["data"]["mytournaments"];
+    console.log("Tournmanets : " + tournArray.length);
+
+    for(var i = 0; i < tournArray.length; i++){
+        var tournName = tournArray[i]["tournamentname"];
+        var tournChamp = tournArray[i]["championname"];
+        $("#tournTable").append("<tr><td>" + tournName + "</td><td>" + tournChamp + "</td></tr>");
+
+    }
+}
+
+function populateCharTable(response){
+
+}
+
+function populateFriendTable(response){
+    var friendArray = response["data"]["myfriends"];
+    console.log("Friends : " + friendArray.length);
+
+    for(var i = 0; i < friendArray.length; i++){
+        var friendName = friendArray[i]["friendsname"];
+        var friendWins = friendArray[i]["totalwins"];
+        var friendLosses = friendArray[i]["totallosses"];
+        $("#friendTable").append("<tr><td>" + friendName + "</td>" + "<td>" + friendWins + "</td>" + "<td>" + friendLosses + "</td></tr>");
+
+    }
+}
+window.onload = populateTables;
 
 /*
 function getFriendNumber() {
