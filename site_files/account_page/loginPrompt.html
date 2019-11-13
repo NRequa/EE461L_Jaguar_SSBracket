@@ -53,7 +53,8 @@
 	<script>
 
 			function signIn(){
-			var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
+            //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
+            var apiCall = "http://localhost:8090/api/v1/Accounts/signin/";
 			
             var formData = {
                 "username" : $('input[id=logInUserName]').val(),
@@ -69,7 +70,10 @@
                 console.log(this.responseText);
                 if(this.readyState == 4 && this.status == 200){
                     var response = JSON.parse(this.responseText);
-                    if(response){
+                    if(response.status){
+                        console.log(response.id);
+                        // Use ID between pages in a session
+                        sessionStorage.setItem("userId", response.id);
                         window.location.href = "accountDataPage.html";
 					}
 					else{

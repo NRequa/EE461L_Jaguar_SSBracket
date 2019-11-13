@@ -6,7 +6,8 @@ function swapPage(pageName){
             $("#tournSect").show();
             $("#settingsSect").hide();
             $("#charSect").hide();
-            $("#friendsSect").hide();            
+            $("#friendsSect").hide();
+               
             break;
         }
 
@@ -16,6 +17,8 @@ function swapPage(pageName){
             $("#charSect").show();
             $("#friendsSect").hide();
             $("#settingsSect").hide();
+         
+
             break;
         }
 
@@ -25,6 +28,8 @@ function swapPage(pageName){
             $("#charSect").hide();
             $("#friendsSect").show();
             $("#settingsSect").hide();
+             
+
             break;
         }
         // Settings page wanted
@@ -33,6 +38,7 @@ function swapPage(pageName){
             $("#charSect").hide();
             $("#friendsSect").hide();
             $("#settingsSect").show();
+            
             break;
         }
 
@@ -42,6 +48,42 @@ function swapPage(pageName){
         }
     }
 }
+
+function displayOverview(){
+    var userID = sessionStorage.getItem("userId");
+        var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
+       // var apiCall = "http://localhost:8090/api/v1/user/" + userID;
+    
+      
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            console.log(this.readyState);
+            console.log(this.responseText);
+            if(this.readyState == 4 && this.status == 200){
+                var response = JSON.parse(this.responseText);
+                if(response["status"] == "OK"){
+
+                    var username = response["data"]["username"];
+                    var totWins = response["data"]["numwins"];
+                    var totGames = response["data"]["numgamesplayed"];
+                    var tournCreated = response["data"]["numtournamentscreated"];
+                    var tournPart = response["data"]["numtournamentsparticipated"];
+                    var tournWon = response["data"]["numtournamentswon"];
+
+                    $("#overviewTable").append("<tr><td>" + username + "</td>" + "<td>" + totWins + "</td>" + "<td>" + totGames + "</td>" + "<td>" + tournCreated + "</td>" + "<td>" + tournPart + "</td>" + "<td>" + tournWon + "</td></tr>");                   
+                }
+                else{
+                    console.log("something wrong with getting ID");
+                }
+            }
+        };
+    
+        xmlhttp.open("GET",apiCall);
+        xmlhttp.send();
+}
+
+window.onload = displayOverview;
 
 /*
 function getFriendNumber() {
@@ -54,3 +96,4 @@ function getFriendNumber() {
 		console.log(Http.responseText)
 	}
 } */
+
