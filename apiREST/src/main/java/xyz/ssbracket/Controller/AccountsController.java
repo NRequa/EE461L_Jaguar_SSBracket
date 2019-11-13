@@ -94,6 +94,7 @@ public class AccountsController{
 
         Accounts existingUser = accountsLog.findAccountsByName(username);
         System.out.println(existingUser);
+        
         if(existingUser == null){
             return new LogInResult(-1, false);
             
@@ -104,7 +105,8 @@ public class AccountsController{
             // Get associated User object
             User linkedUser = userRepository.findUserByName(username);
             System.out.println(linkedUser);
-            return new LogInResult(1, attemptStatus);
+            int Id = linkedUser.getId();
+            return new LogInResult(Id, attemptStatus);
             
 
         }
