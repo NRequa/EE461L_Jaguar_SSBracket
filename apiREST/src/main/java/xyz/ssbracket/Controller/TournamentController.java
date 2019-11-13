@@ -17,6 +17,8 @@ import javax.validation.constraints.Pattern;
 import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
 import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequestMapping("/api/v1/tournament")
@@ -36,7 +38,14 @@ public class TournamentController {
     @GetMapping()
     public ResponseWrapper<Page<Tournament>> getTournamentAll( Pageable pageable )
     {
-        return new ResponseWrapper<>( tournamentService.getAll( pageable ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.getAll(pageable ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "name")
+    public ResponseWrapper<List<Tournament>> searchTournament(@Valid @RequestBody Tournament tournamentName)
+    {
+        return new ResponseWrapper<>( tournamentService.searchTournamentName( tournamentName ), HttpStatus.OK );
     }
 
     @CrossOrigin

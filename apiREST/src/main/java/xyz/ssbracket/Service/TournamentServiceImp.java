@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.ArrayList;
 
 @SuppressWarnings("unchecked")
 @Service
@@ -29,6 +31,11 @@ public class TournamentServiceImp extends TournamentService {
     @Override
     public Page<Tournament> getAll( Pageable pageable ) {
         return tournamentRepository.findAll( pageable );
+    }
+
+    @Override
+    public List<Tournament> searchTournamentName( Tournament tname ) {
+        return tournamentRepository.findTournamentsByName(tname.getTname());
     }
 
     @Override
