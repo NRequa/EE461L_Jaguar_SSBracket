@@ -264,32 +264,34 @@ function getTour(id,player,playerText,callback){
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
-            callback(myResponse,player,playerText);
+            callback(myResponse,id,player,playerText);
 
         }
   };
   xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
 }
-function callback1(myResponse,player,playerText){
+function callback1(myResponse,id,player,playerText){
   document.getElementById("title").innerHTML = myResponse.data.tname;
   document.getElementById("desc").innerHTML = myResponse.data.description;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
   //TODO implement tourmanet closed
   //closed=true;
+
   createBracket(player,playerText);
 }
 
 function createTour(){
   var xmlhttp = new XMLHttpRequest();
   var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
-  var myResponse;
+
   var tName = document.getElementById("tournament_name").value;
   var tDesc = document.getElementById("tournament_desc").value;
   var tCreator = "Wungus";
   var tType = 1;
-  var tSize = parseInt(document.getElementById("tournament_numP").value);
+  var e= document.getElementById("tournament_numP");
+  var tSize = parseInt(e.options[e.selectedIndex].text);
   var tPlayers =document.getElementById("tournament_players").value;
 
   var mod;
@@ -305,43 +307,42 @@ function createTour(){
     $("#myModal").modal();
   // break;
   }
-  else if(tSize!='4'&&tSize!= '8'&&tSize!= '16'&&tSize!= '32'&&tSize!= '64'&&tSize!= '128'&&tSize!= '256'){
-    mod=document.getElementById("modal-text");
-    mod.innerHTML="Invalid player size";
-    $("#myModal").modal();
-  //  break;
-  }
+
   else{
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
+            playerText=parsePlayer(tPlayers);
+            seed=seeding(tSize);
+            size=playerText.length;
+            var mtchid=[];
+            for(i=0;i<tSize/2;i++){
+              sd1=seed[i*2];
+              sd2=seed[i*2+1];
+              if(sd1<=size){
+                player1=playerText[sd1-1];
+              }
+              else{
+                player1="";
+              }
+
+              if(sd2<=size){
+                player2=playerText[sd2-1];
+              }
+              else{
+                player2="";
+              }
+              //add match
+              var id1=findplayer(player1);//search for player, if not guest player
+              var id2=findplayer(player2);
+              mtchid[i]=postMatch(id,id1,id2);
+            }
             window.location.href = "bracket.html?id="+myResponse.data.id;
             //document.getElementById("test").innerHTML = myResponse.data.tname;
         }
   };
-  playerText=parsePlayer(tPlayers);
-  seed=seeding(tSize);
-  size=playerText.length;
-  for(i=0;i<tSize/2;i++){
-    sd1=seed[i*2];
-    sd2=seed[i*2+1];
-    if(sd1<=size){
-      player1=playerText[sd1-1];
-    }
-    else{
-      player1="";
-    }
 
-    if(sd2<=size){
-      player2=playerText[sd2-1];
-    }
-    else{
-      player2="";
-    }
-    //add match
-
-  }
 
   xmlhttp.open("POST", ourApi, true);
   xmlhttp.setRequestHeader("Content-type", "application/json");
@@ -355,9 +356,60 @@ function createTour(){
     "championname":""
   })
   );
-  //document.getElementById("test").style.color = "red";
-  }
-  function seeding(numPlayers){
+}
+function findplayer(player){
+  var xmlhttp = new XMLHttpRequest();
+  var playerApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/username/"+player;
+  var myResponse;
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse);
+            if(myResponse.status=="OK"){
+            return myResponse.data.id;
+            }
+            else{
+              return 0;
+            }
+
+        }
+
+  };
+  xmlhttp.open("GET", ourApi, true);
+  xmlhttp.send();
+
+}
+function postMatch(tid,player1,player2){
+    var xmlhttp = new XMLHttpRequest();
+    var matchApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/";
+    var myResponse;
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              myResponse = JSON.parse(this.responseText);
+              console.log(myResponse);
+              return myResponse.data.id;
+
+          }
+    };
+    xmlhttp.open("POST", matchApi, true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send(JSON.stringify({
+      "completed":false,
+      "p1win":false,
+      "player1":player1,
+      "p1charcaterplayed":"",
+      "p1roundswon":0,
+      "player2":player2,
+      "p2characterplayed":"",
+      "p2roundswon":0,
+      "event":tid,
+      "level":1
+  })
+);
+}
+
+function seeding(numPlayers){
   var rounds = Math.log(numPlayers)/Math.log(2)-1;
   var pls = [1,2];
   for(var i=0;i<rounds;i++){
