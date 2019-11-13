@@ -116,6 +116,11 @@ public class UserServiceImp extends UserService {
         return userRepository.save( ownerUser );
     }
 
+    @Override
+    public User getByUsername(String username){
+      return userRepository.findUserByName(username);
+    }
+
     private User checkIfIdIsPresentAndReturnUser( int id ) {
         if ( !userRepository.findById( id ).isPresent() )
             throw new ResourceNotFoundException( " User id = " + id + " not found" );

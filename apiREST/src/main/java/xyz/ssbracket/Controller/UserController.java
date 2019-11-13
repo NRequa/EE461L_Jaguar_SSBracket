@@ -34,6 +34,14 @@ public class UserController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "username/{username}")
+    public ResponseWrapper<User> getUserByUsername(
+            @PathVariable(value = "username") String username )
+    {
+        return new ResponseWrapper<>( userMainService.getByUsername( username ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
     @GetMapping()
     public ResponseWrapper<Page<User>> getUserAll( Pageable pageable )
     {
