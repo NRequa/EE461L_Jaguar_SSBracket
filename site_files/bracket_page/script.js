@@ -1,11 +1,14 @@
 var gNum;//used for tracking ids for each name element
 var closed;//used for if the tournament is closed for
+var id;
+var mid;
 
 function loading(){
   var parameters = location.search.substring(1);
   var temp = parameters.split("=");
-  var id = unescape(temp[1]);
+  id = unescape(temp[1]);
   var playerText=[];
+  mid=[];
   gNum=0;
   //for number of people in the tournament create svg attrivutes
   var player=1;//number of players;
@@ -138,7 +141,7 @@ function createPeople(svg,numPMat){
     pt1.setAttribute("font-size","15");
     pt1.setAttribute("fill","blue");
     pt1.setAttribute("class","p-text");
-    pt1.innerHTML='Player'+(j*2+p*4+i);
+    pt1.innerHTML="";
     var pt2=document.createElementNS('http://www.w3.org/2000/svg',"text");
     pt2.setAttribute("x","175");
     pt2.setAttribute("y",""+(20+30*i));
@@ -202,6 +205,23 @@ function rectClick(g_id){//set Editable
   }
   else{
     //TODO change stuff
+    var getG=document.getElementById(g_id);
+    var cText=getG.childNodes[3];
+    var mod=document.getElementById("modal-title");
+    mod.innerHTML="Enter Score";
+    mod=document.getElementById("modal-text");
+    mod.innerHTML="Enter Score";
+    mod=document.getElementById("modal-ta");
+    mod.value="";
+    console.log(g_id);
+    console.log(cText.innerHTML);
+    mod.value=cText.innerHTML;
+    mod.setAttribute("rows","1");
+    mod.setAttribute("cols","50");
+    mod=document.getElementsByClassName("modal-data");
+    mod.innerHTML=""+g_id;
+    $("#myModal").modal();
+    //integer error testing
   }
 }
 
@@ -215,23 +235,39 @@ function modalEnter(){
 }
 function setOneName(id,text){
   //parsing for length of text
+  //patch for matches
   var arrG=document.getElementsByTagName('g');
   arrG[id].childNodes[1].innerHTML=text;
 }
 function setName(pArray,player){
-  var arrG=document.getElementsByTagName('g');
-  for(i=0;i<arrG.length;i++){
-    //cutNames
-    if(i<pArray.length){
-      arrG[i].childNodes[1].innerHTML=pArray[i];
-    }
-    else if(i<player*4){
-      arrG[i].childNodes[1].innerHTML="Bye";//implement proper bye
-    }
-    else {
-      arrG[i].childNodes[1].innerHTML="";
-    }
-  }
+  var xmlhttp = new XMLHttpRequest();
+  //var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/113";
+  var ourApi ="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/"+id;
+  var myResponse;
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse)
+            var arrG=document.getElementsByTagName('g');
+            var key;
+            var i=0;
+            for(key in myResponse.data.matchResults){
+              mid[i/2]=key.id;
+              //cutNames
+                arrG[i].childNodes[1].innerHTML=key.player1.string;
+                i++;
+                //set score of the stuff
+                //change color if bye
+                arrG[i].childNodes[1].innerHTML=key.player2.string;
+                i++;
+
+            }
+        }
+  };
+  xmlhttp.open("GET", ourApi, true);
+  xmlhttp.send();
+
+
 }
 
 function closeTour(){
@@ -394,7 +430,7 @@ function postMatch(tid,player1,player2){
     };
     xmlhttp.open("POST", matchApi, true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
-    xmlhttp.send(JSON.stringify({
+    xmlhttp.send(JSON.stringify({//add string to matches
       "completed":false,
       "p1win":false,
       "player1":player1,
