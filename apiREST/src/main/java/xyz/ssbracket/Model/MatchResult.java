@@ -27,6 +27,9 @@ public class MatchResult implements Serializable {
     @JsonIgnore
     private User higherseed;
 
+    @Column(name = "player1string")
+    private String player1string;
+
     @Column(name = "player1")
     private int player1;
 
@@ -40,6 +43,9 @@ public class MatchResult implements Serializable {
     @JoinColumn(name = "lowerseed_id")
     @JsonIgnore
     private User lowerseed;
+
+    @Column(name = "player2string")
+    private String player2string;
 
     @Column(name = "player2")
     private int player2;
