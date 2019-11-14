@@ -62,6 +62,7 @@ function loading() {
 			tname = holder[obj.data.content.length - 1 - i][0];
 			description = holder[obj.data.content.length - 1 - i][1];
 			id = holder[obj.data.content.length - 1 - i][2];
+			visits = holder[obj.data.content.length - 1 - i][3];
 
 			a = document.createElement("a")
 			a.innerHTML = tname;
@@ -69,7 +70,7 @@ function loading() {
 			entry.appendChild(a);
 
 			para = document.createElement("p");
-			para.innerHTML = description;
+			para.innerHTML = description + " | <b> Visits: </b>" + visits;
 			entry.appendChild(para);
 
 			if (count >= 1) {
