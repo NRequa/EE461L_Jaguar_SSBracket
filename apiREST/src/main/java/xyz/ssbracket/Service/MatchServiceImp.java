@@ -1,5 +1,6 @@
 package xyz.ssbracket.Service;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,6 +55,18 @@ public class MatchServiceImp extends MatchService {
         oldMatchResult.setP1roundswon(o.getP1roundswon());
         oldMatchResult.setP2roundswon(o.getP2roundswon());
         return matchResultRepository.save( oldMatchResult );
+    }
+
+    @Override
+    public MatchResult updateUsers( MatchResult o, int id) throws ResourceNotFoundException{
+        MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        oldMatchResult.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
+        oldMatchResult.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
+        oldMatchResult.setPlayer1(o.getPlayer1());
+        oldMatchResult.setPlayer2(o.getPlayer2());
+        oldMatchResult.setPlayer1string(oldMatchResult.getHigherseed().getUsername());
+        oldMatchResult.setPlayer2string(oldMatchResult.getLowerseed().getUsername());
+        return matchResultRepository.save(oldMatchResult);
     }
 
     @Override
