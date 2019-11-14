@@ -85,5 +85,13 @@ public class UserController {
                                              @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
         return new ResponseWrapper<>( userMainService.deleteFriend( friend, Integer.parseInt( id ) ), HttpStatus.OK );
-      }
+    }
+
+    @CrossOrigin
+    @PatchMapping(value = "updateavatar/{id}")
+    public ResponseWrapper<User> updateUserAvatar( @Valid @RequestBody User user,
+                                                       @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( userMainService.updateAvatar( user, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
 }

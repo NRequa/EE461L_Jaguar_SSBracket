@@ -6,6 +6,7 @@ import xyz.ssbracket.Model.User;
 
 public abstract class UserService implements MainService<User> {
   public abstract User addFriend( User friend, int id );
-  public abstract User deleteFriend(User friend, int id);
-  public abstract User getByUsername(String username);
+  public abstract User deleteFriend( User friend, int id );
+  public abstract User getByUsername( String username );
+  public abstract User updateAvatar( User o, int id );
 }
