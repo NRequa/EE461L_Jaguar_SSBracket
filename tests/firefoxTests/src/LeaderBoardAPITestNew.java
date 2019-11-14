@@ -17,8 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-// TODO: limit size of Leaderboard (probably 20)
+// TODO: limit size of Leaderboard (probably 20) -> meaning I have to sort in the test
 // TODO: move separate assertions into different test functions
+// TODO: add trim() here also
 
 public class LeaderBoardAPITestNew {
 
@@ -57,6 +58,9 @@ public class LeaderBoardAPITestNew {
         JSONObject data = (JSONObject) obj.get("data");
         JSONArray content = (JSONArray) data.get("content");
         
+        
+        // may not ever use this mapping
+        /*
         JSONObject arrayElement = new JSONObject();
         Double numPlayed; Double numWins; Double winRate;
         HashMap<String, Double> userMap = new HashMap<>();
@@ -70,12 +74,14 @@ public class LeaderBoardAPITestNew {
         }
         
         userMap = sortByValue(userMap);
+        */
         
         WebElement topList = driver.findElement(By.id("top_list1"));
         
         // First check all names from JSON response exist on page
         String listText = topList.getText();
         
+        JSONObject arrayElement;
         String userName;
         for (int i = 0; i < content.size(); i++) {
         	arrayElement = (JSONObject) content.get(i);
