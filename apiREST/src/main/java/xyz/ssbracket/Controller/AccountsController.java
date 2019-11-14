@@ -54,7 +54,7 @@ public class AccountsController{
         System.out.println("Existing user result: " + existingUser);
 
         if(existingUser == null){
-            User newUser = new User(username, 1,1,0,1,1);
+            User newUser = new User(username, 0,0,0,0,0);
             Accounts newAccount = new Accounts(username, password, newUser);
             accountsLog.save(newAccount);
             return true;
@@ -94,10 +94,10 @@ public class AccountsController{
 
         Accounts existingUser = accountsLog.findAccountsByName(username);
         System.out.println(existingUser);
-        
+
         if(existingUser == null){
             return new LogInResult(-1, false);
-            
+
         }
 
         else{
@@ -107,7 +107,7 @@ public class AccountsController{
             System.out.println(linkedUser);
             int Id = linkedUser.getId();
             return new LogInResult(Id, attemptStatus);
-            
+
 
         }
     }
