@@ -53,6 +53,13 @@ public class UserServiceImp extends UserService {
     }
 
     @Override
+    public User updateAvatar( User o, int id ) {
+        User oldUser = checkIfIdIsPresentAndReturnUser( id );
+        oldUser.setAvatarName(o.getAvatarName());
+        return userRepository.save( oldUser );
+    }
+
+    @Override
     public User getById( int id ) {
         return checkIfIdIsPresentAndReturnUser( id );
     }
