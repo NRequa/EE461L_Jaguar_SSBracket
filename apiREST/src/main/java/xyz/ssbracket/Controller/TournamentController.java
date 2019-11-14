@@ -42,10 +42,10 @@ public class TournamentController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "name")
-    public ResponseWrapper<List<Tournament>> searchTournament(@Valid @RequestBody Tournament tournamentName)
+    @PostMapping(value = "/name")
+    public ResponseWrapper<Page<Tournament>> searchTournament( @RequestBody Tournament tournamentName, Pageable pageable )
     {
-        return new ResponseWrapper<>( tournamentService.searchTournamentName( tournamentName ), HttpStatus.OK );
+        return new ResponseWrapper<>( tournamentService.searchTournamentName( pageable, tournamentName ), HttpStatus.OK );
     }
 
     @CrossOrigin

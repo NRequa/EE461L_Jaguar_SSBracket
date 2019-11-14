@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TournamentRepository extends JpaRepository<Tournament,Integer> {
-  @Query( value = "SELECT * FROM tournaments WHERE tname= :tName",
-          nativeQuery = true)
-  List<Tournament> findTournamentsByName(@Param("tName") String tName);
+  Page<Tournament> findByTname(String tname, Pageable pageable);
 }

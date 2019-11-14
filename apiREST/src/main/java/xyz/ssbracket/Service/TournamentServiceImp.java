@@ -34,8 +34,8 @@ public class TournamentServiceImp extends TournamentService {
     }
 
     @Override
-    public List<Tournament> searchTournamentName( Tournament tname ) {
-        return tournamentRepository.findTournamentsByName(tname.getTname());
+    public Page<Tournament> searchTournamentName( Pageable page, Tournament tname ) {
+        return tournamentRepository.findByTname(tname.getTname(), page);
     }
 
     @Override
