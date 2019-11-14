@@ -73,9 +73,9 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
       characterData = combine(characterWeight, characterDash, characterSpotdodge, characterTraction, characterGames);
       return Promise.resolve(characterData);
   })
-  .then(function(data) {
-	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))
-  })
+  //.then(function(data) {
+	  //return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))
+  //})
   .then(function(data) {
 	  callback(null, {data})
   })

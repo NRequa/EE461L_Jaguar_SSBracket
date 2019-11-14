@@ -1,4 +1,5 @@
 const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
+const util = require('util');
 
 
 // Weight functions
