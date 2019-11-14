@@ -46,6 +46,13 @@ public class MatchResultController {
     }
 
     @CrossOrigin
+    @PostMapping(value = "/guestUser")
+    public ResponseWrapper<MatchResult> createGuestMatch( @Valid @RequestBody MatchResult matchResult )
+    {
+        return new ResponseWrapper<>( matchMainService.addGuestUser( matchResult ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public ResponseWrapper<MatchResult> deleteMatch(
             @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )

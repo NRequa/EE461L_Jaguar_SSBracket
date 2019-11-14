@@ -48,8 +48,20 @@ public class MatchServiceImp extends MatchService {
     }
 
     @Override
+    public MatchResult addGuestUser( MatchResult o ) {
+        int id = o.getId();
+        if ( matchResultRepository.findById( id ).isPresent() )
+            throw new DuplicateResourceFoundException( " MatchResult id = " + id + " already exists" );
+        else {
+            o.setTournament(checkIfIdIsPresentAndReturnTournament(o.getEvent()));
+            MatchResult returnMatchResult = matchResultRepository.save(o);
+            return returnMatchResult;
+        }
+    }
+
+    @Override
     public MatchResult update( MatchResult o, int id ) throws ResourceNotFoundException {
-        MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        MatchResult oldMatchResult = getById( id );
         oldMatchResult.setP1win(o.isP1win());
         oldMatchResult.setCompleted(o.isCompleted());
         oldMatchResult.setP1roundswon(o.getP1roundswon());
@@ -59,7 +71,7 @@ public class MatchServiceImp extends MatchService {
 
     @Override
     public MatchResult updateUsers( MatchResult o, int id) throws ResourceNotFoundException{
-        MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        MatchResult oldMatchResult = getById( id );
         oldMatchResult.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
         oldMatchResult.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
         oldMatchResult.setPlayer1(o.getPlayer1());

@@ -33,7 +33,7 @@ public class MatchResult implements Serializable {
     @Column(name = "player1")
     private int player1;
 
-    @Column(name = "p1characterplayed", nullable = false)
+    @Column(name = "p1characterplayed")
     private String p1characterplayed;
 
     @Column(name = "p1roundswon")
@@ -50,7 +50,7 @@ public class MatchResult implements Serializable {
     @Column(name = "player2")
     private int player2;
 
-    @Column(name = "p2characterplayed", nullable = false)
+    @Column(name = "p2characterplayed" )
     private String p2characterplayed;
 
     @Column(name = "p2roundswon")
