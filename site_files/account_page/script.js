@@ -1,13 +1,13 @@
 function swapPage(pageName){
     switch(pageName){
-        
+
         // Tournament data wanted
         case 0: {
             $("#tournSect").show();
             $("#settingsSect").hide();
             $("#charSect").hide();
             $("#friendsSect").hide();
-               
+
             break;
         }
 
@@ -17,7 +17,7 @@ function swapPage(pageName){
             $("#charSect").show();
             $("#friendsSect").hide();
             $("#settingsSect").hide();
-         
+
 
             break;
         }
@@ -28,7 +28,7 @@ function swapPage(pageName){
             $("#charSect").hide();
             $("#friendsSect").show();
             $("#settingsSect").hide();
-             
+
 
             break;
         }
@@ -38,7 +38,7 @@ function swapPage(pageName){
             $("#charSect").hide();
             $("#friendsSect").hide();
             $("#settingsSect").show();
-            
+
             break;
         }
 
@@ -51,10 +51,10 @@ function swapPage(pageName){
 
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
-       // var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-       //var apiCall = "http://localhost:8080/api/v1/user/" + userID;
-       var apiCall = "http://localhost:8080/api/v1/user/113";
-        
+       //var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
+       var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
+       //var apiCall = "http://localhost:8080/api/v1/user/113";
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             console.log(this.readyState);
@@ -66,14 +66,17 @@ function populateTables(){
                     populateOverview(response);
                     populateTournTable(response);
                     populateCharTable(response);
-                    populateFriendTable(response);                 
+                    populateFriendTable(response);
+                    changeProfilePicture("smashBall.jpg");
+                    //changeProfilePicture(response.data.avatarName);
+
                 }
                 else{
                     console.log("something wrong with getting ID");
                 }
             }
         };
-    
+
         xmlhttp.open("GET",apiCall);
         xmlhttp.send();
 }
@@ -175,7 +178,7 @@ function populateCharTable(response){
         $("#charTable").append("<tr><td>" + key + "</td><td>" + value[0] + "</td><td>" + value[1] + "</td><td>" + (value[0] + value[1]) + "</td>");
     }
 
-    
+
 
 }
 
@@ -191,6 +194,14 @@ function populateFriendTable(response){
 
     }
 }
+
+function changeProfilePicture(imageName){
+  if((imageName!=null)&&(imageName!=undefined)&&(imageName!="default")){
+      document.getElementById("Avatar").src = "images/"+imageName;
+  }
+  console.log("profile picture change function ran")
+}
+
 window.onload = populateTables;
 
 /*
@@ -199,9 +210,8 @@ function getFriendNumber() {
 	var url = "https://api.myip.com";
 	Http.open("GET", url);
 	Http.send();
-	
+
 	Http.onreadystatechange = (e) => {
 		console.log(Http.responseText)
 	}
 } */
-

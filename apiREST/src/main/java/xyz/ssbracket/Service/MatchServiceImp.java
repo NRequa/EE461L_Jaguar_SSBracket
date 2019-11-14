@@ -82,6 +82,20 @@ public class MatchServiceImp extends MatchService {
     }
 
     @Override
+    public MatchResult updateP1String( MatchResult o, int id) throws ResourceNotFoundException{
+        MatchResult oldMatchResult = getById( id );
+        oldMatchResult.setPlayer1string(o.getPlayer1string());
+        return matchResultRepository.save(oldMatchResult);
+    }
+
+    @Override
+    public MatchResult updateP2String( MatchResult o, int id) throws ResourceNotFoundException{
+        MatchResult oldMatchResult = getById( id );
+        oldMatchResult.setPlayer2string(o.getPlayer2string());
+        return matchResultRepository.save(oldMatchResult);
+    }
+
+    @Override
     public MatchResult getById( int id ) throws ResourceNotFoundException {
         return checkIfIdIsPresentAndReturnMatchResult( id );
     }
