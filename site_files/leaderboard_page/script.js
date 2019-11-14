@@ -45,13 +45,19 @@ function showTopUsers() {
 		var i;
 		var user;
 		var tmp;
+		var winRate;
 
 		// 2D array holds player associated with win rate
 		for (i = 0; i < obj.data.content.length; i++) {
 			tmp = [];
 			user = obj.data.content[i];
 			tmp.push(user.username);
-			tmp.push((user.numgamesplayed / user.numwins).toFixed(2));
+			if (user.numwins == 0) {
+				winRate = 0;
+			} else {
+				winRate = user.numgamesplayed / user.numwins;
+			}
+			tmp.push(winRate.toFixed(2));
 			holder.push(tmp)
 		}
 
