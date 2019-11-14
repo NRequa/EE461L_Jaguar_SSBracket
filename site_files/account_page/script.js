@@ -53,7 +53,7 @@ function populateTables(){
     var userID = sessionStorage.getItem("userId");
        // var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
        //var apiCall = "http://localhost:8080/api/v1/user/" + userID;
-       var apiCall = "http://localhost:8080/api/v1/user/114";
+       var apiCall = "http://localhost:8080/api/v1/user/113";
         
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -172,6 +172,7 @@ function populateCharTable(response){
     // Populate table with each character wins and losses
     for(var [key, value] of charStatsMap){
         console.log(key + " - W:" + value[0] + " | L:" + value[1]);
+        $("#charTable").append("<tr><td>" + key + "</td><td>" + value[0] + "</td><td>" + value[1] + "</td><td>" + (value[0] + value[1]) + "</td>");
     }
 
     
