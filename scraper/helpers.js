@@ -1,9 +1,8 @@
 const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
-//const moment = require('moment');
 
+
+// Weight functions
 function getWeightTitleCond(row) {
-	//console.log("row");
-	//console.log(row);
 	return row.children().eq(1).children().last().attr('title');
 }
 
@@ -14,6 +13,47 @@ function getWeightName(row) {
 function getWeightWeight(row) {
 	return row.children().eq(2).text().trim();
 }
+
+// Dash Functions
+function getDashTitleCond(row) {
+	return row.children().eq(1).children().last().attr('title');
+}
+
+function getDashName(row) {
+	return row.children().eq(1).children().last().text().trim();
+}
+
+function getDashDash(row) {
+	return row.children().eq(3).text().trim();
+}
+
+// Spotdodge Functions
+function getSpotdodgeTitleCond(row) {
+	return row.children().eq(0).children().last().attr('title');
+}
+
+function getSpotdodgeName(row) {
+	return row.children().eq(0).children().last().text().trim();
+}
+
+function getSpotdodgeSpotdodge(row) {
+	return row.children().eq(1).text().trim();
+}
+
+// Traction Functions
+function getTractionTitleCond(row) {
+	return row.children().eq(1).children().last().attr('title');
+}
+
+function getTractionName(row) {
+	return row.children().eq(1).children().last().text().trim();
+}
+
+function getTractionTraction(row) {
+	return row.children().eq(2).text().trim();
+}
+
+// SSBWorld Functions
 
 function getSSBWorldCharURL(row) {
 	return "https://ssbworld.com" + row.attr('href');//.toString();
@@ -28,14 +68,10 @@ function getSSBWorldWinLose(row) {
 
 function extractWeightFromHTML (html, characterData) {
   const $ = cheerio.load(html);
-  
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
-  //console.log(characterRows);
   characterRows.each((i, el) => {
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-    
-    // Extract information from each row of the jobs table
     let name = $(el).children().eq(1).children().last().text().trim();
     let weight = $(el).children().eq(2).text().trim();
 
@@ -48,18 +84,12 @@ function extractWeightFromHTML (html, characterData) {
 function extractDashFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
-  
-  //console.log('dash call');
   characterRows.each((i, el) => {
-	//console.log(el);
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(1).children().last().text().trim();
     let dash = $(el).children().eq(3).text().trim();
 	characterData.push({name, dash});
-    //var j = 0;
-	//console.log("about to start loop");
   });
 
   return characterData;
@@ -69,15 +99,11 @@ function extractSpotdodgeFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
   characterRows.each((i, el) => {
-	//console.log(el);
 	if(typeof $(el).children().eq(0).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(0).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(0).children().last().text().trim();
     let spotdodge = $(el).children().eq(1).text().trim();
 	characterData.push({name, spotdodge});
-    //var j = 0;
-	//console.log("about to start loop");
   });
 
   return characterData;
@@ -87,15 +113,11 @@ function extractTractionFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
   characterRows.each((i, el) => {
-	//console.log(el);
 	if(typeof $(el).children().eq(1).children().last().attr('title') === "undefined") {return;}
 	if($(el).children().eq(1).children().last().attr('title').toString().includes('SSBU') === false) {return;}
-	//console.log($(el).children().eq(3).text().trim());
     let name = $(el).children().eq(1).children().last().text().trim();
     let traction = $(el).children().eq(2).text().trim();
 	characterData.push({name, traction});
-    //var j = 0;
-	//console.log("about to start loop");
   });
 
   return characterData;
@@ -119,7 +141,7 @@ function extractTractionFromHTML (html, characterData) {
 	If you aren't using some optional values, input null!
 */
 function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
-	console.log("extracting data from html. These are the arguments:");
+	//console.log("extracting data from html. These are the arguments:");
 	//console.log(html);
 	//console.log("the array:");
 	//console.log(array);
@@ -133,27 +155,27 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 	var rows;
 	var iterating = false;
 	if(rowsDefinition != null) {
-		console.log("iterating");
+		//console.log("iterating");
 		iterating = true;
 		if(rowsNotDefinition != null) {
-			console.log("row exclusion found");
+			//console.log("row exclusion found");
 			rows = $(rowsDefinition).not(rowsNotDefinition);
 		}
 		else {
-			console.log("no row exclusion found");
+			//console.log("no row exclusion found");
 			rows = $(rowsDefinition);
 		}
-		console.log("the rows:");
-		console.log(rows);
+		//console.log("the rows:");
+		//console.log(rows);
 	}
 	else {
 		rows = null;
-		console.log("rows = null");
+		//console.log("rows = null");
 	}
 	if(iterating) {
-		console.log('starting iteration');
+		//console.log('starting iteration');
 		rows.each((i, el) => {
-			console.log("iterate");
+			//console.log("iterate");
 			//console.log(i);
 			//console.log(el);
 			let selected = [];
@@ -164,7 +186,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 				selected.push({name: sel.name, prop: sel.fn($(el))});
 			});
 			if(elementConditionals != null && elementConditionals != 'undefined') {
-				console.log("element conditionals detected");
+				//console.log("element conditionals detected");
 				let success = true;
 				elementConditionals.forEach((con) => {
 					let thing = selected.shift();
@@ -196,16 +218,16 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 						default: success = false;
 					}
 			    });
-				console.log("after condition testing");
-			    console.log(success);
+				//console.log("after condition testing");
+			    //console.log(success);
 				if(!success) {return;}
 			}	
 			let object = {};
 			selected.forEach((prop) => {
-				console.log(prop);
+				//console.log(prop);
 				object[prop.name] = prop.prop;
 			});
-			console.log(object);
+			//console.log(object);
 			array.push(object);
 		});
 	}
@@ -315,10 +337,55 @@ function parseGames(winloss) {
 	return {total, wins, losses};
 }
 
+function parseURL(url) {
+	console.log("parseUrl: ".concat(url));
+	let trimmed = url.substr(32).trim(); // remove the https://ssbworld.com/characters/ part
+	console.log("trimmed: ".concat(trimmed));
+	let output = "";
+	let letters = "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM";
+	let prevChar = " ";
+	for(let i = 0; i < trimmed.length; i++) {
+		console.log(output.charCodeAt(i));
+		if(trimmed.charCodeAt(i) === 45) { 
+		    console.log("DASH DETECTED");
+		    output = output.concat(" ");
+			prevChar = " ";
+		}
+		else if(prevChar === " ") {
+			prevChar = trimmed.charAt(i).toUpperCase();
+			output = output.concat(prevChar);
+		}
+		else {
+			prevChar = trimmed.charAt(i);
+			output = output.concat(prevChar);
+		}
+	}
+	// Some conversions to SSBWiki naming conventions
+	if(output === "King K Rool") output = "King K. Rool";
+	else if(output === "Bowser Jr") output = "Bowser Jr.";
+	else if(output === "Dr Mario") output = "Dr. Mario";
+	else if(output === "Mr Game And Watch") output = "Mr. Game & Watch";
+	else if(output === "Rob") output = "R.O.B.";
+	else if(output === "Banjo And Kazooie") output = "Banjo & Kazooie";
+	else if(output === "Pac Man") output = "Pac-Man";
+	else if(output === "Rosalina And Luma") output = "Rosalina";
+	console.log("output: ".concat(output));
+	return output;
+}
+
 module.exports = {
   getWeightTitleCond,
   getWeightName,
   getWeightWeight,
+  getDashTitleCond,
+  getDashName,
+  getDashDash,
+  getSpotdodgeTitleCond,
+  getSpotdodgeName,
+  getSpotdodgeSpotdodge,
+  getTractionTitleCond,
+  getTractionName,
+  getTractionTraction,
   getSSBWorldCharURL,
   getSSBWorldWinLose,
   extractWeightFromHTML,
@@ -327,5 +394,6 @@ module.exports = {
   extractTractionFromHTML,
   extractDataFromHTML,
   extractStringFromHTML,
-  parseGames
+  parseGames,
+  parseURL
 };
