@@ -47,15 +47,15 @@
             </div>
 
             <a href="regPage.html">Click here to register</a>
-       
+
 	</body>
-	
+
 	<script>
 
 			function signIn(){
-            //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-            var apiCall = "http://localhost:8090/api/v1/Accounts/signin/";
-			
+            var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
+            //var apiCall = "http://localhost:8090/api/v1/Accounts/signin/";
+
             var formData = {
                 "username" : $('input[id=logInUserName]').val(),
                 "password" : $('input[id=logInPass]').val()
@@ -86,8 +86,8 @@
             xmlhttp.setRequestHeader("Content-Type", "application/json");
            // xmlhttp.setRequestHeader("Accept", "*/*");
             xmlhttp.send(JSON.stringify(formData));
-        
-          
+
+
         }
 	</script>
 
