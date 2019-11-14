@@ -28,9 +28,6 @@ function loading() {
 			holder.push(tmp)
 		}
 
-
-		console.log(holder);
-
 		var j;
 		var n = holder.length;
 
@@ -84,7 +81,6 @@ function loading() {
 	}
 	}
 	$('#myCarousel').on('slide.bs.carousel', function () {
-		console.log(topThree);
 		document.getElementById("scroller_text").innerHTML = topThree[index];
 
 		index = index + 1;
