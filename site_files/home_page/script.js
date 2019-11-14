@@ -134,13 +134,17 @@ function populateDrop() {
 								document.getElementById("drop_menu").innerHTML = "";
 	        			myResponse2 = JSON.parse(this.responseText);
 								var searchedTournaments = myResponse2.data.content;
-								console.log(searchedTournaments);
+								var countTournament = 0;
 								for(var eachTournament in searchedTournaments){
-									console.log(searchedTournaments[eachTournament].id);
+									countTournament++;
 									var new_content = '<li style="padding-left: 5%;">'+'<a href='+
 									"site_files/bracket_page/bracket.html?id="+searchedTournaments[eachTournament].id+'>'+
 									searchedTournaments[eachTournament].tname+' by '+searchedTournaments[eachTournament].tcreator+'</a>'+'</li>';
 									document.getElementById("drop_menu").innerHTML = document.getElementById("drop_menu").innerHTML + new_content;
+								}
+								if(countTournament==0){
+									document.getElementById("drop_menu").innerHTML = '<li style="padding-left: 5%;">'
+									+ "No tournaments named <b>"+text+"</b> found" +'</li>';
 								}
 								if (!toggleOn) {
 									$(".dropdown-toggle").dropdown("toggle");
