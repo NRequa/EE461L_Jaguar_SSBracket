@@ -15,11 +15,15 @@ const {extractDashFromHTML} = require('./helpers');
 const {extractTractionFromHTML} = require('./helpers');
 const {extractSpotdodgeFromHTML} = require('./helpers');
 const {extractDataFromHTML} = require('./helpers');
+const {extractStringFromHTML} = require('./helpers');
+const {parseGames} = require('./helpers');
 // function chains
 const {getWeightTitleCond} = require('./helpers');
 const {getWeightName} = require('./helpers');
 const {getWeightWeight} = require('./helpers');
 const {getSSBWorldCharURL} = require('./helpers');
+const {getSSBWorldWinLose} = require('./helpers');
+
 
 
 var characterData = [];
@@ -31,6 +35,7 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   const characterTraction = [];
   const characterSSBWorldURLs = [];
   const characterSSBWorldPages = [];
+  const characterGames = [];
   var jobs; // dummy variable to hold temp results
   // for the promises to synch calls
   var promiseWeight = get('https://www.ssbwiki.com/Weight');
@@ -38,6 +43,7 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   var promiseSpotdodge = get('https://www.ssbwiki.com/Spotdodge');
   var promiseTraction = get('https://www.ssbwiki.com/Traction');
   var promiseSSBWorldChars = get('https://ssbworld.com/characters/');
+  
   //var promiseDynamoGet = dynamo.scan({TableName: 'SSBracketScrape'}).promise();
   //var promiseDynamoDelete;
   //var promiseDynamoPut;
@@ -58,7 +64,18 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 	  });
 	//console.log(characterData);
 	//console.log(JSON.stringify(characterData));
-	return Promise.resolve(characterData); // maybe replace this with a promise all for the ssbworld pages
+	return Promise.all(characterSSBWorldPages); // maybe replace this with a promise all for the ssbworld pages
+  })
+  .then(function(data) {
+	  data.forEach(function(el) {
+		  let winloss = extractStringFromHTML(el, "SSB World Game Record:", 6, "<").trim();
+		  console.log("returned");
+		  console.log(winloss);
+		  let games = parseGames(winloss);
+		  characterGames.push(games);
+		  
+	  });
+      return Promise.resolve(characterGames); // replace later with something leading to combining the data into one JSON
   })
 //  .then(function(data) {
 //	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/data', JSON.stringify(data))

@@ -19,6 +19,11 @@ function getSSBWorldCharURL(row) {
 	return "https://ssbworld.com" + row.attr('href');//.toString();
 }
 
+function getSSBWorldWinLose(row) {
+	//return row.root().children().eq(1).children().eq(3).children().eq(1).children().eq(4).children().eq(5).children().eq(0).text();//.text();
+	return row.root().children().eq(0).children().eq(1).children().eq(1).children().eq(2).children().eq(5).children().eq(0).attr('class');
+}
+
 //extractDataFromHTML(html, characterData, '.wikitable tbody tr', '.collapsed', [getWeightTitleCond, getWeightTitleCond, getWeightName, getWeightWeight], []);
 
 function extractWeightFromHTML (html, characterData) {
@@ -40,8 +45,6 @@ function extractWeightFromHTML (html, characterData) {
   return characterData;
 }
 
-
-
 function extractDashFromHTML (html, characterData) {
   const $ = cheerio.load(html);
   const characterRows = $('.wikitable tbody tr').not('.collapsed');
@@ -61,8 +64,6 @@ function extractDashFromHTML (html, characterData) {
 
   return characterData;
 }
-
-
 
 function extractSpotdodgeFromHTML (html, characterData) {
   const $ = cheerio.load(html);
@@ -119,15 +120,15 @@ function extractTractionFromHTML (html, characterData) {
 */
 function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
 	console.log("extracting data from html. These are the arguments:");
-	console.log(html);
-	console.log("the array:");
-	console.log(array);
-	console.log(rowsDefinition);
-	console.log(rowsNotDefinition);
-	console.log("element selectors");
-	console.log(elementSelectors);
-	console.log("element conditionals");
-	console.log(elementConditionals);
+	//console.log(html);
+	//console.log("the array:");
+	//console.log(array);
+	//console.log(rowsDefinition);
+	//console.log(rowsNotDefinition);
+	//console.log("element selectors");
+	//console.log(elementSelectors);
+	//console.log("element conditionals");
+	//console.log(elementConditionals);
 	const $ = cheerio.load(html);
 	var rows;
 	var iterating = false;
@@ -208,26 +209,48 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			array.push(object);
 		});
 	}
-	else { // TODO: edit this to match above
+	/*else { // TODO: edit this to match above
+	    console.log("not iterating");
 		let selected = [];
-		elementSelectors.forEach((i, sel) => {
-			selected.push({name: sel.name, prop: sel.fn(el)});
+		elementSelectors.forEach((sel) => {
+			//let fn = sel.fn;
+			//let elem = $(fn);
+			//let thingToPush = {name: sel.name, prop: sel.fn($)};
+			//console.log(cheerio.html($(thingToPush.prop)));
+			selected.push({name: sel.name, prop: sel.fn($)});
+			
 		});
-		if(elementConditionals != null) {
+		console.log('the selected elements');
+		//console.log(selected[0]);
+		if(elementConditionals != null && elementConditionals != 'undefined') {
+			console.log("element conditionals detected");
 			let success = true;
-			elementConditionals.forEach((i, con) => {
+			elementConditionals.forEach((con) => {
+				let thing = selected.shift();
+				//console.log(thing);
+				thing = thing.prop;
+				//console.log(thing);
 			    switch(con.type) {
 						case "typeof":
-						    if(typeof selected.shift() != con.value) {success = false;}
+						    if(typeof thing != con.value) {success = false;}
+							//console.log(success);
 							break;
 						case "notTypeof":
-						    if(typeof selected.shift() == con.value) {success = false;}
+						    if(typeof thing == con.value) {success = false;}
+							//console.log(success);
 							break;
 						case "equal":
-						    if(selected.shift() != con.value) {success = false;}
+						    if(thing != con.value) {success = false;}
+							//console.log(success);
 							break;
 						case "notEqual":
-						    if(selected.shift() == con.value) {success = false;}
+						    if(thing == con.value) {success = false;}
+							//console.log(success);
+							break;
+						case "contains":
+						    if(success == false) break;
+						    if(!thing.toString().includes(con.value)) {success = false;}
+							//console.log(success);
 							break;
 						default: success = false;
 					}
@@ -237,14 +260,59 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			if(!success) {return array;} // object isn't good, so return the array.
 		}	
 		let object = {};
-		selected.forEach((i, prop) => {
+		selected.forEach((prop) => {
+			console.log(prop);
 			object[prop.name] = prop.prop;
 		});
+		console.log(object);
 		array.push(object);
-	}
-	console.log("the array");
-	console.log(array);
+	}*/
+	//console.log("the array");
+	//console.log(array);
 	return array;
+}
+
+/*
+    html is the html from axios
+	keyPhrase is what you want to search for
+	skip is number of characters you want to skip
+	end is the character you want to stop at
+*/
+function extractStringFromHTML(html, keyPhrase, skip, end) {
+	let htmlString = util.inspect(html);
+	let index = htmlString.indexOf(keyPhrase) + keyPhrase.length + skip;
+	let output = "";
+	let reading = index;
+	while(!(htmlString.charAt(reading) === end)) {
+		output = output.concat(htmlString.charAt(reading));
+		reading++;
+		if(reading > index + 25) {
+			console.log('reading too long');
+			console.log(output);
+			break;
+		}
+	}
+	return output;
+}
+
+function parseGames(winloss) {
+	let wins = "";
+	let reading = 0;
+	while(!(winloss.charAt(reading) === " ")) {
+		if(!isNaN(winloss.charAt(reading))) {wins = wins.concat(winloss.charAt(reading));}
+		reading++;
+		if(reading > 25) {
+			console.log('reading too long');
+			console.log(wins);
+			break;
+		}
+	}
+	reading = reading + 3;
+	let losses = winloss.substr(reading);
+	wins = parseInt(wins);
+	losses = parseInt(losses);
+	let total = wins + losses;
+	return {total, wins, losses};
 }
 
 module.exports = {
@@ -252,9 +320,12 @@ module.exports = {
   getWeightName,
   getWeightWeight,
   getSSBWorldCharURL,
+  getSSBWorldWinLose,
   extractWeightFromHTML,
   extractDashFromHTML,
   extractSpotdodgeFromHTML,
   extractTractionFromHTML,
-  extractDataFromHTML
+  extractDataFromHTML,
+  extractStringFromHTML,
+  parseGames
 };
