@@ -93,21 +93,21 @@ public class AccountsController{
         String password = signInAttempt.getPassword();
 
         Accounts existingUser = accountsLog.findAccountsByName(username);
-        System.out.println(existingUser);
-        
+
+
         if(existingUser == null){
             return new LogInResult(-1, false);
-            
+
         }
 
         else{
             boolean attemptStatus = existingUser.getPassword().equals(password);
             // Get associated User object
-            User linkedUser = userRepository.findUserByName(username);
+            User linkedUser = userRepository.findByUsername(username);
             System.out.println(linkedUser);
             int Id = linkedUser.getId();
             return new LogInResult(Id, attemptStatus);
-            
+
 
         }
     }

@@ -95,11 +95,13 @@ public class UserServiceImp extends UserService {
     @Override
     public User addFriend( User friend, int id ) {
         User ownerUser = checkIfIdIsPresentAndReturnUser( id );
-        User friendUser = userRepository.findUserByName(friend.getUsername());
+        User friendUser = userRepository.findByUsername(friend.getUsername());
         if(friendUser!=null){
           ownerUser = addUserFriendToUser(friendUser, ownerUser);
           friendUser = addUserFriendToUser(ownerUser,friendUser);
           userRepository.save(friendUser);
+        } else {
+          throw new ResourceNotFoundException( " Friend named " + friend.getUsername() + " not found" );
         }
         return userRepository.save( ownerUser );
     }
@@ -107,18 +109,20 @@ public class UserServiceImp extends UserService {
     @Override
     public User deleteFriend( User friend, int id ) {
         User ownerUser = checkIfIdIsPresentAndReturnUser( id );
-        User friendUser = userRepository.findUserByName(friend.getUsername());
+        User friendUser = userRepository.findByUsername(friend.getUsername());
         if(friendUser!=null){
           ownerUser = deleteUserFriendFromUser(friendUser, ownerUser);
           friendUser = deleteUserFriendFromUser(ownerUser, friendUser);
           userRepository.save(friendUser);
+        } else {
+          throw new ResourceNotFoundException( " Friend named " + friend.getUsername() + " not found" );
         }
         return userRepository.save( ownerUser );
     }
 
     @Override
     public User getByUsername(String username){
-      return userRepository.findUserByName(username);
+      return userRepository.findByUsername(username);
     }
 
     private User checkIfIdIsPresentAndReturnUser( int id ) {
