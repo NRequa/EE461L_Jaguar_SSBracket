@@ -103,7 +103,7 @@ public class AccountsController{
         else{
             boolean attemptStatus = existingUser.getPassword().equals(password);
             // Get associated User object
-            User linkedUser = userRepository.findUserByName(username);
+            User linkedUser = userRepository.findByUsername(username);
             System.out.println(linkedUser);
             int Id = linkedUser.getId();
             return new LogInResult(Id, attemptStatus);
