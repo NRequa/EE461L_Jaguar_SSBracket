@@ -52,8 +52,8 @@ function swapPage(pageName){
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
        // var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-        var apiCall = "http://localhost:8090/api/v1/user/" + userID;
-      
+       //var apiCall = "http://localhost:8080/api/v1/user/" + userID;
+       var apiCall = "http://localhost:8080/api/v1/user/113";
         
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -103,6 +103,79 @@ function populateOverview(response){
 }
 
 function populateCharTable(response){
+    // Arrays to hold lower seed and higher seed matches for user
+    var lowSeedMatches = response["data"]["lowerSeedMatchResults"];
+    var highSeedMatches = response["data"]["higherSeedMatchResults"];
+    console.log(lowSeedMatches);
+
+    // Map for a charater played to wins and losses
+    var charStatsMap = new Map();
+    // Array to hold W/L with [Wins, Losses]
+    var defaultArray = [0, 0];
+    var updatedArray;
+
+    // Iterate through lower seed matches and add wins/losses
+    for(var i = 0; i < lowSeedMatches.length; i++){
+        var matchComplete = lowSeedMatches[i]["completed"];
+        if(matchComplete){
+
+            // Get character played and if match won
+            var charPlayed = lowSeedMatches[i]["p2characterplayed"];
+            var won = !(lowSeedMatches[i]["p1win"]);
+
+            // Checks if characer is already in map. Creates entry if not
+            if(charStatsMap.get(charPlayed) == undefined){
+                charStatsMap.set(charPlayed, defaultArray);
+            }
+
+            // Holds our [Wins, Losses] for given character
+            updatedArray = charStatsMap.get(charPlayed);
+
+            if(won){
+                updatedArray[0] = updatedArray[0] + 1;
+            }
+
+            else{
+                updatedArray[1] = updatedArray[1] + 1;
+            }
+
+        }
+    }
+
+    // Iterate through higher seed matches and add wins/loses
+    for(var i = 0; i < highSeedMatches.length; i++){
+        var matchComplete = highSeedMatches[i]["completed"];
+        if(matchComplete){
+
+            // Get character played and if match won
+            var charPlayed = highSeedMatches[i]["p2characterplayed"];
+            var won = highSeedMatches[i]["p1win"];
+
+            // Checks if characer is already in map. Creates entry if not
+            if(charStatsMap.get(charPlayed) == undefined){
+                charStatsMap.set(charPlayed, defaultArray);
+            }
+
+            // Holds our [Wins, Losses] for given character
+            updatedArray = charStatsMap.get(charPlayed);
+
+            if(won){
+                updatedArray[0] = updatedArray[0] + 1;
+            }
+
+            else{
+                updatedArray[1] = updatedArray[1] + 1;
+            }
+        }
+    }
+
+    // Populate table with each character wins and losses
+    for(var [key, value] of charStatsMap){
+        console.log(key + " - W:" + value[0] + " | L:" + value[1]);
+        $("#charTable").append("<tr><td>" + key + "</td><td>" + value[0] + "</td><td>" + value[1] + "</td><td>" + (value[0] + value[1]) + "</td>");
+    }
+
+    
 
 }
 

@@ -48,6 +48,9 @@ public class User implements Serializable {
     @Column(name = "numtournamentswon", nullable = false)
     private int numtournamentswon;
 
+    @Column(name = "avatarName")
+    private String avatarName;
+
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
     private List<Tournament> tournaments = new ArrayList<>();
@@ -83,6 +86,7 @@ public class User implements Serializable {
        this.numtournamentscreated = num_tournaments_created;
        this.numtournamentsparticipated = num_tournaments_participated;
        this.numtournamentswon = num_tournaments_won;
+       this.avatarName = "default";
      }
 
      public int getId(){
