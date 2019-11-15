@@ -3,6 +3,7 @@ topThree = [];
 index = 1;
 
 function loading() {
+	logInDisplay();
 	var xmlHttp = new XMLHttpRequest();
 	var url = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
 
@@ -158,4 +159,21 @@ function populateDrop() {
 			//xmlhttp.send();
 		}
 	}
+}
+
+function logInDisplay(){
+    if(sessionStorage.getItem("userId") != null){
+        // Hide log in/register
+        $(".guestLinks").hide();
+        // Show account data link
+        $(".logInLinks").show();
+    }
+
+    else{
+        //Hide account data
+        $(".logInLinks").hide();
+        // Show account data link
+        $(".guestLinks").show();
+        
+    }
 }
