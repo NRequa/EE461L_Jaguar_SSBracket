@@ -79,6 +79,10 @@ function addToObject(myObject, nameKey){
   return myObject;
 }
 
+function addRowToProTable(){
+  
+}
+
 function populateChartAndTable(myResponse){
   var characterPlayed = new Object();
   var nationality = new Object();
