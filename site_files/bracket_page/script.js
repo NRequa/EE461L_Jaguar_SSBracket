@@ -6,6 +6,7 @@ var mid;
 function loading(){
   var parameters = location.search.substring(1);
   var temp = parameters.split("=");
+  closed=false;
   id = unescape(temp[1]);
   var playerText=[];
   mid=[];
@@ -185,33 +186,14 @@ function rectClick(g_id){//set Editable
   console.log("clicked");
   console.log(g_id);
 
-  if(closed=false){
-  var getG=document.getElementById(g_id);
-  var cText=getG.childNodes[1];
-  var mod=document.getElementById("modal-title");
-  mod.innerHTML="Edit Player";
-  mod=document.getElementById("modal-text");
-  mod.innerHTML="Enter Player Name (To edit score first close the tournament)";
-  mod=document.getElementById("modal-ta");
-  mod.value="";
-  console.log(g_id);
-  console.log(cText.innerHTML);
-  mod.value=cText.innerHTML;
-  mod.setAttribute("rows","1");
-  mod.setAttribute("cols","50");
-  mod=document.getElementsByClassName("modal-data");
-  mod.innerHTML=""+g_id;
-  $("#myModal").modal();
-  }
-  else{
-    //TODO change stuff
+  if(closed==false/*&&g_id<size*/){
     var getG=document.getElementById(g_id);
-    var cText=getG.childNodes[3];
+    var cText=getG.childNodes[1];
     var mod=document.getElementById("modal-title");
-    mod.innerHTML="Enter Score";
-    mod=document.getElementById("modal-text");
-    mod.innerHTML="Enter Score";
-    mod=document.getElementById("modal-ta");
+    mod.innerHTML="Edit Player";
+    mod=document.getElementById("modal-text1");
+    mod.innerHTML="Enter Player Name (To edit score first close the tournament)";
+    mod=document.getElementById("modal-ta1");
     mod.value="";
     console.log(g_id);
     console.log(cText.innerHTML);
@@ -220,25 +202,92 @@ function rectClick(g_id){//set Editable
     mod.setAttribute("cols","50");
     mod=document.getElementsByClassName("modal-data");
     mod.innerHTML=""+g_id;
+    mod=document.getElementById("modal-text2");
+    mod.innerHTML="Enter Player Character";
+    mod=document.getElementById("modal-ta2");
+    mod.value="";
+    mod.setAttribute("rows","1");
+    mod.setAttribute("cols","50");
+    //TODO patch for charcter
+    $("#myModal").modal();
+  }
+  else{
+    //TODO change stuff
+    var getG=document.getElementById(g_id);
+    var cText=getG.childNodes[3];
+    var mod=document.getElementById("modal-title");
+    mod.innerHTML="Enter Score";
+    mod=document.getElementById("modal-text1");
+    mod.innerHTML="Enter Score";
+    mod=document.getElementById("modal-ta1");
+    mod.value="";
+    console.log(g_id);
+    console.log(cText.innerHTML);
+    mod.value=cText.innerHTML;
+    mod.setAttribute("rows","1");
+    mod.setAttribute("cols","50");
+    mod=document.getElementsByClassName("modal-data");
+    mod.innerHTML=""+g_id;
+    //enter score for player 2 lmao
     $("#myModal").modal();
     //integer error testing
   }
 }
 
 
-function modalEnter(){
+async function modalEnter(){
+  if(closed==false){
   var mod=document.getElementsByClassName("modal-data");
   var data=mod.innerHTML;
-  mod=document.getElementById("modal-ta");
-  setOneName(data,mod.value);
+  mod=document.getElementById("modal-ta1");
+  await setOneName(data,mod.value);
+}
+else{
+  await setScore();
+}
+}
+function setScore(){
 
 }
-function setOneName(id,text){
+function setOneName(g_id,text){
   //parsing for length of text
   //patch for matches
+
   var arrG=document.getElementsByTagName('g');
-  arrG[id].childNodes[1].innerHTML=text;
+  arrG[g_id].childNodes[1].innerHTML=text;
+  	var xmlhttp = new XMLHttpRequest();
+    var matchId=mid[g_id/2];
+    var p1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setp1string/"+id;
+    var p2Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setp2string/"+id;
+    var myReponse;
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              myResponse = JSON.parse(this.responseText);
+              console.log(myResponse)
+              document.getElementById("test").innerHTML = myResponse.data.tname;
+          }
+    };
+
+
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    if(g_id%2==0){
+      xmlhttp.open("PATCH", p1Api, true);
+      xmlhttp.send(JSON.stringify({
+        "player1string":text
+      })
+      );
+    }
+    else{
+      xmlhttp.open("PATCH", p2Api, true);
+      xmlhttp.send(JSON.stringify({
+        "player2string":text
+      })
+      );
+    }
+
+
 }
+
 function setName(pArray,player){
   var xmlhttp = new XMLHttpRequest();
   //var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/113";
@@ -252,13 +301,19 @@ function setName(pArray,player){
             var key;
             var i=0;
             for(key in myResponse.data.matchResults){
-              mid[i/2]=key.id;
+              mid[i/2]=myResponse.data.matchResults[key].id;
               //cutNames
-                arrG[i].childNodes[1].innerHTML=key.player1.string;
+                arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player1string;
+                if(closed==true){
+                  arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p1roundswon;
+                }
                 i++;
                 //set score of the stuff
                 //change color if bye
-                arrG[i].childNodes[1].innerHTML=key.player2.string;
+                arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player2string;
+                if(closed==true){
+                  arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p2roundswon;
+                }
                 i++;
 
             }
@@ -271,9 +326,11 @@ function setName(pArray,player){
 }
 
 function closeTour(){
-  //seteditable rectClick==match
+  //seteditable closed=true;
+  //
   //send tournament closed
 }
+
 function parsePlayer(pString){
   pArray=[];
   var lIndex=0;
@@ -307,9 +364,11 @@ function getTour(id,player,playerText,callback){
   xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
 }
+
 function callback1(myResponse,id,player,playerText){
   document.getElementById("title").innerHTML = myResponse.data.tname;
   document.getElementById("desc").innerHTML = myResponse.data.description;
+  closed=myResponse.data.closed;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
   //TODO implement tourmanet closed
