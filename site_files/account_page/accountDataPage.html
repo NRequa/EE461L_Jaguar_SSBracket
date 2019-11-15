@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script src="../res/jquery.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -51,7 +52,7 @@
 			<nav id="sidebar">
 				<div id="sidebar-header">
 					<h3>Account Name</h3>
-					<img id="Avatar" src="images/userImage.png" height="180" width="180">
+					<img id="Avatar" src="" height="180" width="180">
 				</div>
 
 				<ul class="list-unstyled">
@@ -107,32 +108,23 @@
 								<label for="regUserName">Current Password</label>
 								<input type="text" class="form-control" id="regUserName"  placeholder="Current Password">
 							</div>
-			
+
 							<div class="form-group">
 								<label for="regPassword">New Password</label>
 								<input type="password" class="form-control" id="regPass"  placeholder="Password">
 							</div>
-			
+
 							<div class="form-group">
 								<label for="regPasswordConfirm">Confirm New Password</label>
 								<input type="password" class="form-control" id="confirmPass" placeholder="Re-enter password">
 							</div>
-			
+
 							<div class="form-group">
 								<output id="passwordOK"></output>
 							</div>
-			
+
 							<button id="submit" disabled="true" type="submit" class="btn btn-primary" onclick="resetPassword()">Reset</button>
 						</div>
-
-						<div class="radio">
-							<label><input type="radio" name="aviSelect" value="default" checked><img class="thumbnail" src="images/default.jpg"></label>
-						  </div>
-						<div class="radio">
-							<label><input type="radio" name="aviSelect" value="smashBall"><img class="thumbnail" src="images/smashBall.jpg"></label>
-						</div>
-
-						<button class="btn btn-primary" onclick="changeAvatar()">Change Avatar</button>
 
 						<h3>Add Friends</h3>
 						<div  id="friendForm" class="accountForms"  onsubmit="addBuddy()">
@@ -140,11 +132,43 @@
 								<label for="friendUserName">Friend Name</label>
 								<input type="text" class="form-control" id="palUserName"  placeholder="Friend Name">
 							</div>
-			
+
 							<button id="addPal" onclick="addBuddy()"  type="submit" class="btn btn-primary">Add Friend</button>
 						</div>
-						
-						
+
+						<h3>Change Profile Picture</h3>
+						<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							Select Picture
+						</button>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Available Profile Pictures</li>
+							<li>
+								<button onclick="changePictureRequest('mario.jpeg')"><img src="images/mario.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('yoshi.jpeg')"><img src="images/yoshi.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('captainfalcon.jpeg')"><img src="images/captainfalcon.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('donkeykong.jpeg')"><img src="images/donkeykong.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('fox.jpeg')"><img src="images/fox.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('jigglypuff.jpeg')"><img src="images/jigglypuff.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('kirby.jpeg')"><img src="images/kirby.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('link.jpeg')"><img src="images/link.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('luigi.jpeg')"><img src="images/luigi.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('ness.jpeg')"><img src="images/ness.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('pikachu.jpeg')"><img src="images/pikachu.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('samus.jpeg')"><img src="images/samus.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('smashBall.jpg')"><img src="images/smashBall.jpg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('default.jpg')"><img src="images/default.jpg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('genericuser.png')"><img src="images/genericuser.png" height="60" width="60"></button>
+							</li>
+						</ul>
+					</div>
 
 					<div id=tournSect>
 						<h1>Data by Tournament</h1>

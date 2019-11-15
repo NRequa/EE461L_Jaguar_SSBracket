@@ -62,9 +62,9 @@ function confirmPassword(){
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
        //var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-      // var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
-       var apiCall = "http://localhost:8090/api/v1/user/113";
-
+       var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
+       //var apiCall = "http://localhost:8090/api/v1/user/113";
+       changeProfilePicture("notavailable.jpeg");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             console.log(this.readyState);
@@ -77,8 +77,7 @@ function populateTables(){
                     populateTournTable(response);
                     populateCharTable(response);
                     populateFriendTable(response);
-                    changeProfilePicture("smashBall.jpg");
-                    //changeProfilePicture(response.data.avatarName);
+                    changeProfilePicture(response.data.avatarName);
 
                 }
                 else{
@@ -215,8 +214,8 @@ function changeProfilePicture(imageName){
 function addBuddy(){
     //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/addfriend' + sessionStorage.getItem("userId");
     var apiCall = "http://localhost:8090/api/v1/user/addfriend/261";
-    
-  
+
+
     var formData = {
         "username" : $('input[id=palUserName]').val(),
     }
@@ -242,36 +241,26 @@ function addBuddy(){
     xmlhttp.send(JSON.stringify(formData));
 }
 
-function changeAvatar(){
-    var aviValue = document.querySelector('input[name="aviSelect"]:checked').value;
-    changeProfilePicture(aviValue + ".jpg");
-    //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/updateavatar' + sessionStorage.getItem("userId");
-    var apiCall = "http://localhost:8090/api/v1/user/updateavatar/261";
-    
-  
-    var formData = {
-        "avatarName" : aviValue,
-    }
+function changePictureRequest(imageName){
+  var myuserid = sessionStorage.getItem("userId");
+  var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/updateavatar/'+myuserid;
+  var formData = {
+      "avatarName" : imageName
+  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+      if(this.readyState == 4 && this.status == 200){
+          var response = JSON.parse(this.responseText);
+          if(response.status){
+            console.log(response);
+            changeProfilePicture(response.data.avatarName);
+          }
+      }
+  };
 
-
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-        console.log(this.readyState);
-        console.log(this.status);
-        console.log(this.responseText);
-        if(this.readyState == 4 && this.status == 200){
-            
-        }
-
-        else if(this.readyState == 4 && this.status == 400){
-            alert("Error: Avatar not updated");
-        }
-    };
-
-    xmlhttp.open("PATCH",apiCall);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-   // xmlhttp.setRequestHeader("Accept", "*/*");
-    xmlhttp.send(JSON.stringify(formData));
+  xmlhttp.open("PATCH",apiCall);
+  xmlhttp.setRequestHeader("Content-Type", "application/json");
+  xmlhttp.send(JSON.stringify(formData));
 }
 
 window.onload = populateTables;
