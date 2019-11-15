@@ -61,9 +61,7 @@ function confirmPassword(){
 }
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
-       //var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-       var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
-       //var apiCall = "http://localhost:8090/api/v1/user/113";
+    var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
        changeProfilePicture("notavailable.jpeg");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -72,7 +70,7 @@ function populateTables(){
             if(this.readyState == 4 && this.status == 200){
                 var response = JSON.parse(this.responseText);
                 if(response["status"] == "OK"){
-
+                    document.getElementById("accName").innerHTML = response["data"]["username"];
                     populateOverview(response);
                     populateTournTable(response);
                     populateCharTable(response);
@@ -212,8 +210,8 @@ function changeProfilePicture(imageName){
 }
 
 function addBuddy(){
-    //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/addfriend' + sessionStorage.getItem("userId");
-    var apiCall = "http://localhost:8090/api/v1/user/addfriend/261";
+    var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/addfriend/' + sessionStorage.getItem("userId");
+    
 
 
     var formData = {
