@@ -62,8 +62,8 @@ function confirmPassword(){
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
        //var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
-       var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
-       //var apiCall = "http://localhost:8080/api/v1/user/113";
+      // var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
+       var apiCall = "http://localhost:8090/api/v1/user/113";
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -210,6 +210,68 @@ function changeProfilePicture(imageName){
       document.getElementById("Avatar").src = "images/"+imageName;
   }
   console.log("profile picture change function ran")
+}
+
+function addBuddy(){
+    //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/addfriend' + sessionStorage.getItem("userId");
+    var apiCall = "http://localhost:8090/api/v1/user/addfriend/261";
+    
+  
+    var formData = {
+        "username" : $('input[id=palUserName]').val(),
+    }
+
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        console.log(this.readyState);
+        console.log(this.status);
+        console.log(this.responseText);
+        if(this.readyState == 4 && this.status == 200){
+            alert("Friend added!");
+        }
+
+        else if(this.readyState == 4 && this.status == 400){
+            alert("That user doesn't exist!");
+        }
+    };
+
+    xmlhttp.open("PATCH",apiCall);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+   // xmlhttp.setRequestHeader("Accept", "*/*");
+    xmlhttp.send(JSON.stringify(formData));
+}
+
+function changeAvatar(){
+    var aviValue = document.querySelector('input[name="aviSelect"]:checked').value;
+    changeProfilePicture(aviValue + ".jpg");
+    //var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/updateavatar' + sessionStorage.getItem("userId");
+    var apiCall = "http://localhost:8090/api/v1/user/updateavatar/261";
+    
+  
+    var formData = {
+        "avatarName" : aviValue,
+    }
+
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        console.log(this.readyState);
+        console.log(this.status);
+        console.log(this.responseText);
+        if(this.readyState == 4 && this.status == 200){
+            
+        }
+
+        else if(this.readyState == 4 && this.status == 400){
+            alert("Error: Avatar not updated");
+        }
+    };
+
+    xmlhttp.open("PATCH",apiCall);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+   // xmlhttp.setRequestHeader("Accept", "*/*");
+    xmlhttp.send(JSON.stringify(formData));
 }
 
 window.onload = populateTables;
