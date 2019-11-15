@@ -91,4 +91,12 @@ public class MatchResultController {
     {
         return new ResponseWrapper<>( matchMainService.updateP2String( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
     }
+
+    @CrossOrigin
+    @PatchMapping(value = "/setcharacters/{id}")
+    public ResponseWrapper<MatchResult> updateMatchCharacters(@Valid @RequestBody MatchResult matchResult,
+                                                       @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( matchMainService.updateCharsPlayed( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
 }

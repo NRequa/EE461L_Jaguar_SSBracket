@@ -96,6 +96,14 @@ public class MatchServiceImp extends MatchService {
     }
 
     @Override
+    public MatchResult updateCharsPlayed( MatchResult o, int id) throws ResourceNotFoundException{
+        MatchResult oldMatchResult = getById( id );
+        oldMatchResult.setP1characterplayed(o.getP1characterplayed());
+        oldMatchResult.setP2characterplayed(o.getP2characterplayed());
+        return matchResultRepository.save(oldMatchResult);
+    }
+
+    @Override
     public MatchResult getById( int id ) throws ResourceNotFoundException {
         return checkIfIdIsPresentAndReturnMatchResult( id );
     }
