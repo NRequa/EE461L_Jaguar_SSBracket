@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<script src="../res/jquery.js"></script>
-		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<script src="script.js"></script>
 		<link rel="stylesheet" type="text/css" href="accountDataStyle.css">
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
@@ -98,10 +98,53 @@
 						</table>
 					</div>
 
-					<div id=settingsSect>
+					<div id=settingsSect class="section">
 						<h1>Adjust Settings</h1>
-						<button id="passReset">Reset Password</button>
-					</div>
+
+						<h3>Reset Password</h3>
+						<div  id="regForm" class="accountForms" oninput="confirmPassword()" onsubmit="resetPassword()">
+							<div class="form-group">
+								<label for="regUserName">Current Password</label>
+								<input type="text" class="form-control" id="regUserName"  placeholder="Current Password">
+							</div>
+			
+							<div class="form-group">
+								<label for="regPassword">New Password</label>
+								<input type="password" class="form-control" id="regPass"  placeholder="Password">
+							</div>
+			
+							<div class="form-group">
+								<label for="regPasswordConfirm">Confirm New Password</label>
+								<input type="password" class="form-control" id="confirmPass" placeholder="Re-enter password">
+							</div>
+			
+							<div class="form-group">
+								<output id="passwordOK"></output>
+							</div>
+			
+							<button id="submit" disabled="true" type="submit" class="btn btn-primary" onclick="resetPassword()">Reset</button>
+						</div>
+
+						<div class="radio">
+							<label><input type="radio" name="aviSelect" value="default" checked><img class="thumbnail" src="images/userImage.png"></label>
+						  </div>
+						<div class="radio">
+							<label><input type="radio" name="aviSelect" value="smashBall"><img class="thumbnail" src="images/smashBall.jpg"></label>
+						</div>
+
+						<button class="btn btn-primary" onclick="changeAvatar()">Change Avatar</button>
+
+						<h3>Add Friends</h3>
+						<div  id="friendForm" class="accountForms"  onsubmit="addBuddy()">
+							<div class="form-group">
+								<label for="friendUserName">Friend Name</label>
+								<input type="text" class="form-control" id="palUserName"  placeholder="Friend Name">
+							</div>
+			
+							<button id="addPal" onclick="addBuddy()"  type="submit" class="btn btn-primary">Add Friend</button>
+						</div>
+						
+						
 
 					<div id=tournSect>
 						<h1>Data by Tournament</h1>

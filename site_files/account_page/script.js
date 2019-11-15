@@ -49,6 +49,16 @@ function swapPage(pageName){
     }
 }
 
+function confirmPassword(){
+    if(document.getElementById("regPass").value != document.getElementById("confirmPass").value ){
+        document.getElementById("passwordOK").value = "Passwords don't match.";
+        document.getElementById("submit").disabled = true;
+    }
+    else{
+        document.getElementById("passwordOK").value = "";
+        document.getElementById("submit").disabled = false;
+    }
+}
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
        //var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/signin';
