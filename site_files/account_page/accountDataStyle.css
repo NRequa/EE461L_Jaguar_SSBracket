@@ -46,3 +46,12 @@ a, a:hover, a:focus {
     color: black;
     background: #fff;
 }
+
+.section{
+    height: 100%;
+}
+
+.thumbnail{
+    height: 150px;
+    width: 150px; 
+}

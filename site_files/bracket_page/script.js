@@ -1,11 +1,14 @@
 var gNum;//used for tracking ids for each name element
 var closed;//used for if the tournament is closed for
+var size;//size of tournament
 var id;
 var mid;
 
 function loading(){
+  logInDisplay();
   var parameters = location.search.substring(1);
   var temp = parameters.split("=");
+  closed=false;
   id = unescape(temp[1]);
   var playerText=[];
   mid=[];
@@ -185,33 +188,14 @@ function rectClick(g_id){//set Editable
   console.log("clicked");
   console.log(g_id);
 
-  if(closed=false){
-  var getG=document.getElementById(g_id);
-  var cText=getG.childNodes[1];
-  var mod=document.getElementById("modal-title");
-  mod.innerHTML="Edit Player";
-  mod=document.getElementById("modal-text");
-  mod.innerHTML="Enter Player Name (To edit score first close the tournament)";
-  mod=document.getElementById("modal-ta");
-  mod.value="";
-  console.log(g_id);
-  console.log(cText.innerHTML);
-  mod.value=cText.innerHTML;
-  mod.setAttribute("rows","1");
-  mod.setAttribute("cols","50");
-  mod=document.getElementsByClassName("modal-data");
-  mod.innerHTML=""+g_id;
-  $("#myModal").modal();
-  }
-  else{
-    //TODO change stuff
+  if(closed==false/*&&g_id<size*/){
     var getG=document.getElementById(g_id);
-    var cText=getG.childNodes[3];
+    var cText=getG.childNodes[1];
     var mod=document.getElementById("modal-title");
-    mod.innerHTML="Enter Score";
-    mod=document.getElementById("modal-text");
-    mod.innerHTML="Enter Score";
-    mod=document.getElementById("modal-ta");
+    mod.innerHTML="Edit Player";
+    mod=document.getElementById("modal-text1");
+    mod.innerHTML="Enter Player Name (To edit score first close the tournament)";
+    mod=document.getElementById("modal-ta1");
     mod.value="";
     console.log(g_id);
     console.log(cText.innerHTML);
@@ -220,6 +204,38 @@ function rectClick(g_id){//set Editable
     mod.setAttribute("cols","50");
     mod=document.getElementsByClassName("modal-data");
     mod.innerHTML=""+g_id;
+    mod=document.getElementById("modal-text2");
+    mod.innerHTML="Enter Player Character";
+    mod=document.getElementById("modal-ta2");
+    mod.value="";
+    mod.setAttribute("rows","1");
+    mod.setAttribute("cols","50");
+    //TODO patch for charcter
+    $("#myModal").modal();
+  }
+  else{
+    //TODO get if match is finished
+    var getG=document.getElementById(g_id);
+    var cText=getG.childNodes[3];
+    var mod=document.getElementById("modal-title");
+    mod.innerHTML="Enter Score";
+    mod=document.getElementById("modal-text1");
+    mod.innerHTML="Enter Score for Player1";
+    mod=document.getElementById("modal-ta1");
+    mod.value="";
+    console.log(g_id);
+    console.log(cText.innerHTML);
+    mod.value=cText.innerHTML;
+    mod.setAttribute("rows","1");
+    mod.setAttribute("cols","5");
+    mod=document.getElementsByClassName("modal-data");
+    mod.innerHTML=""+g_id;
+    mod=document.getElementById("modal-text2");
+    mod.innerHTML="Enter Score for Player2";
+    mod=document.getElementById("modal-ta2");
+    mod.value="";
+    mod.setAttribute("rows","1");
+    mod.setAttribute("cols","5");
     $("#myModal").modal();
     //integer error testing
   }
@@ -229,15 +245,113 @@ function rectClick(g_id){//set Editable
 function modalEnter(){
   var mod=document.getElementsByClassName("modal-data");
   var data=mod.innerHTML;
-  mod=document.getElementById("modal-ta");
+  if(closed==false){
+  mod=document.getElementById("modal-ta1");
   setOneName(data,mod.value);
-
 }
-function setOneName(id,text){
+else{
+  mod=document.getElementById("modal-ta1");
+  var score1=mod.value;
+  mod=document.getElementById("modal-ta2");
+  var score2=mod.value;
+  setScore(data,score1,score2);
+}
+}
+async function setScore(g_id,score1,score2){
+    var arrG=document.getElementsByTagName('g');
+    var ret=await patchScore(mid[g_id/2],score1,score2)
+    if(ret==1){
+      //success!!
+      var pid=(g_id/2)*2;
+        arrG[pid].childNodes[3].innerHTML=score1;
+        arrG[pid+1].childNodes[3].innerHTML=score2;
+    }
+}
+function patchScore(mtchid,score1,score2){
+  return new Promise(function(resolve,reject){
+    var xmlhttp = new XMLHttpRequest();
+    var matchId=mtchid;
+    var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/"+matchid;
+    var myResponse;
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ) {
+            if(this.status == 200)
+              myResponse = JSON.parse(this.responseText);
+              console.log(myResponse)
+              resolve(1);
+            }
+            else{
+              reject(0);
+            }
+          }
+    };
+    var win=false;
+    if(score1>score2){
+      win=true;
+    }
+    else if(score1==score2){
+      reject(0);
+    }
+
+    console.log(playertext);
+      xmlhttp.open("PATCH", mApi, true);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      xmlhttp.send(JSON.stringify({
+        "p1win":win,
+        "p1roundswon":score1,
+        "p2roundswon":score2,
+        "completed":true
+      })
+      );
+  })
+}
+async function setOneName(g_id,text){
   //parsing for length of text
   //patch for matches
   var arrG=document.getElementsByTagName('g');
-  arrG[id].childNodes[1].innerHTML=text;
+  arrG[g_id].childNodes[1].innerHTML=text;
+  await patchPlayer(id,mid[g_id/2],g_id%2,text)
+}
+function patchPlayer(tourid,mtchid,playernum,playertext){
+  return new Promise(function(resolve,reject){
+  var xmlhttp = new XMLHttpRequest();
+  var matchId=mtchid;
+  var p1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setp1string/"+mtchid;
+  var p2Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setp2string/"+mtchid;
+  var myReponse;
+  if(playertext==""){
+    playertext="Bye";
+  }
+  else if(playertext=="nullzeroplayer"){
+    playertext="";
+  }
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse)
+            resolve();
+        }
+  };
+
+
+  console.log(playertext);
+  if(playernum==0){
+    xmlhttp.open("PATCH", p1Api, true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send(JSON.stringify({
+      "player1string":playertext
+    })
+    );
+  }
+  else{
+    xmlhttp.open("PATCH", p2Api, true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send(JSON.stringify({
+      "player2string":playertext
+    })
+    );
+  }
+  })
 }
 function setName(pArray,player){
   var xmlhttp = new XMLHttpRequest();
@@ -252,13 +366,19 @@ function setName(pArray,player){
             var key;
             var i=0;
             for(key in myResponse.data.matchResults){
-              mid[i/2]=key.id;
+              mid[i/2]=myResponse.data.matchResults[key].id;
               //cutNames
-                arrG[i].childNodes[1].innerHTML=key.player1.string;
+                arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player1string;
+                if(closed==true){
+                  arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p1roundswon;
+                }
                 i++;
                 //set score of the stuff
                 //change color if bye
-                arrG[i].childNodes[1].innerHTML=key.player2.string;
+                arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player2string;
+                if(closed==true){
+                  arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p2roundswon;
+                }
                 i++;
 
             }
@@ -271,9 +391,13 @@ function setName(pArray,player){
 }
 
 function closeTour(){
-  //seteditable rectClick==match
+  closed=true;
+  //patch tournament closed
   //send tournament closed
+  //make matches good
+
 }
+
 function parsePlayer(pString){
   pArray=[];
   var lIndex=0;
@@ -307,13 +431,15 @@ function getTour(id,player,playerText,callback){
   xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
 }
+
 function callback1(myResponse,id,player,playerText){
   document.getElementById("title").innerHTML = myResponse.data.tname;
   document.getElementById("desc").innerHTML = myResponse.data.description;
+  closed=myResponse.data.closed;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
   //TODO implement tourmanet closed
-  //closed=true;
+  closed=myResponse.data.closed;
 
   createBracket(player,playerText);
 }
@@ -349,11 +475,12 @@ function createTour(){
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
+            var touid=myResponse.data.id;
             playerText=parsePlayer(tPlayers);
             seed=seeding(tSize);
             size=playerText.length;
             var mtchid=[];
-            for(i=0;i<tSize/2;i++){
+            for(i=0;i<tSize/2;i++){//create round 1 matches
               sd1=seed[i*2];
               sd2=seed[i*2+1];
               if(sd1<=size){
@@ -374,10 +501,23 @@ function createTour(){
               //search for player, if not guest player
 
               var id2=await findplayer(player2)
-              mtchid[i]=await postMatch(myResponse.data.id,id1,id2,player1,player2)
+              mtchid[i]=await postMatch(touid,id1,id2,1)
             //document.getElementById("test").innerHTML = myResponse.data.tname;
+            await patchPlayer(touid,mtchid[i],0,player1);
+            await patchPlayer(touid,mtchid[i],1,player2);
         }
-        window.location.href = "bracket.html?id="+myResponse.data.id;
+        //create the rest of the mattches
+        var counter=tSize/2;
+        while(!(counter==1)){
+          counter=counter/2;
+          var tempPlayId=await findplayer("");
+          for(i=0;i<counter;i++){
+            var mtchid=await postMatch(touid,tempPlayId,tempPlayId);
+            await patchPlayer(touid,mtchid,0,"nullzeroplayer");
+            await patchPlayer(touid,mtchid,1,"nullzeroplayer");
+          }
+        }
+        window.location.href = "bracket.html?id="+touid;
       }
   };
 
@@ -423,7 +563,7 @@ function findplayer(player){
   xmlhttp.send();
   })
 }
-function postMatch(tid,player1,player2,player1str,player2str){
+function postMatch(tid,player1,player2){
   return new Promise(function(resolve,reject){
     var xmlhttp = new XMLHttpRequest();
     var matchApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/";
@@ -443,11 +583,9 @@ function postMatch(tid,player1,player2,player1str,player2str){
       "p1win":false,
       "player1":player1,
       "p1characterplayed":"None",
-      "player1string":player1str,
       "p1roundswon":0,
       "player2":player2,
       "p2characterplayed":"None",
-      "player2string":player2str,
       "p2roundswon":0,
       "event":tid,
       "level":1
@@ -471,5 +609,22 @@ function seeding(numPlayers){
       out.push(length-d);
     });
     return out;
+  }
+}
+
+function logInDisplay(){
+  if(sessionStorage.getItem("userId") != -1){
+      // Hide log in/register
+      $(".guestLinks").hide();
+      // Show account data link
+      $(".logInLinks").show();
+  }
+
+  else{
+      //Hide account data
+      $(".logInLinks").hide();
+      // Show account data link
+      $(".guestLinks").show();
+      
   }
 }

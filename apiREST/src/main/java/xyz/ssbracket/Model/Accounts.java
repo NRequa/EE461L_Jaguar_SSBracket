@@ -72,6 +72,10 @@ public class Accounts implements Serializable {
         return this.myuser;
     }
 
+    public void setPassword(String pass){
+        this.password = pass;
+    }
+
 
 
 }

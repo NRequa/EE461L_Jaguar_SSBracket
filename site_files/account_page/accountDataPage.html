@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="../res/jquery.js"></script>
-		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<script src="script.js"></script>
 		<link rel="stylesheet" type="text/css" href="accountDataStyle.css">
 		<meta charset="UTF-8">
 		<title>SSBracket</title>
@@ -50,8 +51,8 @@
 		<div class="siderbar-wrapper col-md-2">
 			<nav id="sidebar">
 				<div id="sidebar-header">
-					<h3>Account Name</h3>
-					<img id="Avatar" src="images/userImage.png" height="180" width="180">
+					<h3 id="accName">Account Name</h3>
+					<img id="Avatar" src="" height="180" width="180">
 				</div>
 
 				<ul class="list-unstyled">
@@ -59,7 +60,7 @@
 					<li><a onclick="swapPage(1)">Character Stats</a></li>
 					<li><a onclick="swapPage(2)">Friend Stats</a></li>
 					<li><a onclick="swapPage(3)">Settings</a></li>
-					<li><a href="loginPrompt.html">Log Out</a></li>
+					<li><a onclick="swapPage(4)">Log Out</a></li>
 				</ul>
 
 			</nav>
@@ -98,9 +99,71 @@
 						</table>
 					</div>
 
-					<div id=settingsSect>
+					<div id=settingsSect class="section">
 						<h1>Adjust Settings</h1>
-						<button id="passReset">Reset Password</button>
+
+						<h3>Reset Password</h3>
+						<div  id="resetForm" class="accountForms" oninput="confirmPassword()" onsubmit="resetPassword()">
+							<div class="form-group">
+								<label for="regPassword">New Password</label>
+								<input type="password" class="form-control" id="regPass"  placeholder="Password">
+							</div>
+
+							<div class="form-group">
+								<label for="regPasswordConfirm">Confirm New Password</label>
+								<input type="password" class="form-control"  id="confirmPass" placeholder="Re-enter password">
+							</div>
+
+							<div class="form-group">
+								<output id="passwordOK"></output>
+							</div>
+
+							<button id="submit" disabled="true" type="reset" class="btn btn-primary" onclick="resetPassword()">Reset</button>
+						</div>
+
+						<h3>Add Friends</h3>
+						<div  id="friendForm" class="accountForms"  onsubmit="addBuddy()">
+							<div class="form-group">
+								<label for="friendUserName">Friend Name</label>
+								<input type="text" class="form-control" id="palUserName"  placeholder="Friend Name">
+							</div>
+
+							<button id="addPal" onclick="addBuddy()"  type="submit" class="btn btn-primary">Add Friend</button>
+							<button id="killPall" onclick="killFriend()" type="submit" class="btn btn-primary">Remove Friend</button>
+						</div>
+
+						<h3>Change Profile Picture</h3>
+						<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							Select Picture
+						</button>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Available Profile Pictures</li>
+							<li>
+								<button onclick="changePictureRequest('mario.jpeg')"><img src="images/mario.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('yoshi.jpeg')"><img src="images/yoshi.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('captainfalcon.jpeg')"><img src="images/captainfalcon.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('donkeykong.jpeg')"><img src="images/donkeykong.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('fox.jpeg')"><img src="images/fox.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('jigglypuff.jpeg')"><img src="images/jigglypuff.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('kirby.jpeg')"><img src="images/kirby.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('link.jpeg')"><img src="images/link.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('luigi.jpeg')"><img src="images/luigi.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('ness.jpeg')"><img src="images/ness.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('pikachu.jpeg')"><img src="images/pikachu.jpeg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('samus.jpeg')"><img src="images/samus.jpeg" height="60" width="60"></button>
+							</li>
+							<li>
+								<button onclick="changePictureRequest('smashBall.jpg')"><img src="images/smashBall.jpg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('default.jpg')"><img src="images/default.jpg" height="60" width="60"></button>
+								<button onclick="changePictureRequest('genericuser.png')"><img src="images/genericuser.png" height="60" width="60"></button>
+							</li>
+						</ul>
 					</div>
 
 					<div id=tournSect>
@@ -115,8 +178,6 @@
 
 					<div id=friendsSect>
 						<h1>Friends Stats</h1>
-						<p id=friendNumber>null</p>
-						<button onclick="getFriendNumber();" style="color: black;">Get friend number</button>
 						<table id="friendTable" class="table table-striped">
 							<tr>
 								<th>Friend Name</th>
