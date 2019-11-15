@@ -535,7 +535,7 @@ function seeding(numPlayers){
 }
 
 function logInDisplay(){
-  if(sessionStorage.getItem("userId") != null){
+  if(sessionStorage.getItem("userId") != -1){
       // Hide log in/register
       $(".guestLinks").hide();
       // Show account data link
