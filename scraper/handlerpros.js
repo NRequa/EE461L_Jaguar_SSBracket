@@ -41,20 +41,44 @@ module.exports.scrapeSSBWorldPros = (event, context, callback) => {
   })
   .then(function(data) {
 	  data.forEach(function(el, i) {
-		  let proStats = [];
-	      extractDataFromHTML(el.data, proStats, '.col-3', '.players-list', [{name: "charName", fn: getProCharName}, {name: "charPercent", fn: getProCharPercent}]);
+		  let characterStats = [];
+		  let playerObject = {};
+		  playerObject.pandaGlobalRanking = i;
+		  playerObject.name = proSSBWorldNames[i];
+	      extractDataFromHTML(el.data, characterStats, '.col-3', '.players-list', [{name: "charName", fn: getProCharName}, {name: "charPercent", fn: getProCharPercent}]);
+		  characterStats.forEach(function(character, j) {
+			  if(j > 2) return; // just want top 3 characters
+			  switch(j) {
+				  case 0:
+				      playerObject.firstCharName = character.charName;
+					  playerObject.firstCharPercent = character.charPercent;
+					  break;
+				  case 1:
+				      playerObject.secondCharName = character.charName;
+					  playerObject.secondCharPercent = character.charPercent;
+					  break;
+				  case 2:
+				      playerObject.thirdCharName = character.charName;
+					  playerObject.thirdCharPercent = character.charPercent;
+					  break;
+				  default: // do nothing
+			  }
+		  });
 		  let winloss = extractStringFromHTML(el, "SSB World Set Record:", 6, "<").trim();
 		  let games = parseGames(winloss);
-		  games.name = proSSBWorldNames[i];
-		  console.log(proStats);
-		  console.log(games);
-		  //characterGames.push(games);
+		  playerObject.totalGames = games.total;
+		  playerObject.wins = games.wins;
+		  playerObject.losses = games.losses;
+
+		  console.log(characterStats);
+		  console.log(playerObject);
+		  proStats.push(playerObject);
 	  });
-      return Promise.resolve(42);
+      return Promise.resolve(proStats);
   })
   .then(function(data) {
       //characterData = combine(characterWeight, characterDash, characterSpotdodge, characterTraction, characterGames);
-      return Promise.resolve(42);
+      return Promise.resolve(data);
   })
   //.then(function(data) {
 	  //return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/prodata', JSON.stringify(data))
@@ -69,20 +93,42 @@ function getProPlayerName(row) { // TODO: edit so it doesn't have the number!
 	return row.text();
 }
 
-function getProCharName(row) {
+function getProCharName(row) { // TODO: edit so it doesn't have the number!
 	return row.children().eq(0).children().eq(0).attr('href');
 }
 
-function getProCharPercent(row) {
+function getProCharPercent(row) { // TODO: edit so it doesn't have the number!
 	return row.children().eq(1).text();
 }
 
-function parseProURL(url) { //https://ssbworld.com/players/
-	url = url.substr(29).trim();
-	let i = 0;
-	while(url.charAt(i) != "/") {i++;} // get us to the actual name!
-	i++;
-	return url.substr(i);
+function parseProURL(url) {
+	let trimmed = url.substr(32).trim(); // remove the https://ssbworld.com/characters/ part
+	let output = "";
+	let prevChar = " ";
+	for(let i = 0; i < trimmed.length; i++) {
+		if(trimmed.charCodeAt(i) === 45) { 
+		    output = output.concat(" ");
+			prevChar = " ";
+		}
+		else if(prevChar === " ") {
+			prevChar = trimmed.charAt(i).toUpperCase();
+			output = output.concat(prevChar);
+		}
+		else {
+			prevChar = trimmed.charAt(i);
+			output = output.concat(prevChar);
+		}
+	}
+	// Some conversions to SSBWiki naming conventions
+	if(output === "King K Rool") output = "King K. Rool";
+	else if(output === "Bowser Jr") output = "Bowser Jr.";
+	else if(output === "Dr Mario") output = "Dr. Mario";
+	else if(output === "Mr Game And Watch") output = "Mr. Game & Watch";
+	else if(output === "Rob") output = "R.O.B.";
+	else if(output === "Banjo And Kazooie") output = "Banjo & Kazooie";
+	else if(output === "Pac Man") output = "Pac-Man";
+	else if(output === "Rosalina And Luma") output = "Rosalina";
+	return output;
 }
 
 function putIntoS3(bucket, key, data) {
