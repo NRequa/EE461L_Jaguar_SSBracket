@@ -83,6 +83,10 @@ function getSSBWorldWinLose(row) {
 	If you aren't using some optional values, input null!
 */
 function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
+	if(typeof html != "string") return null;
+	if(array == null) return null;
+	if(typeof array != "object") return null;
+	if(typeof elementSelectors != "object") return null;
 	const $ = cheerio.load(html);
 	var rows;
 	var iterating = false;

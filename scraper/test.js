@@ -195,8 +195,14 @@ function getTitle(row) {
 	return row.children().eq(0).attr('title');
 }
 
+function returnAString(row) {return "hello";}
+function returnANumber(row) {return 42;}
+function returnNull(row) {return null;}
+
+
 describe('general tests', function() {
 	var testHTML = '<body><table><tbody class="awesome"><tr>0</tr><tr>1</tr><tr>2</tr><tr>3</tr><tr>4</tr><tr>5</tr></tbody></table><table><tbody class="awesome notawesome"><tr>5</tr><tr>4</tr><tr>3</tr><tr>2</tr><tr>1</tr><tr>0</tr></tbody></table><ul class="awesomer"><li class="skipme"><a href="bad.link">NO</a></li><li><a href="cultofthepartyparrot.com">cult</a></li><li><a href="google.com">goog</a></li><li><a href="yahoo.com" title="notnull">yaho</a></li></ul></body>';
+	
 	describe('testing extractDataFromHTML', function() {
 		it('should return true selecting the right test table', function() {
 			let array = [];
@@ -212,12 +218,40 @@ describe('general tests', function() {
 		        null);
 			assert.equal(array.length == 1, true);
 		});
-		it('should return an empty array when given invalid arguments', function() {
+		it('should return an empty array when given invalid row definition', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, null, '.notawesome', 
                 [{name: "test", fn: getTableRow}],
 		        null);
 			assert.equal(array.length == 0, true);
+		});
+		it('should return null when given invalid html', function() {
+			let array = [];
+			let val = helpers.extractDataFromHTML(null, array, '.awesome', '.notawesome', 
+                [{name: "test", fn: getTableRow}],
+		        null);
+			assert.equal(val == null, true);
+		});
+		it('should return null when given null array', function() {
+			let array = [];
+			let val = helpers.extractDataFromHTML(testHTML, null, '.awesome', '.notawesome', 
+                [{name: "test", fn: getTableRow}],
+		        null);
+			assert.equal(val == null, true);
+		});
+		it('should return null when given a non-object array', function() {
+			let array = [];
+			let val = helpers.extractDataFromHTML(testHTML, 42, '.awesome', '.notawesome', 
+                [{name: "test", fn: getTableRow}],
+		        null);
+			assert.equal(val == null, true);
+		});
+		it('should return null when given a non-object elementSelectors array', function() {
+			let array = [];
+			let val = helpers.extractDataFromHTML(testHTML, array, '.awesome', '.notawesome', 
+                42,
+		        null);
+			assert.equal(val == null, true);
 		});
 		it('should exclude the first li element with anchor "bad.link"', function() {
 			let array = [];
@@ -251,7 +285,36 @@ describe('general tests', function() {
 		        [{type: "notTypeof", value: 'undefined'}]);
 			assert.equal(array.length == 1, true);
 		});
+		it('should exclude test condition values from returned objects', function() {
+			let array = [];
+			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
+                [{name: "test", fn: getTitle},
+				 {name: "link", fn: getLink}],
+		        [{type: "notTypeof", value: 'undefined'}]);
+			assert.equal(array[0].test == undefined, true);
+		});
+		it('should return an object with the specified parameters', function() {
+			let array = [];
+			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
+                [{name: "string", fn: returnAString},
+				 {name: "number", fn: returnANumber},
+			     {name: "nullval", fn: returnNull}],
+		        null);
+			assert.equal(array[0].string == "hello", true);
+			assert.equal(array[0].number == 42, true);
+			assert.equal(array[0].nullval == null, true);
+		});
+		it('should not return an object with unspecified parameters', function() {
+			let array = [];
+			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
+                [{name: "string", fn: returnAString},
+				 {name: "number", fn: returnANumber},
+			     {name: "nullval", fn: returnNull}],
+		        null);
+			assert.equal(array[0].unspecified == undefined, true);
+		});
 	});
+	
 	describe('testing extractStringFromHTML', function() {
 		it('should return "<tr>"', function() {
 			let value = helpers.extractStringFromHTML(testHTML, 'notawesome', 2, "5");
