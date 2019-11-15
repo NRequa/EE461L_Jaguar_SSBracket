@@ -103,12 +103,7 @@
 						<h1>Adjust Settings</h1>
 
 						<h3>Reset Password</h3>
-						<div  id="regForm" class="accountForms" oninput="confirmPassword()" onsubmit="resetPassword()">
-							<div class="form-group">
-								<label for="regUserName">Current Password</label>
-								<input type="text" class="form-control" id="regUserName"  placeholder="Current Password">
-							</div>
-
+						<div  id="resetForm" class="accountForms" oninput="confirmPassword()" onsubmit="resetPassword()">
 							<div class="form-group">
 								<label for="regPassword">New Password</label>
 								<input type="password" class="form-control" id="regPass"  placeholder="Password">
@@ -116,14 +111,14 @@
 
 							<div class="form-group">
 								<label for="regPasswordConfirm">Confirm New Password</label>
-								<input type="password" class="form-control" id="confirmPass" placeholder="Re-enter password">
+								<input type="password" class="form-control"  id="confirmPass" placeholder="Re-enter password">
 							</div>
 
 							<div class="form-group">
 								<output id="passwordOK"></output>
 							</div>
 
-							<button id="submit" disabled="true" type="submit" class="btn btn-primary" onclick="resetPassword()">Reset</button>
+							<button id="submit" disabled="true" type="reset" class="btn btn-primary" onclick="resetPassword()">Reset</button>
 						</div>
 
 						<h3>Add Friends</h3>

@@ -263,6 +263,34 @@ function changePictureRequest(imageName){
   xmlhttp.send(JSON.stringify(formData));
 }
 
+
+function resetPassword(){
+    var myuserid = sessionStorage.getItem("userId");
+    var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/updatePass/'+myuserid;
+    var formData = {
+        "username" :  "bigDummy",
+        "password" :  $('input[id=regPass]').val()
+    }
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var response = JSON.parse(this.responseText);
+            if(response.status){
+              console.log(response);
+              alert("Password changed!");
+            }
+
+            else{
+                alert("Password not reset, something went wrong.");
+            }
+        }
+    };
+  
+    xmlhttp.open("PATCH",apiCall);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify(formData));
+
+}
 window.onload = populateTables;
 
 /*
