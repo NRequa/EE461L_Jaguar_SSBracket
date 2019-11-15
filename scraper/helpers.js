@@ -140,6 +140,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			array.push(object);
 		});
 	}
+	console.log(array);
 	return array;
 }
 
