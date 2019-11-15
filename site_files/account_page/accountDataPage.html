@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="../res/jquery.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="accountDataStyle.css">
@@ -51,7 +51,7 @@
 			<nav id="sidebar">
 				<div id="sidebar-header">
 					<h3>Account Name</h3>
-					<img id="Avatar" src="images/userImage.png" height="180" width="180">
+					<img id="Avatar" src="" height="180" width="180">
 				</div>
 
 				<ul class="list-unstyled">
@@ -101,6 +101,39 @@
 					<div id=settingsSect>
 						<h1>Adjust Settings</h1>
 						<button id="passReset">Reset Password</button>
+
+
+					    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					      Change Profile Picture
+					    </button>
+					    <ul class="dropdown-menu">
+					      <li class="dropdown-header">Available Profile Pictures</li>
+					      <li>
+									<button onclick="changePictureRequest('mario.jpeg')"><img src="images/mario.jpeg" height="60" width="60"></button>
+					        <button onclick="changePictureRequest('yoshi.jpeg')"><img src="images/yoshi.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('captainfalcon.jpeg')"><img src="images/captainfalcon.jpeg" height="60" width="60"></button>
+					      </li>
+								<li>
+					        <button onclick="changePictureRequest('donkeykong.jpeg')"><img src="images/donkeykong.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('fox.jpeg')"><img src="images/fox.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('jigglypuff.jpeg')"><img src="images/jigglypuff.jpeg" height="60" width="60"></button>
+					      </li>
+								<li>
+					        <button onclick="changePictureRequest('kirby.jpeg')"><img src="images/kirby.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('link.jpeg')"><img src="images/link.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('luigi.jpeg')"><img src="images/luigi.jpeg" height="60" width="60"></button>
+					      </li>
+								<li>
+					        <button onclick="changePictureRequest('ness.jpeg')"><img src="images/ness.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('pikachu.jpeg')"><img src="images/pikachu.jpeg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('samus.jpeg')"><img src="images/samus.jpeg" height="60" width="60"></button>
+					      </li>
+								<li>
+									<button onclick="changePictureRequest('smashBall.jpg')"><img src="images/smashBall.jpg" height="60" width="60"></button>
+									<button onclick="changePictureRequest('userImage.png')"><img src="images/userImage.png" height="60" width="60"></button>
+									<button onclick="changePictureRequest('genericuser.png')"><img src="images/genericuser.png" height="60" width="60"></button>
+					      </li>
+					    </ul>
 					</div>
 
 					<div id=tournSect>

@@ -67,8 +67,8 @@ function populateTables(){
                     populateTournTable(response);
                     populateCharTable(response);
                     populateFriendTable(response);
-                    changeProfilePicture("smashBall.jpg");
-                    //changeProfilePicture(response.data.avatarName);
+                    changeProfilePicture("notavailable.jpeg");
+                    changeProfilePicture(response.data.avatarName);
 
                 }
                 else{
@@ -200,6 +200,28 @@ function changeProfilePicture(imageName){
       document.getElementById("Avatar").src = "images/"+imageName;
   }
   console.log("profile picture change function ran")
+}
+
+function changePictureRequest(imageName){
+  var myuserid = sessionStorage.getItem("userId");
+  var apiCall = 'http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/updateavatar/'+myuserid;
+  var formData = {
+      "avatarName" : imageName
+  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+      if(this.readyState == 4 && this.status == 200){
+          var response = JSON.parse(this.responseText);
+          if(response.status){
+            console.log(response);
+            changeProfilePicture(response.data.avatarName);
+          }
+      }
+  };
+
+  xmlhttp.open("PATCH",apiCall);
+  xmlhttp.setRequestHeader("Content-Type", "application/json");
+  xmlhttp.send(JSON.stringify(formData));
 }
 
 window.onload = populateTables;

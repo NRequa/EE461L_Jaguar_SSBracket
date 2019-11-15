@@ -86,7 +86,7 @@ public class User implements Serializable {
        this.numtournamentscreated = num_tournaments_created;
        this.numtournamentsparticipated = num_tournaments_participated;
        this.numtournamentswon = num_tournaments_won;
-       this.avatarName = "default";
+       this.avatarName = "genericuser.png";
      }
 
      public int getId(){
