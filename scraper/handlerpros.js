@@ -2,22 +2,17 @@
 
 const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
-const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
-const util = require('util');
 
 AWS.config.update({
 	region: "us-east-2",
 });
 
-const {getSSBWorldCharURL} = require('./helpers');
-const {getSSBWorldWinLose} = require('./helpers');
 const {extractDataFromHTML} = require('./helpers');
-const {extractStringFromHTML} = require('./helpers');
 const {parseGames} = require('./helpers');
 
 // Run locally with: node -e "require('./handlerpros').scrapeSSBWorldPros(null, {}, console.log)"
 
-module.exports.scrapeSSBWorldPros = (event, context, callback) => {
+module.exports.scrapeProData = (event, context, callback) => {
   const proStats = [];
 
   // for the promises to synch calls
@@ -41,9 +36,9 @@ module.exports.scrapeSSBWorldPros = (event, context, callback) => {
 	  
       return Promise.resolve(proStats);
   })
-  //.then(function(data) {
-	  //return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/prodata', JSON.stringify(data))
-  //})
+  .then(function(data) {
+	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/prodata', JSON.stringify(data))
+  })
   .then(function(data) {
 	  callback(null, {data})
   })
@@ -96,37 +91,6 @@ function getProPlayerXFactor(row) {
 	let xfac = row.children().eq(5).text();
 	if(typeof xfac === "string") xfac = xfac.trim();
 	return xfac;
-}
-
-
-function parseProURL(url) {
-	let trimmed = url.substr(32).trim(); // remove the https://ssbworld.com/characters/ part
-	let output = "";
-	let prevChar = " ";
-	for(let i = 0; i < trimmed.length; i++) {
-		if(trimmed.charCodeAt(i) === 45) { 
-		    output = output.concat(" ");
-			prevChar = " ";
-		}
-		else if(prevChar === " ") {
-			prevChar = trimmed.charAt(i).toUpperCase();
-			output = output.concat(prevChar);
-		}
-		else {
-			prevChar = trimmed.charAt(i);
-			output = output.concat(prevChar);
-		}
-	}
-	// Some conversions to SSBWiki naming conventions
-	if(output === "King K Rool") output = "King K. Rool";
-	else if(output === "Bowser Jr") output = "Bowser Jr.";
-	else if(output === "Dr Mario") output = "Dr. Mario";
-	else if(output === "Mr Game And Watch") output = "Mr. Game & Watch";
-	else if(output === "Rob") output = "R.O.B.";
-	else if(output === "Banjo And Kazooie") output = "Banjo & Kazooie";
-	else if(output === "Pac Man") output = "Pac-Man";
-	else if(output === "Rosalina And Luma") output = "Rosalina";
-	return output;
 }
 
 function putIntoS3(bucket, key, data) {

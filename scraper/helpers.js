@@ -96,7 +96,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 		}
 	}
 	else {
-		console.error("null rowsDefinition - cannot work!");
+		//console.error("null rowsDefinition - cannot work!");
 		return array;
 		rows = null;
 	}
@@ -140,7 +140,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			array.push(object);
 		});
 	}
-	console.log(array);
+	//console.log(array);
 	return array;
 }
 
@@ -151,18 +151,21 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 	end is the character you want to stop at
 */
 function extractStringFromHTML(html, keyPhrase, skip, end) {
+	if(typeof keyPhrase != "string") return null;
+	if(keyPhrase.length < 1) return null;
+	if(typeof end != "string") return null;
+	if(end.length != 1) return null;
 	let htmlString = util.inspect(html);
-	let index = htmlString.indexOf(keyPhrase) + keyPhrase.length + skip;
+	let index = htmlString.indexOf(keyPhrase);
+	if(index == -1) return null;
+	index = index + keyPhrase.length + skip
 	let output = "";
 	let reading = index;
 	while(!(htmlString.charAt(reading) === end)) {
 		output = output.concat(htmlString.charAt(reading));
 		reading++;
-		if(reading > index + 25) {
-			console.log('reading too long');
-			console.log(output);
-			break;
-		}
+		if(reading > index + 25) break; 
+		if(reading > html.length) break;
 	}
 	return output;
 }
