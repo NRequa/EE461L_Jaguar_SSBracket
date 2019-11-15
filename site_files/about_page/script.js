@@ -1,3 +1,20 @@
+function logInDisplay(){
+    if(sessionStorage.getItem("userId") != null){
+        // Hide log in/register
+        $(".guestLinks").hide();
+        // Show account data link
+        $(".logInLinks").show();
+    }
+
+    else{
+        //Hide account data
+        $(".logInLinks").hide();
+        // Show account data link
+        $(".guestLinks").show();
+        
+    }
+}
+
 function grabCommits() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -84,6 +101,7 @@ function grabCommits() {
     }
 
     function runGETS(){
+        logInDisplay();
         // Get individual commits for 
         grabCommits();
         var userArray = ["NRequa", "jdieciedue", "NickDuggar", "TakumaFujiwara", "up1007", "bsx-1"];
