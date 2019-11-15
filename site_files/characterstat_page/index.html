@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script src="../res/jquery.js"></script>
+		<script src="../res/navBarHandler.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 		<script src="script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
@@ -21,8 +24,10 @@
 						<li><a href="../leaderboard_page/index.html">LeaderBoard</a></li>
 						<li class="active"><a href="../characterstat_page/index.html">Character Stats</a></li>
 						<li><a href="../about_page/index.html">About Us</a></li>
-						<li><a href="../account_page/regPage.html">Register</a></li>
-						<li><a href="../account_page/loginPrompt.html">Log In</a></li>
+						<li class="guestLinks"><a href="../account_page/regPage.html">Register</a></li>
+						<li class="guestLinks"><a href="../account_page/loginPrompt.html">Log In</a></li>
+						<li class="logInLinks"><a href="../account_page/accountDataPage.html">Account Data</a></li>
+
 					</ul>
 				</div>
 			</nav>
@@ -38,7 +43,6 @@
 					<th>Dash Speed</th>
 					<th>Spot Dodge</th>
 					<th>Traction</th>
-					<th>Notable Player</th>
 					<th>Global Win/Loss Ratio</th>
 	      </tr>
 	    </thead>
@@ -49,5 +53,37 @@
 		</div>
 	</div>
 </div>
+
+</div class="container-fluid">
+	<canvas id="usageChart"></canvas>
+</div>
+
+</div class="container-fluid">
+	<canvas id="nationalityChart"></canvas>
+</div>
+
+<!--
+<div class="container-fluid">
+  <div class="row">
+		<div class="col">
+			<table id="proPlayer" class="table table-hover table-bordered table-striped">
+	    <thead>
+	      <tr>
+	        <th>Name</th>
+	        <th>Rank</th>
+					<th>Nationality</th>
+					<th>Characters Used</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+			
+	    </tbody>
+	  </table>
+		</div>
+	</div>
+</div>
+-->
+
+
 	</body>
 </html>
