@@ -4,7 +4,7 @@ var size;//size of tournament
 var id;
 var mid;
 var ongoing;
-var ongoingindex;
+
 
 async function loading(){
   logInDisplay();
@@ -15,7 +15,7 @@ async function loading(){
   var playerText=[];
   mid=[];
   ongoing=[];
-  ongoingindex=0;
+
   gNum=0;
   //for number of people in the tournament create svg attrivutes
   var player=1;//number of players;
@@ -219,6 +219,7 @@ function rectClick(g_id){//set Editable
     $("#myModal").modal();
   }
   else{
+    if(ongoing.includes(parseInt(g_id))){
     //TODO get if match is finished
     var getG=document.getElementById(g_id);
     var cText=getG.childNodes[3];
@@ -228,9 +229,6 @@ function rectClick(g_id){//set Editable
     mod.innerHTML="Enter Score for Player1";
     mod=document.getElementById("modal-ta1");
     mod.value="";
-    console.log(g_id);
-    console.log(cText.innerHTML);
-    mod.value=cText.innerHTML;
     mod.setAttribute("rows","1");
     mod.setAttribute("cols","5");
     mod=document.getElementsByClassName("modal-data");
@@ -243,6 +241,7 @@ function rectClick(g_id){//set Editable
     mod.setAttribute("cols","5");
     $("#myModal").modal();
     //integer error testing
+    }
   }
 }
 
@@ -381,26 +380,52 @@ function setName(pArray,player){
             var arrG=document.getElementsByTagName('g');
             var key;
             var i=0;
+            var ongoingindex=0;
             for(key in myResponse.data.matchResults){
               mid[i/2]=myResponse.data.matchResults[key].id;
               //cutNames
-                arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player1string;
+
+                var str=myResponse.data.matchResults[key].player1string;
+                arrG[i].childNodes[1].innerHTML=str
+                if(str=="Bye"){
+                    arrG[i].childNodes[0].style.fill="#C0392B"
+                    arrG[i].childNodes[2].style.fill="#C0392B"
+                    arrG[i].childNodes[1].style.fill="#E74C3C"
+                    arrG[i].childNodes[3].style.fill="#E74C3C"
+                }
+
                 if(myResponse.data.matchResults[key].completed==true){
                   arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p1roundswon;
+                  if(myResponse.data.matchResults[key].p1win!=true){
+                    arrG[i].childNodes[0].style.fill="#C0392B"
+                    arrG[i].childNodes[2].style.fill="#C0392B"
+                  }
                 }
                 i++;
                 //set score of the stuff
                 //change color if bye
-                arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player2string;
+                str=myResponse.data.matchResults[key].player2string;
+                arrG[i].childNodes[1].innerHTML=str
+                if(str=="Bye"){
+                  arrG[i].childNodes[0].style.fill="#C0392B"
+                  arrG[i].childNodes[2].style.fill="#C0392B"
+                  arrG[i].childNodes[1].style.fill="#E74C3C"
+                  arrG[i].childNodes[3].style.fill="#E74C3C"
+                }
+
                 if(myResponse.data.matchResults[key].completed==true){
                   arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p2roundswon;
+                  if(myResponse.data.matchResults[key].p1win==true){
+                    arrG[i].childNodes[0].style.fill="#C0392B"
+                    arrG[i].childNodes[2].style.fill="#C0392B"
+                  }
                 }
                 i++;
                 if(myResponse.data.matchResults[key].ongoing==true){
                   ongoing[ongoingindex]=i-2
-                  ongoingIndex++
+                  ongoingindex++
                   ongoing[ongoingindex]=i-1
-                  ongoingIndex++
+                  ongoingindex++
                 }
             }
         }
