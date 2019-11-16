@@ -117,15 +117,15 @@ public class TournamentServiceImp extends TournamentService {
 
       if(myTournamentRequest.isClosed()&&!tournament.isClosed()){
         tournament = handleCloseTournamentHelper(tournament);
-        //tournament.setClosed(true);
-      } else {
+        tournament.setClosed(true);
+      } /*else {
         if(!myTournamentRequest.isClosed()){
           throw new ResourceNotFoundException("Request to change closed tournament state to not closed was not found");
         }
         if(tournament.isClosed()){
           throw new ResourceNotFoundException("Tournament is already closed");
         }
-      }
+      }*/
       return tournamentRepository.save(tournament);
     };
 
@@ -155,10 +155,7 @@ public class TournamentServiceImp extends TournamentService {
         boolean isLowerSeed = false;
         for(int i = currentIndex;i<endIndex;i++){
           if(isLowerSeed ){
-            isLowerSeed =false;
             nextMatchIncrement--;
-          } else{
-            isLowerSeed =true;
           }
           int nextMatch = i+nextMatchIncrement;
           if(nextMatch>=matches.size()){
@@ -168,6 +165,7 @@ public class TournamentServiceImp extends TournamentService {
           System.out.println("Current match:" +currentIndex + " Next match: "+ nextMatch);
           if(matches.get(i).getPlayer1string().equals("Bye")&&matches.get(i).getPlayer2string().equals("Bye")){
             System.out.println("Both are byes");
+            matches.get(nextMatch).setOngoing(false);
             if(isLowerSeed){
               matches.get(nextMatch).setPlayer2string("Bye");
             } else {
@@ -201,6 +199,11 @@ public class TournamentServiceImp extends TournamentService {
             }
           }
           currentIndex++;
+          if(isLowerSeed ){
+            isLowerSeed =false;
+          } else{
+            isLowerSeed =true;
+          }
         }
       }
       return tournament;
