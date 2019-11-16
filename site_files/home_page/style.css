@@ -1,7 +1,3 @@
-/* TODO: move common CSS to universal CSS */
-/* define common attributes such as color */
-
-
 body {
 	padding-top: 50px;
 }
@@ -14,17 +10,68 @@ body {
 	visibility: hidden; 
 }
 
+#splash_screen {
+	text-align: center;
+	margin-top: 5%;
+}
+
+#splash_screen h1 {
+	font-weight: bold;
+	font-size: 60px;
+}
+
+#splash_screen p {
+	margin-top: 50px;
+	font-size: 30px;
+}
+
+#splash_screen button {
+	margin-top: 75px;
+	width: 300px;
+	font-weight: bold;
+	border: 2px solid red;
+}
+
+#user_features {
+	margin-top: 5%;
+}
+
+#features_btn {
+	visibility: hidden;
+}
+
+#tcarousel h1 {
+	font-size: 40px;
+	text-align: center;
+}
+
+#tcarousel p {
+	font-size: 25px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+#tcarousel img {
+	width: 400px;
+	height: 400px;
+	margin-top: 35px;
+}
+
 #col1 {
 	height: 937px;
+	width: 20%;
 }
 
 #col2 {
 	height: 937px;
+	width: 60%;
 }
 
 #col3 {
 	height: 937px;
 	outline: 2px solid black;
+	width: 20%;
+	float: right;
 }
 
 #twitter_view {
@@ -62,13 +109,17 @@ hr {
 	overflow-y: scroll;
 }
 
-/* TODO: center properly */
 #contact_btn {
-	margin-left: 42.5%;
+	border: 1px solid black;
+	margin-top: -1%;
 }
 
 #contact_p {
 	text-align: center;
 	font-size: 16px;
 	font-weight: bold;
+}
+
+#bracket_btn {
+	border: 1px solid black;
 }

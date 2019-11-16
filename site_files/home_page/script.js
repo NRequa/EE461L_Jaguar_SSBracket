@@ -68,8 +68,13 @@ function loading() {
 			entry.appendChild(a);
 
 			para = document.createElement("p");
-			para.innerHTML = description + " | <b> Visits: </b>" + visits;
+			para.innerHTML = description;
 			entry.appendChild(para);
+			
+			para2 = document.createElement("p");
+			para2.innerHTML = "<b>Visits: </b>" + visits;
+			para2.className = "visit_nums";
+			entry.appendChild(para2);
 
 			if (count >= 1) {
 				topThree.push(description);
@@ -78,19 +83,9 @@ function loading() {
 
 			popular.appendChild(entry);
 		}
-		document.getElementById("scroller_text").innerHTML = topThree[0];
+		$("#features_btn").click();
 	}
 	}
-	$('#myCarousel').on('slide.bs.carousel', function () {
-		document.getElementById("scroller_text").innerHTML = topThree[index];
-
-		index = index + 1;
-		if (index > 2) {
-			index = 0;
-		}
-	});
-
-
 
 	xmlHttp.open("GET", url,true);
 	xmlHttp.send();
@@ -99,7 +94,7 @@ function loading() {
 		document.getElementById("drop_menu").innerHTML = "";
     toggleOn = false;
   });
-};
+}
 
 function showContactInfo() {
 	$("#contact_btn").css({"display": "none"});
@@ -141,7 +136,7 @@ function populateDrop() {
 								}
 								if(countTournament==0){
 									document.getElementById("drop_menu").innerHTML = '<li style="padding-left: 5%;">'
-									+ "No tournaments named <b>"+text+"</b> found" +'</li>';
+									+ "No tournament found</li>";
 								}
 								if (!toggleOn) {
 									$(".dropdown-toggle").dropdown("toggle");
@@ -176,4 +171,80 @@ function logInDisplay(){
         $(".guestLinks").show();
         
     }
+}
+
+function showFeatures() {
+	var xmlHttp = new XMLHttpRequest();
+	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/";
+
+	xmlHttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var obj = JSON.parse(this.responseText);
+			content = obj.data.content;
+			
+			var users = [];
+			for (i = 0; i < content.length; i++) {
+				if (content[i].numtournamentswon >= 5) {
+					users.push(content[i]);
+				}
+			}
+			
+			inner = document.getElementById("tcarousel");
+			
+			// creating first/active carousel item
+			var item = document.createElement("div");
+			item.className = "item active";
+			
+			var head = document.createElement("h1");
+			head.innerHTML = users[0].username;
+			var image = document.createElement("img");
+			
+			var srcString;
+			if (users[0].avatarName == null) {
+				srcString = "site_files/account_page/images/notavailable.jpeg"
+			} else {
+				srcString = "site_files/account_page/images/" + users[0].avatarName;
+			}
+			image.src = srcString;
+			
+			var para = document.createElement("p");
+			para.innerHTML = "Tournament Wins: " + users[0].numtournamentswon;
+			
+			item.appendChild(head);
+			item.appendChild(image);
+			item.appendChild(para);
+			
+			inner.appendChild(item);
+			
+			// do the rest
+			for (i = 1; i < users.length; i++) {
+				item = document.createElement("div");
+				item.className = "item";
+				
+				head = document.createElement("h1");
+				head.innerHTML = users[i].username;
+				image = document.createElement("img");
+				
+				if (users[i].avatarName == null) {
+					srcString = "site_files/account_page/images/notavailable.jpeg"
+				} else {
+					srcString = "site_files/account_page/images/" + users[i].avatarName;
+				}
+				image.src = srcString;
+				
+				para = document.createElement("p");
+				para.innerHTML = "Tournament Wins: " + users[i].numtournamentswon;
+				
+				item.appendChild(head);
+				item.appendChild(image);
+				item.appendChild(para);
+				
+				inner.appendChild(item);
+			}
+		}
+	}
+	
+	xmlHttp.open("GET", url, true);
+	xmlHttp.send();
+
 }

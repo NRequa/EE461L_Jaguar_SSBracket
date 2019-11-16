@@ -45,42 +45,34 @@
 					</div>
 				</div>
 
-				<div class="col-sm-6" style="background-color:lavenderblush;" id="col2">
-
-					<h1 style="text-align: center;">Top Tournaments</h1>
-					<br>
-
-					<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller" data-pause="false">
-
-					  <!-- Indicators -->
-					  <ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-					  </ol>
-
-					  <!-- Wrapper for slides -->
-					  <div class="carousel-inner">
-						<div class="item active">
-						  <img src="test_images/b1.png" alt="Los Angeles">
-						</div>
-
-						<div class="item">
-						  <img src="test_images/b2.png" alt="Chicago">
-						</div>
-
-						<div class="item">
-						  <img src="test_images/b3.png" alt="New York">
-						</div>
-					  </div>
+				<div class="col-sm-6" style="background-color:lavender;" id="col2">
+				
+					<div id="splash_screen">
+						<h1>Welcome to SSBracket</h1>
+						<p>Make a new bracket right away or explore our page!</p>
 					</div>
 
-					<br>
+					<div id="user_features">
+						<h1 style="text-align: center; font-weight: bold; font-size: 35px; 	text-decoration: underline;">Featured Users</h1>
 
-					<p id="scroller_text"></p>
+						<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller" data-pause="false">
+
+						  <!-- Indicators -->
+						  <ol class="carousel-indicators">
+							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+						  </ol>
+
+						  <!-- Wrapper for slides -->
+						  <div class="carousel-inner" id="tcarousel"></div>
+						
+						</div>
+					</div>
+					<button type="button" class="btn" onclick="showFeatures();" id="features_btn">Featured Users</button>
 				</div>
 
-				<div class="col-sm-3" style="background-color:lavender; padding-bottom: 10px;" id="col3">
+				<div class="col-sm-3" style="background-color:white; padding-bottom: 10px;" id="col3">
 					<br>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search tournaments..." onkeydown="populateDrop(event)" id="searchForm">
@@ -99,7 +91,7 @@
 					<div id="popular">
 					</div>
 					<hr>
-					<button type="button" class="btn" onclick="showContactInfo();" id="contact_btn">Contact</button>
+					<button type="button" class="btn" onclick="showContactInfo();" id="contact_btn">Contact:</button>
 					<p style="display: none" id="contact_p">ssbracket.web@gmail.com</p>
 				</div>
 			</div>
