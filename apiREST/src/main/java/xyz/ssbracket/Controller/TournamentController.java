@@ -86,4 +86,13 @@ public class TournamentController {
     {
         return new ResponseWrapper<>( tournamentService.addVisit( Integer.parseInt( id ) ), HttpStatus.OK );
     }
+
+    @CrossOrigin
+    @PatchMapping(value = "/close/{id}")
+    public ResponseWrapper<Tournament> closeTournament(@Valid @RequestBody Tournament tournamentClose,
+                                               @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( tournamentService.handleCloseTournament( tournamentClose, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
 }

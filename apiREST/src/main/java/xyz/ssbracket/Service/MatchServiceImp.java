@@ -76,8 +76,9 @@ public class MatchServiceImp extends MatchService {
         oldMatchResult.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
         oldMatchResult.setPlayer1(o.getPlayer1());
         oldMatchResult.setPlayer2(o.getPlayer2());
-        oldMatchResult.setPlayer1string(oldMatchResult.getHigherseed().getUsername());
-        oldMatchResult.setPlayer2string(oldMatchResult.getLowerseed().getUsername());
+        oldMatchResult.setPlayer1string(o.getPlayer1string());
+        oldMatchResult.setPlayer2string(o.getPlayer2string());
+        oldMatchResult.setOngoing(o.isOngoing());
         return matchResultRepository.save(oldMatchResult);
     }
 

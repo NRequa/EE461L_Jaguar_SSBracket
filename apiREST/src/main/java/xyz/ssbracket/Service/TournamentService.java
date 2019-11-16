@@ -11,5 +11,5 @@ public abstract class TournamentService implements MainService<Tournament> {
   public abstract Tournament deleteUsers( User o, int id);
   public abstract Tournament addVisit(int id);
   public abstract Page<Tournament> searchTournamentName( Pageable page, Tournament tname );
-
+  public abstract Tournament handleCloseTournament(Tournament tournament, int id);
 }

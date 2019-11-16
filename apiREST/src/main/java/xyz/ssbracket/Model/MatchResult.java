@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@Entity(name = "MatchResult")
+@Entity
 @Table(name = "matchresult")
 public class MatchResult implements Serializable {
 
@@ -18,6 +18,9 @@ public class MatchResult implements Serializable {
 
     @Column(name = "completed", nullable = false)
     private boolean completed;
+
+    @Column(name = "ongoing", nullable = false)
+    private boolean ongoing;
 
     @Column(name = "p1win", nullable = false)
     private boolean p1win;

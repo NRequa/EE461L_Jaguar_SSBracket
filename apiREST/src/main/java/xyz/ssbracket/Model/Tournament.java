@@ -42,8 +42,8 @@ public class Tournament implements Serializable {
 	@Column(name = "tsize", nullable = false)
 	private int tsize;
 
-    @Column(name = "closed", nullable = false)
-    private boolean closed;
+  @Column(name = "closed", nullable = false)
+  private boolean closed;
 
   @Column(name = "description", nullable = false)
   private String description;
@@ -53,6 +53,9 @@ public class Tournament implements Serializable {
 
   @Column(name = "visits", nullable = false)
   private int visits;
+
+  @Column(name = "twitter", nullable = true)
+  private String twitter;
 
   @Column(name = "championname", nullable = true)
   private String championname;
@@ -79,4 +82,5 @@ public class Tournament implements Serializable {
         this.tempplayers = tempplayers;
         this.championname = championname;
     }
+
 }
