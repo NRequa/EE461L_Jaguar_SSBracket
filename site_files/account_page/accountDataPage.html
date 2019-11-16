@@ -54,10 +54,10 @@
 				</div>
 
 				<ul class="list-unstyled">
-					<li><a onclick="swapPage(0)">Tournament Stats</a></li>
-					<li><a onclick="swapPage(1)">Character Stats</a></li>
-					<li><a onclick="swapPage(2)">Friend Stats</a></li>
-					<li><a onclick="swapPage(3)">Settings</a></li>
+					<li><a id="showTourn" onclick="swapPage(0)">Tournament Stats</a></li>
+					<li><a id="showChar" onclick="swapPage(1)">Character Stats</a></li>
+					<li><a id="showFriend" onclick="swapPage(2)">Friend Stats</a></li>
+					<li><a id="showSettings" onclick="swapPage(3)">Settings</a></li>
 					<li><a onclick="swapPage(4)">Log Out</a></li>
 				</ul>
 
@@ -127,14 +127,14 @@
 							</div>
 
 							<button id="addPal" onclick="addBuddy()"  type="submit" class="btn btn-primary">Add Friend</button>
-							<button id="killPall" onclick="killFriend()" type="submit" class="btn btn-primary">Remove Friend</button>
+							<button id="killPal" onclick="killFriend()" type="submit" class="btn btn-primary">Remove Friend</button>
 						</div>
 
 						<h3>Change Profile Picture</h3>
 						<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 							Select Picture
 						</button>
-						<ul class="dropdown-menu">
+						<ul id="aviDropDown" class="dropdown-menu">
 							<li class="dropdown-header">Available Profile Pictures</li>
 							<li>
 								<button onclick="changePictureRequest('mario.jpeg')"><img src="images/mario.jpeg" height="60" width="60"></button>
