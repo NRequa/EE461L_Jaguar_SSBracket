@@ -275,7 +275,7 @@ function patchScore(mtchid,score1,score2){
     var myResponse;
     xmlhttp.onreadystatechange = function() {
           if (this.readyState == 4 ) {
-            if(this.status == 200)
+            if(this.status == 200){
               myResponse = JSON.parse(this.responseText);
               console.log(myResponse)
               resolve(1);
@@ -625,6 +625,6 @@ function logInDisplay(){
       $(".logInLinks").hide();
       // Show account data link
       $(".guestLinks").show();
-      
+
   }
 }

@@ -1,4 +1,5 @@
 const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
+const util = require('util');
 
 
 // Weight functions
@@ -82,6 +83,10 @@ function getSSBWorldWinLose(row) {
 	If you aren't using some optional values, input null!
 */
 function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
+	if(typeof html != "string") return null;
+	if(array == null) return null;
+	if(typeof array != "object") return null;
+	if(typeof elementSelectors != "object") return null;
 	const $ = cheerio.load(html);
 	var rows;
 	var iterating = false;
@@ -95,7 +100,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 		}
 	}
 	else {
-		console.error("null rowsDefinition - cannot work!");
+		//console.error("null rowsDefinition - cannot work!");
 		return array;
 		rows = null;
 	}
@@ -139,6 +144,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			array.push(object);
 		});
 	}
+	//console.log(array);
 	return array;
 }
 
@@ -149,18 +155,21 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 	end is the character you want to stop at
 */
 function extractStringFromHTML(html, keyPhrase, skip, end) {
+	if(typeof keyPhrase != "string") return null;
+	if(keyPhrase.length < 1) return null;
+	if(typeof end != "string") return null;
+	if(end.length != 1) return null;
 	let htmlString = util.inspect(html);
-	let index = htmlString.indexOf(keyPhrase) + keyPhrase.length + skip;
+	let index = htmlString.indexOf(keyPhrase);
+	if(index == -1) return null;
+	index = index + keyPhrase.length + skip
 	let output = "";
 	let reading = index;
 	while(!(htmlString.charAt(reading) === end)) {
 		output = output.concat(htmlString.charAt(reading));
 		reading++;
-		if(reading > index + 25) {
-			console.log('reading too long');
-			console.log(output);
-			break;
-		}
+		if(reading > index + 25) break; 
+		if(reading > html.length) break;
 	}
 	return output;
 }
