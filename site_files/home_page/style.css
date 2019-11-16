@@ -12,7 +12,7 @@ body {
 
 #splash_screen {
 	text-align: center;
-	margin-top: 25%;
+	margin-top: 5%;
 }
 
 #splash_screen h1 {
@@ -34,12 +34,14 @@ body {
 
 #user_features {
 	margin-top: 5%;
-	display: none;
+}
+
+#features_btn {
+	visibility: hidden;
 }
 
 #tcarousel h1 {
 	font-size: 40px;
-	text-decoration: underline;
 	text-align: center;
 }
 

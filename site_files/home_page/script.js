@@ -67,8 +67,13 @@ function loading() {
 			entry.appendChild(a);
 
 			para = document.createElement("p");
-			para.innerHTML = description + " | <b> Visits: </b>" + visits;
+			para.innerHTML = description;
 			entry.appendChild(para);
+			
+			para2 = document.createElement("p");
+			para2.innerHTML = "<b>Visits: </b>" + visits;
+			para2.className = "visit_nums";
+			entry.appendChild(para2);
 
 			if (count >= 1) {
 				topThree.push(description);
@@ -77,6 +82,7 @@ function loading() {
 
 			popular.appendChild(entry);
 		}
+		$("#features_btn").click();
 	}
 	}
 
@@ -129,7 +135,7 @@ function populateDrop() {
 								}
 								if(countTournament==0){
 									document.getElementById("drop_menu").innerHTML = '<li style="padding-left: 5%;">'
-									+ "No tournaments named <b>"+text+"</b> found" +'</li>';
+									+ "No tournaments found</li>";
 								}
 								if (!toggleOn) {
 									$(".dropdown-toggle").dropdown("toggle");
@@ -150,11 +156,6 @@ function populateDrop() {
 }
 
 function showFeatures() {
-	$("#features_btn").css({"display": "none"});
-	$("#splash_screen").slideUp();
-	
-	$("#user_features").css({"display": "block"});
-	
 	var xmlHttp = new XMLHttpRequest();
 	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/";
 
