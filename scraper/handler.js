@@ -14,21 +14,6 @@ const {extractDataFromHTML} = require('./helpers');
 const {extractStringFromHTML} = require('./helpers');
 const {parseGames} = require('./helpers');
 const {parseURL} = require('./helpers');
-// function chains
-const {getWeightTitleCond} = require('./helpers');
-const {getWeightName} = require('./helpers');
-const {getWeightWeight} = require('./helpers');
-const {getDashTitleCond} = require('./helpers');
-const {getDashName} = require('./helpers');
-const {getDashDash} = require('./helpers');
-const {getSpotdodgeTitleCond} = require('./helpers');
-const {getSpotdodgeName} = require('./helpers');
-const {getSpotdodgeSpotdodge} = require('./helpers');
-const {getTractionTitleCond} = require('./helpers');
-const {getTractionName} = require('./helpers');
-const {getTractionTraction} = require('./helpers');
-const {getSSBWorldCharURL} = require('./helpers');
-const {getSSBWorldWinLose} = require('./helpers');
 
 var characterData = [];
 
@@ -51,10 +36,10 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 
   Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction, promiseSSBWorldChars]).then(function(data1) {
 	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getWeightTitleCond}, {name: "wtitle2", fn: sel.getWeightTitleCond}, {name: "name", fn: sel.getWeightName}, {name: "weight", fn: sel.getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getDashTitleCond}, {name: "wtitle2", fn: getDashTitleCond}, {name: "name", fn: getDashName}, {name: "dash", fn: getDashDash}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getSpotdodgeTitleCond}, {name: "wtitle2", fn: getSpotdodgeTitleCond}, {name: "name", fn: getSpotdodgeName}, {name: "spotdodge", fn: getSpotdodgeSpotdodge}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getTractionTitleCond}, {name: "wtitle2", fn: getTractionTitleCond}, {name: "name", fn: getTractionName}, {name: "traction", fn: getTractionTraction}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[4].data, characterSSBWorldURLs, '.players-list div a', null, [{name: "url", fn: getSSBWorldCharURL}], null);
+	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getDashTitleCond}, {name: "wtitle2", fn: sel.getDashTitleCond}, {name: "name", fn: sel.getDashName}, {name: "dash", fn: sel.getDashDash}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getSpotdodgeTitleCond}, {name: "wtitle2", fn: sel.getSpotdodgeTitleCond}, {name: "name", fn: sel.getSpotdodgeName}, {name: "spotdodge", fn: sel.getSpotdodgeSpotdodge}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getTractionTitleCond}, {name: "wtitle2", fn: sel.getTractionTitleCond}, {name: "name", fn: sel.getTractionName}, {name: "traction", fn: sel.getTractionTraction}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[4].data, characterSSBWorldURLs, '.players-list div a', null, [{name: "url", fn: sel.getSSBWorldCharURL}], null);
 	  characterSSBWorldURLs.forEach(function(el) {
 		  characterSSBWorldPages.push(get(el.url));
 		  characterSSBWorldNames.push(parseURL(el.url));

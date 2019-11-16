@@ -1,70 +1,6 @@
 const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
 const util = require('util');
 
-
-// Weight functions
-function getWeightTitleCond(row) {
-	return row.children().eq(1).children().last().attr('title');
-}
-
-function getWeightName(row) {
-	return row.children().eq(1).children().last().text().trim();
-}
-
-function getWeightWeight(row) {
-	return row.children().eq(2).text().trim();
-}
-
-// Dash Functions
-function getDashTitleCond(row) {
-	return row.children().eq(1).children().last().attr('title');
-}
-
-function getDashName(row) {
-	return row.children().eq(1).children().last().text().trim();
-}
-
-function getDashDash(row) {
-	return row.children().eq(3).text().trim();
-}
-
-// Spotdodge Functions
-function getSpotdodgeTitleCond(row) {
-	return row.children().eq(0).children().last().attr('title');
-}
-
-function getSpotdodgeName(row) {
-	return row.children().eq(0).children().last().text().trim();
-}
-
-function getSpotdodgeSpotdodge(row) {
-	return row.children().eq(1).text().trim();
-}
-
-// Traction Functions
-function getTractionTitleCond(row) {
-	return row.children().eq(1).children().last().attr('title');
-}
-
-function getTractionName(row) {
-	return row.children().eq(1).children().last().text().trim();
-}
-
-function getTractionTraction(row) {
-	return row.children().eq(2).text().trim();
-}
-
-// SSBWorld Functions
-
-function getSSBWorldCharURL(row) {
-	return "https://ssbworld.com" + row.attr('href');//.toString();
-}
-
-function getSSBWorldWinLose(row) {
-	//return row.root().children().eq(1).children().eq(3).children().eq(1).children().eq(4).children().eq(5).children().eq(0).text();//.text();
-	return row.root().children().eq(0).children().eq(1).children().eq(1).children().eq(2).children().eq(5).children().eq(0).attr('class');
-}
-
 /*
     html is the html document from axios that we want to scrape
 	array is an input array that we want to add to
@@ -226,20 +162,6 @@ function parseURL(url) {
 }
 
 module.exports = {
-  getWeightTitleCond,
-  getWeightName,
-  getWeightWeight,
-  getDashTitleCond,
-  getDashName,
-  getDashDash,
-  getSpotdodgeTitleCond,
-  getSpotdodgeName,
-  getSpotdodgeSpotdodge,
-  getTractionTitleCond,
-  getTractionName,
-  getTractionTraction,
-  getSSBWorldCharURL,
-  getSSBWorldWinLose,
   extractDataFromHTML,
   extractStringFromHTML,
   parseGames,
