@@ -100,7 +100,8 @@
                 console.log(this.responseText);
                 if(this.readyState == 4 && this.status == 200){
                     var response = JSON.parse(this.responseText);
-                    if(response){
+                    if(response.status){
+                        sessionStorage.setItem("userId", response.id);
                         window.location.href = "accountDataPage.html";
                     }
 
