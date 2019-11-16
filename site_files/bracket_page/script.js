@@ -15,6 +15,7 @@ async function loading(){
   var playerText=[];
   mid=[];
   ongoing=[];
+  size=[];
 
   gNum=0;
   //for number of people in the tournament create svg attrivutes
@@ -263,25 +264,44 @@ else{
 }
 async function setScore(g_id,score1,score2){
     var arrG=document.getElementsByTagName('g');
-    var ret=await patchScore(mid[g_id/2],score1,score2)
-    if(ret==1){
-      //success!!
-      var pid=(g_id/2)*2;
-        arrG[pid].childNodes[3].innerHTML=score1;
-        arrG[pid+1].childNodes[3].innerHTML=score2;
-    }
+    var ret=await patchScore(mid[Math.floor(g_id/2)],score1,score2,Math.floor(g_id/2))
+    window.location.reload(false);
 }
-function patchScore(mtchid,score1,score2){
+function patchScore(mtchid,score1,score2,mNum){
   return new Promise(function(resolve,reject){
     var xmlhttp = new XMLHttpRequest();
-    var matchId=mtchid;
-    var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/"+matchid;
+    var matchId=mtchid.toString();
+    var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/"+matchId;
     var myResponse;
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = async function() {
           if (this.readyState == 4 ) {
             if(this.status == 200){
               myResponse = JSON.parse(this.responseText);
               console.log(myResponse)
+              var counter=size[0]/2;
+              var even=mNum%2;
+              if(even==1){
+                mNum--;
+              }
+              var add=counter-mNum/2;
+
+              var nextmNum=mNum+add;
+              var winner
+              var winnerid
+              if(myResponse.data.p1win){
+                winner=myResponse.data.player1string
+                winnerid=myResponse.data.player1
+              }
+              else{
+                winner=myResponse.data.player2string
+                winnerid=myResponse.data.player2
+              }
+              if(add<=1){
+                await setWinner(winner);
+                resolve(1);
+              }
+              var full =await findNextMatch(mid[nextmNum])
+              patchNextMatch(mid[nextmNum],winner,winnerid,even,full);
               resolve(1);
             }
             else{
@@ -296,17 +316,91 @@ function patchScore(mtchid,score1,score2){
     else if(score1==score2){
       reject(0);
     }
-
-    console.log(playertext);
       xmlhttp.open("PATCH", mApi, true);
       xmlhttp.setRequestHeader("Content-type", "application/json");
       xmlhttp.send(JSON.stringify({
         "p1win":win,
         "p1roundswon":score1,
         "p2roundswon":score2,
-        "completed":true
+        "completed":true,
+        "ongoing":false
       })
       );
+  })
+}
+function findNextMatch(mtchid){
+  return new Promise(function(resolve,reject){
+      var xmlhttp = new XMLHttpRequest();
+      var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/"+mtchid.toString();
+      var myResponse;
+      xmlhttp.onreadystatechange = function() {
+	    			if (this.readyState == 4 && this.status == 200) {
+	        			myResponse = JSON.parse(this.responseText);
+								if(myResponse.data.player1string==""&&myResponse.data.player2string==""){
+                  resolve(false);
+                }
+                else{
+                  resolve(true);
+                }
+
+	    			}
+			};
+      xmlhttp.open("GET", mApi, true);
+  		xmlhttp.send();
+  })
+}
+function patchNextMatch(mtchid,winner,winnerid,even,full){
+  return new Promise(function(resolve,reject){
+      var xmlhttp = new XMLHttpRequest();
+      var m1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setuser1/"+mtchid.toString();
+      var m2Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setuser2/"+mtchid.toString();
+      var myResponse;
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+
+            resolve();
+        }
+      };
+      if(even==0){
+      xmlhttp.open("PATCH", m1Api, true);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      xmlhttp.send(JSON.stringify({
+        "player1":winnerid,
+        "player1string":winner,
+        "ongoing":full
+      }));
+      }
+      else{
+        xmlhttp.open("PATCH", m2Api, true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify({
+          "player2":winnerid,
+          "player2string":winner,
+          "ongoing":full
+        }));
+      }
+  })
+}
+function setWinner(winner){
+  return new Promise(function(resolve,reject){
+  var xmlhttp = new XMLHttpRequest();
+  var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/setChampion"+id;
+  var myResponse;
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse)
+            resolve(0);
+        }
+  };
+
+  xmlhttp.open("PATCH", mApi, true);
+  xmlhttp.setRequestHeader("Content-type", "application/json");
+  xmlhttp.send(JSON.stringify({
+    "championname":winner
+  })
+  );
   })
 }
 async function setOneName(g_id,text){
@@ -489,6 +583,7 @@ function getTour(id,player,playerText,callback){
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
             callback(myResponse,id,player,playerText);
+            size[0]=myResponse.data.tsize;
             resolve();
         }
   };
@@ -502,6 +597,7 @@ function callback1(myResponse,id,player,playerText){
   document.getElementById("desc").innerHTML = myResponse.data.description;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
+
   twttr.widgets.createTimeline(
   {
     sourceType:"profile",
