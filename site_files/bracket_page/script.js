@@ -301,7 +301,7 @@ function patchScore(mtchid,score1,score2,mNum){
                 resolve(1);
               }
               var full =await findNextMatch(mid[nextmNum])
-              patchNextMatch(mid[nextmNum],winner,winnerid,even,full);
+              await patchNextMatch(mid[nextmNum],winner,winnerid,even,full);
               resolve(1);
             }
             else{
@@ -358,7 +358,7 @@ function patchNextMatch(mtchid,winner,winnerid,even,full){
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
-
+            console.log(myResponse);
             resolve();
         }
       };
