@@ -43,48 +43,35 @@
 					</div>
 				</div>
 
-				<div class="col-sm-6" style="background-color:lavenderblush;" id="col2">
-
-					<h1 style="text-align: center;">Featured Users</h1>
-					<br>
-
-					<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller" data-pause="false">
-
-					  <!-- Indicators -->
-					  <ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-					  </ol>
-
-					  <!-- Wrapper for slides -->
-					  <div class="carousel-inner" id="tcarousel">
-						<div class="item active">
-						  <h1>User1</h1>
-						  <p>something something something</p>
-						  <img src="site_files/account_page/images/donkeykong.jpeg"></img>
-						</div>
-
-						<div class="item">
-						  <h1>Users2</h1>
-						  <p>something something something</p>
-						  <img src="site_files/account_page/images/kirby.jpeg"></img>
-						</div>
-
-						<div class="item">
-						  <h1>User3</h1>
-						  <p>something something something</p>
-						  <img src="site_files/account_page/images/yoshi.jpeg"></img>
-						</div>
-					  </div>
+				<div class="col-sm-6" style="background-color:lavender;" id="col2">
+				
+					<div id="splash_screen">
+						<h1>Welcome to SSBracket</h1>
+						<p>Make a new bracket right away or explore our page!</p>
+						<button type="button" class="btn" onclick="showFeatures();" id="features_btn">Featured Users</button>
 					</div>
 
-					<br>
+					<div id="user_features">
+						<h1 style="text-align: center; font-weight: bold; font-size: 50px;">Featured Users</h1>
+						<br><br><br>
 
-					<p id="scroller_text"></p>
+						<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller" data-pause="false">
+
+						  <!-- Indicators -->
+						  <ol class="carousel-indicators">
+							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+						  </ol>
+
+						  <!-- Wrapper for slides -->
+						  <div class="carousel-inner" id="tcarousel"></div>
+						
+						</div>
+					</div>
 				</div>
 
-				<div class="col-sm-3" style="background-color:lavender; padding-bottom: 10px;" id="col3">
+				<div class="col-sm-3" style="background-color:white; padding-bottom: 10px;" id="col3">
 					<br>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search tournaments..." onkeydown="populateDrop(event)" id="searchForm">
@@ -103,7 +90,7 @@
 					<div id="popular">
 					</div>
 					<hr>
-					<button type="button" class="btn" onclick="showContactInfo();" id="contact_btn">Contact</button>
+					<button type="button" class="btn" onclick="showContactInfo();" id="contact_btn">Contact:</button>
 					<p style="display: none" id="contact_p">ssbracket.web@gmail.com</p>
 				</div>
 			</div>
