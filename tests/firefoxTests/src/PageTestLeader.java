@@ -20,81 +20,17 @@ class PageTestLeader {
 	}
 
 	@Test
-	void overallTest() { 
-		WebElement overallBtn = driver.findElement(By.id("btn1"));
-		overallBtn.click();
-		
+	void buttonTest() { 
+		WebElement btn = driver.findElement(By.id("btn1"));
+		assertEquals(btn.getText(), "TOP WINRATES");
+	}
+	
+	@Test 
+	void contentsTest() {
 		WebElement list = driver.findElement(By.id("top_list1"));
-		String listText = list.getText();
-		
-		verifyContents("btn1", listText);
+		assertTrue(list.getText() != "");
 	}
 	
-	@Test
-	void characterTest() { 		
-		WebElement overallBtn = driver.findElement(By.id("btn2"));
-		overallBtn.click();
-		
-		WebElement list = driver.findElement(By.id("top_list2"));
-		String listText = list.getText();
-		
-		verifyContents("btn2", listText);
-	}
-	
-	@Test
-	void regionTest() { 	
-		WebElement overallBtn = driver.findElement(By.id("btn3"));
-		overallBtn.click();
-		
-		WebElement list = driver.findElement(By.id("top_list3"));
-		String listText = list.getText();
-		
-		verifyContents("btn3", listText);
-	}
-	
-	private void verifyContents(String id, String listText) {
-		if (id.equals("btn1")) {
-			assertTrue(listText.contains("testOverall"));
-			assertFalse(listText.contains("testCharacter"));
-			assertFalse(listText.contains("testRegion"));
-			
-		} else if (id.equals("btn2")) {
-			assertFalse(listText.contains("testOverall"));
-			assertTrue(listText.contains("testCharacter"));
-			assertFalse(listText.contains("testRegion"));
-			
-		} else if (id.equals("btn3")) {
-			assertFalse(listText.contains("testOverall"));
-			assertFalse(listText.contains("testCharacter"));
-			assertTrue(listText.contains("testRegion"));
-			
-		} else {
-			fail();
-		}
-		
-		for (int i = 1; i < 20; i++)
-			assertTrue(listText.contains(Integer.toString(i)));
-	}
-	
-	@Test
-	void navBarTest() {
-		String[] navBarLinks = {"Home", "Tournaments", "LeaderBoard", "About Us", "Register", "Log In"};
-		String[] pageIds = {"myCarousel","tweets", "sections", "NRequaUnitTests", "passwordOK", "submit"};
-		
-		for( int i = 0; i < navBarLinks.length; i++) {
-			try {
-				WebElement pageLink = driver.findElement(By.linkText(navBarLinks[i]));
-				pageLink.click();
-				
-				WebElement pageElement = driver.findElement(By.id(pageIds[i]));
-				
-				driver.navigate().back();
-			} catch(Exception e) {
-				fail();
-			}
-		}
-	}
-
 	@AfterAll
 	public static void tearDown() {
 		driver.close();
