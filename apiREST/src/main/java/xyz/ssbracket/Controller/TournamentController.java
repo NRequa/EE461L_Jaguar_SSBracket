@@ -95,4 +95,12 @@ public class TournamentController {
         return new ResponseWrapper<>( tournamentService.handleCloseTournament( tournamentClose, Integer.parseInt( id ) ), HttpStatus.OK );
     }
 
+    @CrossOrigin
+    @PatchMapping(value = "/setChampion/{id}")
+    public ResponseWrapper<Tournament>setChampionName(@Valid @RequestBody Tournament champion,
+                                               @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( tournamentService.setChampion( champion, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
 }

@@ -105,6 +105,16 @@ public class TournamentServiceImp extends TournamentService {
     }
 
     @Override
+    public Tournament setChampion(Tournament myTournamentRequest, int id)throws ResourceNotFoundException {
+      Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
+      TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(id);
+      tournament.setChampionname(myTournamentRequest.getChampionname());
+      storingTournament.setChampionname(myTournamentRequest.getChampionname());
+      tournamentArrayRepository.save(storingTournament);
+      return tournamentRepository.save(tournament);
+    };
+
+    @Override
     public Tournament addVisit(int id) throws ResourceNotFoundException{
       Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
       tournament.setVisits(tournament.getVisits()+1);
