@@ -310,7 +310,7 @@ function patchScore(mtchid,score1,score2,mNum){
           }
     };
     var win=false;
-    if(score1>score2){
+    if(parseInt(score1)>parseInt(score2)){
       win=true;
     }
     else if(score1==score2){
