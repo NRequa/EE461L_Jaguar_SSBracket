@@ -66,6 +66,7 @@ public class MatchServiceImp extends MatchService {
         oldMatchResult.setCompleted(o.isCompleted());
         oldMatchResult.setP1roundswon(o.getP1roundswon());
         oldMatchResult.setP2roundswon(o.getP2roundswon());
+        oldMatchResult.setOngoing(o.isOngoing());
         return matchResultRepository.save( oldMatchResult );
     }
 

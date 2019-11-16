@@ -60,7 +60,7 @@ function handleProData(){
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
-            populateChartAndTable(myResponse);
+            populateChart(myResponse);
             }
   }
   xmlhttp.open("GET", ourApi, true);
@@ -79,11 +79,35 @@ function addToObject(myObject, nameKey){
   return myObject;
 }
 
-function addRowToProTable(){
-  
-}
+/*function addRowToProTable(myResponse){
+  for(var proPlayerIndex in myResponse){
+    var proPlayer = myResponse[proPlayerIndex];
+    var charUsed = "";
+    if(proPlayer.char1!="None Listed"){
+      charUsed+=proPlayer.char1;
+    }
+    if(proPlayer.char2!="None Listed"){
+      charUsed+=proPlayer.char2;
+    }
+    if(proPlayer.char3!="None Listed"){
+      charUsed+=proPlayer.char3;
+    }
+    if(proPlayer.char4!="None Listed"){
+      charUsed+=proPlayer.char4;
+    }
+    var newRow2 = $("<tr>");
+    var col2 = "";
+    col2 += "<td>"+proPlayer.name+"</td>";//name
+    col2 += "<td>"+proPlayer.rank+"</td>";//rank
+    col2 += "<td>"+proPlayer.nationality+"</td>";//nationality
+    col2 += "<td>"+charUsed+"</td>";//character used
+    col2 += "</tr>";
+    newRow2.append(col2);
+    $("#proPlayer").append(newRow2);
+  }
+}*/
 
-function populateChartAndTable(myResponse){
+function populateChart(myResponse){
   var characterPlayed = new Object();
   var nationality = new Object();
   for(var proPlayerIndex in myResponse){

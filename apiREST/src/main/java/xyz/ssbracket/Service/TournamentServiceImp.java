@@ -157,6 +157,7 @@ public class TournamentServiceImp extends TournamentService {
         int nextMatchIncrement = indexFinder;
         boolean isLowerSeed = false;
         for(int i = currentIndex;i<endIndex;i++){
+          matches.get(i).setLevel(currentRound);
           if(isLowerSeed ){
             nextMatchIncrement--;
           }
