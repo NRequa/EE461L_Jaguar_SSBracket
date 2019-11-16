@@ -8,9 +8,9 @@ function init(){
 function handleCharacterData(){
   //get number of characters
   var xmlhttp = new XMLHttpRequest();
-  var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-  var ourApi = proxyUrl + "http://www.ssbracket.xyz/scrape/data";
-  //var ourApi = "../../scrape/data"
+  //var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+  //var ourApi = proxyUrl + "http://www.ssbracket.xyz/scrape/data";
+  var ourApi = "../../scrape/data"
   var myResponse;
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -52,9 +52,9 @@ function handleCharacterData(){
 
 function handleProData(){
   var xmlhttp = new XMLHttpRequest();
-  var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-  var ourApi = proxyUrl + "http://www.ssbracket.xyz/scrape/prodata";
-  //var ourApi = "../../scrape/data"
+  //var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+  //var ourApi = proxyUrl + "http://www.ssbracket.xyz/scrape/prodata";
+  var ourApi = "../../scrape/prodata"
   var myResponse;
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

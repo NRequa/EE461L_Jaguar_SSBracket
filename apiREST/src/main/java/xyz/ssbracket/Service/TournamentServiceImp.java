@@ -40,13 +40,15 @@ public class TournamentServiceImp extends TournamentService {
     }
 
     @Override
-    public Tournament add( Tournament o ) {
+    public Tournament add( Tournament o ) throws ResourceNotFoundException{
     	int id = o.getId();
+      int creatorId = Integer.parseInt(o.getTcreator());
+      User creatorUser = checkIfIdIsPresentAndReturnUser(creatorId);
       String tname = o.getTname();
     	if ( tournamentRepository.findById( id ).isPresent() )
     		throw new DuplicateResourceFoundException( " Tournament id = " + id + " already exists" );
     	else {
-
+        creatorUser.setNumtournamentscreated(creatorUser.getNumtournamentscreated()+1);
         Tournament returnTournament = tournamentRepository.save(o);
         TournamentArray storingTournament = new TournamentArray(returnTournament.getId(), tname, returnTournament.getChampionname());
         tournamentArrayRepository.save(storingTournament);
@@ -108,8 +110,15 @@ public class TournamentServiceImp extends TournamentService {
     public Tournament setChampion(Tournament myTournamentRequest, int id)throws ResourceNotFoundException {
       Tournament tournament = checkIfIdIsPresentAndReturnTournament( id );
       TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(id);
-      tournament.setChampionname(myTournamentRequest.getChampionname());
-      storingTournament.setChampionname(myTournamentRequest.getChampionname());
+      String myChampion = myTournamentRequest.getChampionname();
+      tournament.setChampionname(myChampion);
+      storingTournament.setChampionname(myChampion);
+      try {
+        User championUser = userRepository.findByUsername(myChampion);
+        championUser.setNumtournamentswon(championUser.getNumtournamentswon()+1);
+      } catch(Exception e){
+        //Do nothing if User with the name of the champion is not found. Probably a guest user
+      }
       tournamentArrayRepository.save(storingTournament);
       return tournamentRepository.save(tournament);
     };
