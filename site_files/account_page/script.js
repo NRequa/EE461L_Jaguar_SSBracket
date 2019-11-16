@@ -44,7 +44,7 @@ function swapPage(pageName){
 
         // Log out requested
         case 4: {
-            sessionStorage.setItem("userId", -1);
+            sessionStorage.setItem("userId", null);
             document.location.href = "loginPrompt.html";
         }
     }
