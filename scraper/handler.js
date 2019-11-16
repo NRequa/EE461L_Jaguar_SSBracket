@@ -2,6 +2,7 @@
 
 const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
+const sel = require('./charStatsSelectors');
 
 AWS.config.update({
 	region: "us-east-2",
@@ -49,7 +50,7 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   var promiseSSBWorldChars = get('https://ssbworld.com/characters/');
 
   Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction, promiseSSBWorldChars]).then(function(data1) {
-	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getWeightTitleCond}, {name: "wtitle2", fn: getWeightTitleCond}, {name: "name", fn: getWeightName}, {name: "weight", fn: getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getWeightTitleCond}, {name: "wtitle2", fn: sel.getWeightTitleCond}, {name: "name", fn: sel.getWeightName}, {name: "weight", fn: sel.getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
 	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getDashTitleCond}, {name: "wtitle2", fn: getDashTitleCond}, {name: "name", fn: getDashName}, {name: "dash", fn: getDashDash}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
 	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getSpotdodgeTitleCond}, {name: "wtitle2", fn: getSpotdodgeTitleCond}, {name: "name", fn: getSpotdodgeName}, {name: "spotdodge", fn: getSpotdodgeSpotdodge}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
 	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: getTractionTitleCond}, {name: "wtitle2", fn: getTractionTitleCond}, {name: "name", fn: getTractionName}, {name: "traction", fn: getTractionTraction}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
