@@ -4,6 +4,7 @@ var size;//size of tournament
 var id;
 var mid;
 var ongoing;
+var editable;
 
 
 async function loading(){
@@ -16,7 +17,7 @@ async function loading(){
   mid=[];
   ongoing=[];
   size=[];
-
+  editable=false;
   gNum=0;
   //for number of people in the tournament create svg attrivutes
   var player=1;//number of players;
@@ -193,7 +194,7 @@ function rectClick(g_id){//set Editable
 
   console.log("clicked");
   console.log(g_id);
-
+  if(editable){
   if(document.getElementById("close-tour").style.visibility!="hidden"&&g_id<size[0]){
     var getG=document.getElementById(g_id);
     var cText=getG.childNodes[1];
@@ -247,6 +248,7 @@ function rectClick(g_id){//set Editable
     $("#myModal").modal();
     //integer error testing
     }
+  }
   }
 }
 
@@ -425,6 +427,51 @@ async function setOneName(g_id,text){
   await patchPlayer(id,mid[mcount],odd,text)
   window.location.reload(false);
 }
+function joinTour(){
+  var xmlhttp = new XMLHttpRequest();
+  var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/"+id;
+  var myResponse;
+  xmlhttp.onreadystatechange = async function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            var key;
+            for(key in myResponse.data.matchResults){
+              if(myResponse.data.matchResults[key].player1string=="Bye"){
+                await patchUserId(myResponse.data.matchResults[key].id,sessionStorage.getItem("userId"),0);
+                window.location.reload(false);
+              }
+              else if(myResponse.data.matchResults[key].player2string=="Bye"){
+                await patchUserId(myResponse.data.matchResults[key].id,sessionStorage.getItem("userId"),1);
+                window.location.reload(false);
+              }
+            }
+          }
+        }
+    xmlhttp.open("GET", ourApi, true);
+    xmlhttp.send();
+}
+function patchUserId(mtid,pid,even){
+  return new Promise(function(resolve,reject){
+    var xmlhttp = new XMLHttpRequest();
+    var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/"+pid;
+    var myResponse;
+    xmlhttp.onreadystatechange = async function() {
+          if (this.readyState == 4 ) {
+            if(this.status == 200){
+              myResponse = JSON.parse(this.responseText);
+              var full= await findNextMatch(mtid);
+              await patchNextMatch(mtid,myResponse.data.username,myResponse.data.id,even,full)
+              resolve();
+              }
+              else{
+                reject();
+              }
+            }
+        }
+        xmlhttp.open("GET", ourApi, true);
+        xmlhttp.send();
+  });
+}
 function patchPlayer(tourid,mtchid,playernum,playertext){
   return new Promise(function(resolve,reject){
   var xmlhttp = new XMLHttpRequest();
@@ -588,6 +635,14 @@ function getTour(id,player,playerText,callback){
             console.log(myResponse);
             callback(myResponse,id,player,playerText);
             size[0]=myResponse.data.tsize;
+            editable=(myResponse.data.tcreator==sessionStorage.getItem("userId"))
+            if(editable){
+              document.getElementById("add-tour").style.visibility="hidden";
+            }
+            else{
+              document.getElementById("close-tour").style.visibility="hidden";
+            }
+
             if(myResponse.data.championname==""){
               document.getElementById("ch1").style.visibility="hidden";
               document.getElementById("ch2").style.visibility="hidden";
@@ -621,6 +676,8 @@ function callback1(myResponse,id,player,playerText){
 
   if(myResponse.data.closed){
     document.getElementById("close-tour").style.visibility="hidden";
+    document.getElementById("add-tour").style.visibility="hidden";
+
     closed=true;
   }
 
