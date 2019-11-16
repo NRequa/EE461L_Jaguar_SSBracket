@@ -64,6 +64,26 @@ public class MatchServiceImp extends MatchService {
         MatchResult oldMatchResult = getById( id );
         oldMatchResult.setP1win(o.isP1win());
         oldMatchResult.setCompleted(o.isCompleted());
+        if(o.isCompleted()){
+          try{
+            User player1 = checkIfIdIsPresentAndReturnUser(oldMatchResult.getPlayer1());
+            if(o.isP1win()){
+              player1.setNumwins(player1.getNumwins()+1);
+            }
+            player1.setNumgamesplayed(player1.getNumgamesplayed()+1);
+          } catch (ResourceNotFoundException e){
+            //do nothing
+          }
+          try{
+            User player2 = checkIfIdIsPresentAndReturnUser(oldMatchResult.getPlayer2());
+            if(!o.isP1win()){
+              player2.setNumwins(player2.getNumwins()+1);
+            }
+            player2.setNumgamesplayed(player2.getNumgamesplayed()+1);
+          } catch (ResourceNotFoundException e){
+            //do nothing
+          }
+        }
         oldMatchResult.setP1roundswon(o.getP1roundswon());
         oldMatchResult.setP2roundswon(o.getP2roundswon());
         oldMatchResult.setOngoing(o.isOngoing());

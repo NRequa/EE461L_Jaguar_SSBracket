@@ -52,8 +52,35 @@ public class TournamentServiceImp extends TournamentService {
         Tournament returnTournament = tournamentRepository.save(o);
         TournamentArray storingTournament = new TournamentArray(returnTournament.getId(), tname, returnTournament.getChampionname());
         tournamentArrayRepository.save(storingTournament);
-        return returnTournament;
+        System.out.println("got to my function");
+        returnTournament = addUsersStringToTournament(o.getTempplayers(), returnTournament);
+        return tournamentRepository.save(returnTournament);
       }
+    }
+
+    private Tournament addUsersStringToTournament(String usersString, Tournament o){
+      String usernames[] = usersString.split("\n");
+	    for(int i = 0; i<usernames.length; i++) {
+		    System.out.println(usernames[i]);
+        try {
+          User participant = userRepository.findByUsername(usernames[i]);
+          if(participant==null){
+            System.out.println("A user not found");
+            continue;
+          }
+          System.out.print("here is what we got: ");
+          System.out.println(participant.getUsername());
+          participant.setNumtournamentsparticipated(participant.getNumtournamentsparticipated()+1);
+          TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(o.getId());
+          if(!o.getUsers().contains(participant)){
+            storingTournament.getUsersarray().add(participant);
+            o.getUsers().add(participant);
+          }
+        } catch (Exception e){
+          continue;
+        }
+	    }
+      return o;
     }
 
     //maybe changes are needed
