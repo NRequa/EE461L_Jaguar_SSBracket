@@ -1,5 +1,6 @@
 function loading(){
-  if(sessionStorage.getItem("userId") != -1){
+  console.log(sessionStorage.getItem("userId"));
+  if(sessionStorage.getItem("userId") != null){
     document.getElementById("bracket_btn").style.visibility="visible";
     document.getElementById("login_prompt").style.visibility="hidden";
 
@@ -10,7 +11,7 @@ function loading(){
   }
 }
 function logInDisplay(){
-  if(sessionStorage.getItem("userId") != -1){
+  if(sessionStorage.getItem("userId") != null){
       // Hide log in/register
       $(".guestLinks").hide();
       // Show account data link

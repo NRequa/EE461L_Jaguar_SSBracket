@@ -649,7 +649,7 @@ function seeding(numPlayers){
 }
 
 function logInDisplay(){
-  if(sessionStorage.getItem("userId") != -1){
+  if(sessionStorage.getItem("userId") != null){
       // Hide log in/register
       $(".guestLinks").hide();
       // Show account data link
