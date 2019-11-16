@@ -135,7 +135,7 @@ function populateDrop() {
 								}
 								if(countTournament==0){
 									document.getElementById("drop_menu").innerHTML = '<li style="padding-left: 5%;">'
-									+ "No tournaments found</li>";
+									+ "No tournament found</li>";
 								}
 								if (!toggleOn) {
 									$(".dropdown-toggle").dropdown("toggle");
