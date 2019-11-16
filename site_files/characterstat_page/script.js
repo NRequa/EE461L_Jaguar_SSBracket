@@ -61,6 +61,7 @@ function handleProData(){
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
             populateChart(myResponse);
+            addRowToProTable(myResponse);
             }
   }
   xmlhttp.open("GET", ourApi, true);
@@ -79,7 +80,7 @@ function addToObject(myObject, nameKey){
   return myObject;
 }
 
-/*function addRowToProTable(myResponse){
+function addRowToProTable(myResponse){
   for(var proPlayerIndex in myResponse){
     var proPlayer = myResponse[proPlayerIndex];
     var charUsed = "";
@@ -87,13 +88,13 @@ function addToObject(myObject, nameKey){
       charUsed+=proPlayer.char1;
     }
     if(proPlayer.char2!="None Listed"){
-      charUsed+=proPlayer.char2;
+      charUsed+=", "+proPlayer.char2;
     }
     if(proPlayer.char3!="None Listed"){
-      charUsed+=proPlayer.char3;
+      charUsed+=", "+proPlayer.char3;
     }
     if(proPlayer.char4!="None Listed"){
-      charUsed+=proPlayer.char4;
+      charUsed+=", "+proPlayer.char4;
     }
     var newRow2 = $("<tr>");
     var col2 = "";
@@ -105,7 +106,7 @@ function addToObject(myObject, nameKey){
     newRow2.append(col2);
     $("#proPlayer").append(newRow2);
   }
-}*/
+}
 
 function populateChart(myResponse){
   var characterPlayed = new Object();
