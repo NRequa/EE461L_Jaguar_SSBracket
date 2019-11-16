@@ -194,7 +194,7 @@ function rectClick(g_id){//set Editable
   console.log("clicked");
   console.log(g_id);
 
-  if(document.getElementById("close-tour").style.visibility!="hidden"/*&&g_id<size*/){
+  if(document.getElementById("close-tour").style.visibility!="hidden"&&g_id<size[0]){
     var getG=document.getElementById(g_id);
     var cText=getG.childNodes[1];
     var mod=document.getElementById("modal-title");
@@ -222,12 +222,16 @@ function rectClick(g_id){//set Editable
   else{
     if(ongoing.includes(parseInt(g_id))){
     //TODO get if match is finished
-    var getG=document.getElementById(g_id);
-    var cText=getG.childNodes[3];
+    var intid=parseInt(g_id);
+    intid=Math.floor(intid/2)*2
+    var getG1=document.getElementById(intid);
+    var getG2=document.getElementById(intid+1);
+    var cText1=getG1.childNodes[1].innerHTML;
+    var cText2=getG2.childNodes[1].innerHTML;
     var mod=document.getElementById("modal-title");
-    mod.innerHTML="Enter Score";
+    mod.innerHTML="Enter Score ";
     mod=document.getElementById("modal-text1");
-    mod.innerHTML="Enter Score for Player1";
+    mod.innerHTML="Enter Score for "+cText1;
     mod=document.getElementById("modal-ta1");
     mod.value="";
     mod.setAttribute("rows","1");
@@ -235,7 +239,7 @@ function rectClick(g_id){//set Editable
     mod=document.getElementsByClassName("modal-data");
     mod.innerHTML=""+g_id;
     mod=document.getElementById("modal-text2");
-    mod.innerHTML="Enter Score for Player2";
+    mod.innerHTML="Enter Score for "+cText2;
     mod=document.getElementById("modal-ta2");
     mod.value="";
     mod.setAttribute("rows","1");
@@ -385,7 +389,7 @@ function patchNextMatch(mtchid,winner,winnerid,even,full){
 function setWinner(winner){
   return new Promise(function(resolve,reject){
   var xmlhttp = new XMLHttpRequest();
-  var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/setChampion"+id;
+  var mApi="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/setChampion/"+id;
   var myResponse;
   xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -584,6 +588,14 @@ function getTour(id,player,playerText,callback){
             console.log(myResponse);
             callback(myResponse,id,player,playerText);
             size[0]=myResponse.data.tsize;
+            if(myResponse.data.championname==""){
+              document.getElementById("ch1").style.visibility="hidden";
+              document.getElementById("ch2").style.visibility="hidden";
+            }
+            else{
+              console.log(myResponse.data.championname)
+              document.getElementById("ch2").innerHTML=(myResponse.data.championname+"!");
+            }
             resolve();
         }
   };
