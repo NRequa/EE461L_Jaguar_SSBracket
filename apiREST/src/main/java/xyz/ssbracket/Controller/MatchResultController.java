@@ -93,6 +93,22 @@ public class MatchResultController {
     }
 
     @CrossOrigin
+    @PatchMapping(value = "/setuser1/{id}")
+    public ResponseWrapper<MatchResult> updateUser1(@Valid @RequestBody MatchResult matchResult,
+                                                         @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( matchMainService.updateUser1( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
+    @PatchMapping(value = "/setuser2/{id}")
+    public ResponseWrapper<MatchResult> updateUser2(@Valid @RequestBody MatchResult matchResult,
+                                                         @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( matchMainService.updateUser2( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
     @PatchMapping(value = "/setcharacters/{id}")
     public ResponseWrapper<MatchResult> updateMatchCharacters(@Valid @RequestBody MatchResult matchResult,
                                                        @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )

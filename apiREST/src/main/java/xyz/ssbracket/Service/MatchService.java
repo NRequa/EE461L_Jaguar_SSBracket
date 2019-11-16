@@ -9,4 +9,6 @@ public abstract class MatchService implements MainService<MatchResult> {
     public abstract MatchResult updateP1String( MatchResult o, int id);
     public abstract MatchResult updateP2String( MatchResult o, int id);
     public abstract MatchResult updateCharsPlayed( MatchResult o, int id);
+    public abstract MatchResult updateUser1( MatchResult o, int id);
+    public abstract MatchResult updateUser2( MatchResult o, int id);
 }
