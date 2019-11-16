@@ -1,7 +1,7 @@
 function loading(){
   console.log(sessionStorage.getItem("userId"));
   logInDisplay();
-  if(sessionStorage.getItem("userId") != null){
+  if(sessionStorage.getItem("userId") != null && sessionStorage.getItem("userId") != "null"){
     document.getElementById("bracket_btn").style.visibility="visible";
     document.getElementById("login_prompt").style.visibility="hidden";
 
