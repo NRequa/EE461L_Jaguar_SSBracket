@@ -790,7 +790,7 @@ function findplayer(player){
             resolve(myResponse.data.id)
           }
           else if(this.status==400){
-            resolve(258)
+            resolve(17)
           }
           else[
             reject(this.status)

@@ -55,7 +55,7 @@ public class AccountsController{
 
     @CrossOrigin
     @PostMapping("/register")
-    public boolean registerAccount(@RequestBody AccountSubmission registerAttempt){
+    public LogInResult registerAccount(@RequestBody AccountSubmission registerAttempt){
       //  return registerAttempt;
         // Check if the username exists
 
@@ -70,11 +70,12 @@ public class AccountsController{
             User newUser = new User(username, 0,0,0,0,0);
             Accounts newAccount = new Accounts(username, password, newUser);
             accountsLog.save(newAccount);
-            return true;
+            LogInResult response = new LogInResult(newUser.getId(), true);
+            return response;
         }
 
         else{
-            return false;
+            return new LogInResult(-1, false);
         }
 
 
