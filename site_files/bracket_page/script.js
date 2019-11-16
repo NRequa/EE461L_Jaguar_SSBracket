@@ -4,6 +4,7 @@ var size;//size of tournament
 var id;
 var mid;
 var ongoing;
+var ongoingindex;
 
 async function loading(){
   logInDisplay();
@@ -13,6 +14,8 @@ async function loading(){
   id = unescape(temp[1]);
   var playerText=[];
   mid=[];
+  ongoing=[];
+  ongoingindex=0;
   gNum=0;
   //for number of people in the tournament create svg attrivutes
   var player=1;//number of players;
@@ -190,7 +193,7 @@ function rectClick(g_id){//set Editable
   console.log("clicked");
   console.log(g_id);
 
-  if(closed==false/*&&g_id<size*/){
+  if(document.getElementById("close-tour").style.visibility!="hidden"/*&&g_id<size*/){
     var getG=document.getElementById(g_id);
     var cText=getG.childNodes[1];
     var mod=document.getElementById("modal-title");
@@ -247,7 +250,7 @@ function rectClick(g_id){//set Editable
 function modalEnter(){
   var mod=document.getElementsByClassName("modal-data");
   var data=mod.innerHTML;
-  if(closed==false){
+  if(document.getElementById("close-tour").style.visibility!="hidden"){
   mod=document.getElementById("modal-ta1");
   setOneName(data,mod.value);
 }
@@ -382,18 +385,23 @@ function setName(pArray,player){
               mid[i/2]=myResponse.data.matchResults[key].id;
               //cutNames
                 arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player1string;
-                if(closed==true){
+                if(myResponse.data.matchResults[key].completed==true){
                   arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p1roundswon;
                 }
                 i++;
                 //set score of the stuff
                 //change color if bye
                 arrG[i].childNodes[1].innerHTML=myResponse.data.matchResults[key].player2string;
-                if(closed==true){
+                if(myResponse.data.matchResults[key].completed==true){
                   arrG[i].childNodes[3].innerHTML=myResponse.data.matchResults[key].p2roundswon;
                 }
                 i++;
-
+                if(myResponse.data.matchResults[key].ongoing==true){
+                  ongoing[ongoingindex]=i-2
+                  ongoingIndex++
+                  ongoing[ongoingindex]=i-1
+                  ongoingIndex++
+                }
             }
         }
   };
@@ -469,11 +477,18 @@ function callback1(myResponse,id,player,playerText){
   document.getElementById("desc").innerHTML = myResponse.data.description;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
-  document.getElementById("twitter-timeline").href="https://twitter.com/"+myResponse.data.twitter+"?ref_src=twsrc%5Etfw"
+  twttr.widgets.createTimeline(
+  {
+    sourceType:"profile",
+    screenName:myResponse.data.twitter
+  },
+  document.getElementById("twittertimeline")
+  );
   //TODO implement tourmanet closed
-  closed=myResponse.data.closed;
-  if(closed){
+
+  if(myResponse.data.closed){
     document.getElementById("close-tour").style.visibility="hidden";
+    closed=true;
   }
 
   createBracket(player,playerText);
