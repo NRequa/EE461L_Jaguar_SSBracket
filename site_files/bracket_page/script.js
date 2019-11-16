@@ -3,12 +3,13 @@ var closed;//used for if the tournament is closed for
 var size;//size of tournament
 var id;
 var mid;
+var ongoing;
 
-function loading(){
+async function loading(){
   logInDisplay();
   var parameters = location.search.substring(1);
   var temp = parameters.split("=");
-  closed=false;
+  //closed=false;
   id = unescape(temp[1]);
   var playerText=[];
   mid=[];
@@ -16,13 +17,14 @@ function loading(){
   //for number of people in the tournament create svg attrivutes
   var player=1;//number of players;
   if(id!=null){
-    console.log(getTour(id,player,playerText,callback1));
+    console.log(await getTour(id,player,playerText,callback1));
     addVisitToTournament(id);
 
     }
     else{
         createBracket(player,playerText);
     }
+
   }
 
   function addVisitToTournament(tournamentId){
@@ -310,7 +312,18 @@ async function setOneName(g_id,text){
   //patch for matches
   var arrG=document.getElementsByTagName('g');
   arrG[g_id].childNodes[1].innerHTML=text;
-  await patchPlayer(id,mid[g_id/2],g_id%2,text)
+  var odd
+  var mcount
+  if(g_id%2==0){
+    odd=0
+    mcount=g_id/2;
+  }
+  else{
+    odd=1
+    mcount=(g_id-1)/2;
+  }
+  await patchPlayer(id,mid[mcount],odd,text)
+  window.location.reload(false);
 }
 function patchPlayer(tourid,mtchid,playernum,playertext){
   return new Promise(function(resolve,reject){
@@ -394,7 +407,24 @@ function closeTour(){
   closed=true;
   //patch tournament closed
   //send tournament closed
-  //make matches good
+  var xmlhttp = new XMLHttpRequest();
+  var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/close/"+id;
+  var myResponse;
+  //make matches good<--done in the backend
+  xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myResponse = JSON.parse(this.responseText);
+            console.log(myResponse)
+            window.location.reload(false);
+        }
+  };
+
+  xmlhttp.open("PATCH", ourApi, true);
+  xmlhttp.setRequestHeader("Content-type", "application/json");
+  xmlhttp.send(JSON.stringify({
+    "closed":true
+  })
+  );
 
 }
 
@@ -417,6 +447,7 @@ function parsePlayer(pString){
   return pArray;
 }
 function getTour(id,player,playerText,callback){
+  return new Promise(function(resolve,reject){
   var xmlhttp = new XMLHttpRequest();
   var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/"+id;
   var myResponse;
@@ -425,21 +456,25 @@ function getTour(id,player,playerText,callback){
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
             callback(myResponse,id,player,playerText);
-
+            resolve();
         }
   };
   xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
+  })
 }
 
 function callback1(myResponse,id,player,playerText){
   document.getElementById("title").innerHTML = myResponse.data.tname;
   document.getElementById("desc").innerHTML = myResponse.data.description;
-  closed=myResponse.data.closed;
   playerText=parsePlayer(myResponse.data.tempplayers);
   player= parseInt(myResponse.data.tsize)/4;
+  document.getElementById("twitter-timeline").href="https://twitter.com/"+myResponse.data.twitter+"?ref_src=twsrc%5Etfw"
   //TODO implement tourmanet closed
   closed=myResponse.data.closed;
+  if(closed){
+    document.getElementById("close-tour").style.visibility="hidden";
+  }
 
   createBracket(player,playerText);
 }
@@ -450,12 +485,12 @@ function createTour(){
 
   var tName = document.getElementById("tournament_name").value;
   var tDesc = document.getElementById("tournament_desc").value;
-  var tCreator = "Wungus";
+  var tCreator = sessionStorage.getItem("userId").toString();
   var tType = 1;
   var e= document.getElementById("tournament_numP");
   var tSize = parseInt(e.options[e.selectedIndex].text);
   var tPlayers =document.getElementById("tournament_players").value;
-
+  var account=document.getElementById("tournament_ht").value;
   var mod;
   if(tName==""){
     mod=document.getElementById("modal-text");
@@ -531,7 +566,8 @@ function createTour(){
     "tsize":tSize,
     "description":tDesc,
     "tempplayers":tPlayers,
-    "championname":""
+    "championname":"",
+    "twitter":account
   })
   );
   }
@@ -619,7 +655,6 @@ function logInDisplay(){
       // Show account data link
       $(".logInLinks").show();
   }
-
   else{
       //Hide account data
       $(".logInLinks").hide();

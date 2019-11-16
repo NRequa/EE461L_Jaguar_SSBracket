@@ -1,9 +1,26 @@
 function loading(){
-  var user=sessionStorage.getItem("userId");
-  if(user!=null){
-    
+  if(sessionStorage.getItem("userId") != -1){
+    document.getElementById("bracket_btn").style.visibility="visible";
+    document.getElementById("login_prompt").style.visibility="hidden";
+
   }
   else{
-    //hide the button and say you need to register
+    document.getElementById("bracket_btn").style.visibility="hidden";
+    document.getElementById("login_prompt").style.visibility="visible";
+  }
+}
+function logInDisplay(){
+  if(sessionStorage.getItem("userId") != -1){
+      // Hide log in/register
+      $(".guestLinks").hide();
+      // Show account data link
+      $(".logInLinks").show();
+  }
+  else{
+      //Hide account data
+      $(".logInLinks").hide();
+      // Show account data link
+      $(".guestLinks").show();
+
   }
 }

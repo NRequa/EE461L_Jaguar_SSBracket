@@ -13,7 +13,7 @@
     <meta charset="utf-8">
     <title>SSBracket</title>
   </head>
-  <body style="margin-left:40px">
+  <body style="margin-left:40px" onload="loading()">
     <nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container-fluid">
 					<div class="navbar-header">
@@ -37,6 +37,7 @@
       <button type="button" class="btn" onclick="location.href='tour_create.html';" id="bracket_btn">
         Create a tournament
       </button>
+      <p id=login_prompt style="visibility:hidden">Please login or register to create a tournament</p>
 
 
   </body>
