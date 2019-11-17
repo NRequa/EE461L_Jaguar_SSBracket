@@ -110,17 +110,19 @@ public class AccountsController{
         System.out.println(existingUser);
 
         if(existingUser == null){
-            return new LogInResult(-1, false);
+            return new LogInResult(-1, -1, false);
 
         }
 
         else{
             boolean attemptStatus = existingUser.getPassword().equals(password);
+
             // Get associated User object
             User linkedUser = userRepository.findByUsername(username);
             System.out.println(linkedUser);
             int Id = linkedUser.getId();
-            return new LogInResult(Id, attemptStatus);
+            int accId = existingUser.getId();
+            return new LogInResult(Id, accId, attemptStatus);
 
 
         }
