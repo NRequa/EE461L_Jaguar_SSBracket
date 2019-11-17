@@ -55,7 +55,7 @@ function showTopUsers() {
 			if (user.numwins == 0) {
 				winRate = 0;
 			} else {
-				winRate = user.numgamesplayed / user.numwins;
+				winRate = user.numwins / user.numgamesplayed;
 			}
 			tmp.push(winRate.toFixed(2));
 			holder.push(tmp)
