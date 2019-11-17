@@ -10,9 +10,11 @@ import xyz.ssbracket.Exception.ResourceNotFoundException;
 import xyz.ssbracket.Model.MatchResult;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
+import xyz.ssbracket.Model.TournamentArray;
 import xyz.ssbracket.Repository.MatchResultRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.UserRepository;
+import xyz.ssbracket.Repository.TournamentArrayRepository;
 
 @Service
 public class MatchServiceImp extends MatchService {
@@ -25,6 +27,9 @@ public class MatchServiceImp extends MatchService {
 
     @Autowired
     private TournamentRepository tournamentRepository;
+
+    @Autowired
+    private TournamentArrayRepository tournamentArrayRepository;
 
     @Override
     public Page<MatchResult> getAll(Pageable pageable ) {
@@ -103,12 +108,28 @@ public class MatchServiceImp extends MatchService {
         return matchResultRepository.save(oldMatchResult);
     }
 
-    public MatchResult updateUser1( MatchResult o, int id)throws ResourceNotFoundException{
+    public MatchResult updateUser1( MatchResult o, int id) throws ResourceNotFoundException{
       MatchResult oldMatchResult = getById( id );
       oldMatchResult.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
       oldMatchResult.setPlayer1(o.getPlayer1());
       oldMatchResult.setPlayer1string(o.getPlayer1string());
       oldMatchResult.setOngoing(o.isOngoing());
+      Tournament myTournament = checkIfIdIsPresentAndReturnTournament(oldMatchResult.getEvent());
+      if(!myTournament.isClosed()){
+        TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(oldMatchResult.getEvent());
+        try{
+          User participant = checkIfIdIsPresentAndReturnUser(o.getPlayer1());
+          participant.setNumtournamentsparticipated(participant.getNumtournamentsparticipated()+1);
+          if(!myTournament.getUsers().contains(participant)){
+            storingTournament.getUsersarray().add(participant);
+            myTournament.getUsers().add(participant);
+            tournamentArrayRepository.save(storingTournament);
+            tournamentRepository.save(myTournament);
+          }
+        } catch (Exception e){
+          System.out.println("username probably not found");
+        }
+      }
       return matchResultRepository.save(oldMatchResult);
     };
     public MatchResult updateUser2( MatchResult o, int id)throws ResourceNotFoundException{
@@ -117,6 +138,22 @@ public class MatchServiceImp extends MatchService {
       oldMatchResult.setPlayer2(o.getPlayer2());
       oldMatchResult.setPlayer2string(o.getPlayer2string());
       oldMatchResult.setOngoing(o.isOngoing());
+      Tournament myTournament = checkIfIdIsPresentAndReturnTournament(oldMatchResult.getEvent());
+      if(!myTournament.isClosed()){
+        TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(oldMatchResult.getEvent());
+        try{
+          User participant = checkIfIdIsPresentAndReturnUser(o.getPlayer2());
+          participant.setNumtournamentsparticipated(participant.getNumtournamentsparticipated()+1);
+          if(!myTournament.getUsers().contains(participant)){
+            storingTournament.getUsersarray().add(participant);
+            myTournament.getUsers().add(participant);
+            tournamentArrayRepository.save(storingTournament);
+            tournamentRepository.save(myTournament);
+          }
+        } catch (Exception e){
+          System.out.println("username probably not found");
+        }
+      }
       return matchResultRepository.save(oldMatchResult);
     };
 
@@ -154,6 +191,20 @@ public class MatchServiceImp extends MatchService {
         return matchResult;
     }
 
+    @Override
+    public MatchResult updateChar1(MatchResult o, int id)throws ResourceNotFoundException{
+      MatchResult matchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+      matchResult.setP1characterplayed(o.getP1characterplayed());
+      return matchResultRepository.save(matchResult);
+    };
+
+    @Override
+    public MatchResult updateChar2(MatchResult o, int id)throws ResourceNotFoundException{
+      MatchResult matchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+      matchResult.setP2characterplayed(o.getP2characterplayed());
+      return matchResultRepository.save(matchResult);
+    };
+
     private MatchResult checkIfIdIsPresentAndReturnMatchResult( int id ) {
         if ( !matchResultRepository.findById( id ).isPresent() )
             throw new ResourceNotFoundException( " Match id = " + id + " not found" );
@@ -174,5 +225,13 @@ public class MatchServiceImp extends MatchService {
         } else {
             return tournamentRepository.findById( id ).get();
         }
+    }
+
+    private TournamentArray checkIfIdIsPresentAndReturnArrayTournament( int id ){
+      if ( !tournamentArrayRepository.findById( id ).isPresent() ){
+          throw new ResourceNotFoundException( "This tournament may have been made before changes to database and might not have necessary data associated." );
+      } else {
+          return tournamentArrayRepository.findById( id ).get();
+      }
     }
 }
