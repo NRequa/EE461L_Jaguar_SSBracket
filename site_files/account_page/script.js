@@ -295,6 +295,7 @@ function changePictureRequest(imageName){
 function resetPassword(){
     var myuserid = sessionStorage.getItem("accId");
     var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/updatePass/'+myuserid;
+   // var apiLocal = 'http://localhost:8080/api/v1/Accounts/updatePass/'+myuserid;
     var formData = {
         "username" :  "bigDummy",
         "password" :  $('input[id=regPass]').val()
