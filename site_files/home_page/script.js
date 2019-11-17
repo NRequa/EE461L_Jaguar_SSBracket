@@ -219,6 +219,10 @@ function showFeatures() {
 			
 			// do the rest
 			for (i = 1; i < users.length; i++) {
+				if (users[i].username == "guest") {
+					continue;
+				}
+				
 				item = document.createElement("div");
 				item.className = "item";
 				
