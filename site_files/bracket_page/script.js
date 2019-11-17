@@ -629,7 +629,7 @@ function getTour(id,player,playerText,callback){
   var xmlhttp = new XMLHttpRequest();
   var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/"+id;
   var myResponse;
-  xmlhttp.onreadystatechange = function() {
+  xmlhttp.onreadystatechange = async function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
@@ -651,6 +651,7 @@ function getTour(id,player,playerText,callback){
               console.log(myResponse.data.championname)
               document.getElementById("ch2").innerHTML=(myResponse.data.championname+"!");
             }
+            document.getElementById("creator").innerHTML=await getUserName(myResponse.data.tcreator);
             resolve();
         }
   };
@@ -683,7 +684,22 @@ function callback1(myResponse,id,player,playerText){
 
   createBracket(player,playerText);
 }
-
+function getUserName(id){
+  return new Promise(function(resolve,reject){
+    var xmlhttp = new XMLHttpRequest();
+    var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/"+id;
+    var myResponse;
+    xmlhttp.onreadystatechange = async function() {
+          if (this.readyState == 4 && this.status == 200) {
+              myResponse = JSON.parse(this.responseText);
+              console.log(myResponse);
+              resolve(myResponse.data.username);
+            }
+          }
+      xmlhttp.open("GET", ourApi, true);
+      xmlhttp.send();
+  })
+}
 function createTour(){
   var xmlhttp = new XMLHttpRequest();
   var ourApi = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
