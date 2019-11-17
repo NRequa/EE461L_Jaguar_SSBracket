@@ -45,6 +45,7 @@ function swapPage(pageName){
         // Log out requested
         case 4: {
             sessionStorage.setItem("userId", null);
+            sessionStorage.setItem("accId", null);
             document.location.href = "loginPrompt.html";
         }
     }
@@ -292,7 +293,7 @@ function changePictureRequest(imageName){
 
 
 function resetPassword(){
-    var myuserid = sessionStorage.getItem("userId");
+    var myuserid = sessionStorage.getItem("accId");
     var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/updatePass/'+myuserid;
     var formData = {
         "username" :  "bigDummy",
