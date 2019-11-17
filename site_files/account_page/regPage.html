@@ -102,6 +102,7 @@
                     var response = JSON.parse(this.responseText);
                     if(response.status){
                         sessionStorage.setItem("userId", response.id);
+                        sessionStorage.setItem("accId", response.accId);
                         window.location.href = "accountDataPage.html";
                     }
 

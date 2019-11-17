@@ -70,12 +70,12 @@ public class AccountsController{
             User newUser = new User(username, 0,0,0,0,0);
             Accounts newAccount = new Accounts(username, password, newUser);
             accountsLog.save(newAccount);
-            LogInResult response = new LogInResult(newUser.getId(), true);
+            LogInResult response = new LogInResult(newUser.getId(), newAccount.getId(), true);
             return response;
         }
 
         else{
-            return new LogInResult(-1, false);
+            return new LogInResult(-1, -1, false);
         }
 
 
