@@ -153,6 +153,9 @@ public class MatchServiceImp extends MatchService {
       oldMatchResult.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
       oldMatchResult.setPlayer1(o.getPlayer1());
       oldMatchResult.setPlayer1string(o.getPlayer1string());
+
+      oldMatchResult.setP1characterplayed(o.getP1characterplayed());
+
       oldMatchResult.setOngoing(o.isOngoing());
       Tournament myTournament = checkIfIdIsPresentAndReturnTournament(oldMatchResult.getEvent());
       if(!myTournament.isClosed()){
@@ -177,6 +180,9 @@ public class MatchServiceImp extends MatchService {
       oldMatchResult.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
       oldMatchResult.setPlayer2(o.getPlayer2());
       oldMatchResult.setPlayer2string(o.getPlayer2string());
+
+      oldMatchResult.setP2characterplayed(o.getP2characterplayed());
+
       oldMatchResult.setOngoing(o.isOngoing());
       Tournament myTournament = checkIfIdIsPresentAndReturnTournament(oldMatchResult.getEvent());
       if(!myTournament.isClosed()){
