@@ -11,10 +11,15 @@ import xyz.ssbracket.Model.MatchResult;
 import xyz.ssbracket.Model.Tournament;
 import xyz.ssbracket.Model.User;
 import xyz.ssbracket.Model.TournamentArray;
+import xyz.ssbracket.Model.Friends;
 import xyz.ssbracket.Repository.MatchResultRepository;
 import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.UserRepository;
 import xyz.ssbracket.Repository.TournamentArrayRepository;
+import xyz.ssbracket.Repository.FriendRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MatchServiceImp extends MatchService {
@@ -30,6 +35,9 @@ public class MatchServiceImp extends MatchService {
 
     @Autowired
     private TournamentArrayRepository tournamentArrayRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
 
     @Override
     public Page<MatchResult> getAll(Pageable pageable ) {
@@ -70,8 +78,13 @@ public class MatchServiceImp extends MatchService {
         oldMatchResult.setP1win(o.isP1win());
         oldMatchResult.setCompleted(o.isCompleted());
         if(o.isCompleted()){
+          boolean player1IsPlayer = false;
+          boolean player2IsPlayer = false;
+          User player1 = null;
+          User player2 = null;
           try{
-            User player1 = checkIfIdIsPresentAndReturnUser(oldMatchResult.getPlayer1());
+            player1 = checkIfIdIsPresentAndReturnUser(oldMatchResult.getPlayer1());
+            player1IsPlayer = true;
             if(o.isP1win()){
               player1.setNumwins(player1.getNumwins()+1);
             }
@@ -80,13 +93,40 @@ public class MatchServiceImp extends MatchService {
             //do nothing
           }
           try{
-            User player2 = checkIfIdIsPresentAndReturnUser(oldMatchResult.getPlayer2());
+            player2 = checkIfIdIsPresentAndReturnUser(oldMatchResult.getPlayer2());
+            player2IsPlayer = true;
             if(!o.isP1win()){
               player2.setNumwins(player2.getNumwins()+1);
             }
             player2.setNumgamesplayed(player2.getNumgamesplayed()+1);
           } catch (ResourceNotFoundException e){
             //do nothing
+          }
+          if(player1IsPlayer&&player2IsPlayer){
+            List<Friends> player1Friends = player1.getMyfriends();
+            List<Friends> player2Friends = player2.getMyfriends();
+            for(Friends friend : player1Friends){
+              if(friend.getFriendsname().equals(player2.getUsername())){
+                if(o.isP1win()){
+                  friend.setTotalwins(friend.getTotalwins()+1);
+                } else{
+                  friend.setTotallosses(friend.getTotallosses()+1);
+                }
+                friendRepository.save(friend);
+              }
+            }
+
+            for(Friends friend : player2Friends){
+              if(friend.getFriendsname().equals(player1.getUsername())){
+                if(o.isP1win()){
+                  friend.setTotallosses(friend.getTotallosses()+1);
+                } else{
+                  friend.setTotalwins(friend.getTotalwins()+1);
+                }
+                friendRepository.save(friend);
+              }
+            }
+
           }
         }
         oldMatchResult.setP1roundswon(o.getP1roundswon());
