@@ -9,36 +9,22 @@ class elemSelector {
 		this._checker = checker;
 	}
 	
-	set property(prop) {
-		this._property = prop;
-	}
+	set property(prop) {this._property = prop;}
 	
-	set sel(sel) {
-		this._selector = sel;
-	}
+	set sel(sel) {this._selector = sel;}
 	
-	set checker(ch) {
-		this._checker = ch;
-	}
+	set checker(ch) {this._checker = ch;}
 	
-	get property() {
-		return this._property;
-	}
+	get property() {return this._property;}
 	
-	get selector() {
-		return this._selector;
-	}
+	get selector() {return this._selector;}
 	
-	get checker() {
-		return this._checker;
-	}
+	get checker() {return this._checker;}
 	
 	applySelector(row) {
 		let property = this._selector(row);
 		if(this._checker == null || this._checker == undefined) return property;
-		if(this._checker(property)) {
-			return true;
-		}
+		if(this._checker(property)) return true;
 		return false;
 	}
 }

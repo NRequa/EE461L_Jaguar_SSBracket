@@ -72,8 +72,7 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 // Assumes that each array is the same length to make a well-formed result
 function combine(weight, dash, spotdodge, traction, games) {
 	var combined = [];
-	let x;
-	for(x = 0; x < weight.length; x++) {
+	for(let x = 0; x < weight.length; x++) {
 		let name = weight[x].name;
 		let tweight = weight[x].weight;
 		let tdash;
@@ -83,26 +82,10 @@ function combine(weight, dash, spotdodge, traction, games) {
 		let twins;
 		let tlosses;
 		var j;
-
-		for(j = 0; j < dash.length; j++) {
-	        if(dash[j].name === name) {
-	    	    tdash = dash[j].dash;
-	    	    break;
-	        }
-		}
-		for(j = 0; j < spotdodge.length; j++) {
-	        if(spotdodge[j].name === name) {
-	    	    tspotdodge = spotdodge[j].spotdodge;
-	    	    break;
-	        }
-		}
-
-		for(j = 0; j < traction.length; j++) {
-	        if(traction[j].name === name) {
-	    	    ttraction = traction[j].traction;
-	    	    break;
-	        }
-		}
+        
+		tdash = searchArray(dash, name, "dash");
+		tspotdodge = searchArray(spotdodge, name, "spotdodge");
+		ttraction = searchArray(traction, name, "traction");
 		for(j = 0; j < games.length; j++) {
 	        if(games[j].name === name) {
 	    	    ttotalGames = games[j].total;
@@ -126,20 +109,10 @@ function combine(weight, dash, spotdodge, traction, games) {
 	            }
 				break;
 		    case "Dr. Mario":
-			    for(j = 0; j < dash.length; j++) {
-	                if(dash[j].name === "Mario") {
-	    	            tdash = dash[j].dash;
-	    	            break;
-	                }
-				}
+			    tdash = searchArray(dash, "Mario", "dash");
 				break;
 			case "Rosalina":
-			    for(j = 0; j < dash.length; j++) {
-	                if(dash[j].name === "Rosalina & Luma") {
-	    	            tdash = dash[j].dash;
-	    	            break;
-	                }
-				}
+			    tdash = searchArray(dash, "Rosalina & Luma", "dash");
 				break;
 			case "Bayonetta":
 			    tspotdodge = tspotdodge.substr(0, 4);
@@ -157,5 +130,13 @@ function combine(weight, dash, spotdodge, traction, games) {
 		combined.push({name, tweight, tdash, tspotdodge, ttraction, ttotalGames, twins, tlosses});
 	}
 	return combined;
+}
+
+function searchArray(array, name, property) {
+	for(let j = 0; j < array.length; j++) {
+	        if(array[j].name === name) {
+	    	    return array[j][property];
+	        }
+	}
 }
 
