@@ -3,36 +3,32 @@ const elemSelector = require('./helpers').elemSelector;
 
 // get selectors for the weight
 function getWeightSelectors() {
-	let weightTitleSelector1 = new elemSelector("titletest", getWeightTitleCond);
-    let weightTitleSelector2 = new elemSelector("titletest2", getWeightTitleCond);
+	let weightTitleSelector1 = new elemSelector("titletest", getWeightTitleCond, verifyTitle);
     let weightNameSelector = new elemSelector("name", getWeightName);
     let weightWeightSelector = new elemSelector("weight", getWeightWeight);
-	return [weightTitleSelector1, weightTitleSelector2, weightNameSelector, weightWeightSelector];
+	return [weightTitleSelector1, weightNameSelector, weightWeightSelector];
 }
 
 function getDashSelectors() {
-	let dashTitleSelector1 = new elemSelector("titletest", getDashTitleCond);
-    let dashTitleSelector2 = new elemSelector("titletest2", getDashTitleCond);
+	let dashTitleSelector1 = new elemSelector("titletest", getDashTitleCond, verifyTitle);
     let dashNameSelector = new elemSelector("name", getDashName);
     let dashDashSelector = new elemSelector("dash", getDashDash);
-	return [dashTitleSelector1, dashTitleSelector2, dashNameSelector, dashDashSelector];
+	return [dashTitleSelector1, dashNameSelector, dashDashSelector];
 }
 
 
 function getSpotdodgeSelectors() {
-	let spotdodgeTitleSelector1 = new elemSelector("titletest", getSpotdodgeTitleCond);
-    let spotdodgeTitleSelector2 = new elemSelector("titletest2", getSpotdodgeTitleCond);
+	let spotdodgeTitleSelector1 = new elemSelector("titletest", getSpotdodgeTitleCond, verifyTitle);
     let spotdodgeNameSelector = new elemSelector("name", getSpotdodgeName);
     let spotdodgeSpotdodgeSelector = new elemSelector("spotdodge", getSpotdodgeSpotdodge);
-	return [spotdodgeTitleSelector1, spotdodgeTitleSelector2, spotdodgeNameSelector, spotdodgeSpotdodgeSelector];
+	return [spotdodgeTitleSelector1, spotdodgeNameSelector, spotdodgeSpotdodgeSelector];
 }
 
 function getTractionSelectors() {
-	let tractionTitleSelector1 = new elemSelector("titletest", getTractionTitleCond);
-    let tractionTitleSelector2 = new elemSelector("titletest2", getTractionTitleCond);
+	let tractionTitleSelector1 = new elemSelector("titletest", getTractionTitleCond, verifyTitle);
     let tractionNameSelector = new elemSelector("name", getTractionName);
     let tractionTractionSelector = new elemSelector("traction", getTractionTraction);
-	return [tractionTitleSelector1, tractionTitleSelector2, tractionNameSelector, tractionTractionSelector];
+	return [tractionTitleSelector1, tractionNameSelector, tractionTractionSelector];
 }
 
 function getSSBWorldSelectors() {
@@ -96,6 +92,13 @@ function getTractionTraction(row) {
 	return row.children().eq(2).text().trim();
 }
 
+function verifyTitle(title) {
+	if(typeof title == 'undefined') return false;
+	if(!title.toString().includes("SSBU")) return false;
+	return true;
+}
+
+
 // SSBWorld Functions
 
 function getSSBWorldCharURL(row) {
@@ -105,6 +108,8 @@ function getSSBWorldCharURL(row) {
 function getSSBWorldWinLose(row) {
 	return row.root().children().eq(0).children().eq(1).children().eq(1).children().eq(2).children().eq(5).children().eq(0).attr('class');
 }
+
+
 
 module.exports = {
   getWeightSelectors,

@@ -3,9 +3,10 @@ const util = require('util');
 
 // The class for element selector objects
 class elemSelector {
-	constructor(property, selector) {
+	constructor(property, selector, checker) {
 		this._property = property;
 		this._selector = selector;
+		this._checker = checker;
 	}
 	
 	// very basic validation function
@@ -23,6 +24,10 @@ class elemSelector {
 		this._selector = sel;
 	}
 	
+	set checker(ch) {
+		this._checker = ch;
+	}
+	
 	get property() {
 		return this._property;
 	}
@@ -31,10 +36,17 @@ class elemSelector {
 		return this._selector;
 	}
 	
+	get checker() {
+		return this._checker;
+	}
+	
 	applySelector(row) {
-		//let object = {};
-		//object[this._property] = this._selector(row);
-		return this._selector(row);//object;
+		let property = this._selector(row);
+		if(this._checker == null || this._checker == undefined) return property;
+		if(this._checker(property)) {
+			return true;
+		}
+		return false;
 	}
 }
 
@@ -81,12 +93,20 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 		// get data from each row
 		rows.each((i, el) => {
 			let selected = [];
+			var goodRow = true;
 			elementSelectors.forEach((sel, i) => {
 				//console.log(sel);
-				selected.push({name: sel.property, prop: sel.applySelector($(el))});
+				let applied = sel.applySelector($(el));
+				if(typeof applied == "boolean") {
+					if(applied) return;
+					else goodRow = false;
+				}
+				selected.push({name: sel.property, prop: applied});
 			});
+			if(!goodRow) return;
 			//console.log(selected);
 			// perform tests on data to see if we want to keep it
+			/*
 			if(elementConditionals != null && elementConditionals != 'undefined') {
 				let success = true;
 				elementConditionals.forEach((con) => {
@@ -114,7 +134,8 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			    });
 				if(!success) {return;}
 			}	
-			console.log(selected);
+			*/
+			//console.log(selected);
 			// put resulting object into the array
 			let object = {};
 			selected.forEach((prop) => {
