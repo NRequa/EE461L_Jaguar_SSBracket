@@ -388,8 +388,7 @@ function findNextMatch(mtchid){
 function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full){
   return new Promise(function(resolve,reject){
       var xmlhttp = new XMLHttpRequest();
-      var m1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setuser1/"+mtchid.toString();
-      var m2Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setuser2/"+mtchid.toString();
+      var m1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setuser/"+mtchid.toString();
       var myResponse;
       if(winnerChar==""){
         winnerChar="None";
@@ -412,7 +411,7 @@ function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full){
       }));
       }
       else{
-        xmlhttp.open("PATCH", m2Api, true);
+        xmlhttp.open("PATCH", m1Api, true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send(JSON.stringify({
           "player2":winnerid,
@@ -553,8 +552,8 @@ function patchCharacter(mtchid,playernum,chartext){
   return new Promise(function(resolve,reject){
   var xmlhttp = new XMLHttpRequest();
   var matchId=mtchid;
-  var p1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setcharacter1/"+mtchid;
-  var p2Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setcharacter2/"+mtchid;
+  var p1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setcharacters/"+mtchid;
+  var p2Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setcharacters/"+mtchid;
   var myReponse;
   if(chartext==""){
     chartext="None";
@@ -578,7 +577,7 @@ function patchCharacter(mtchid,playernum,chartext){
     );
   }
   else{
-    xmlhttp.open("PATCH", p2Api, true);
+    xmlhttp.open("PATCH", p1Api, true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(JSON.stringify({
       "p2characterplayed":chartext

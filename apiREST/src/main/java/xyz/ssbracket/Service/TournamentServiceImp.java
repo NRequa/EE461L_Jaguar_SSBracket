@@ -52,7 +52,6 @@ public class TournamentServiceImp extends TournamentService {
         Tournament returnTournament = tournamentRepository.save(o);
         TournamentArray storingTournament = new TournamentArray(returnTournament.getId(), tname, returnTournament.getChampionname());
         tournamentArrayRepository.save(storingTournament);
-        System.out.println("got to my function");
         returnTournament = addUsersStringToTournament(o.getTempplayers(), returnTournament);
         return tournamentRepository.save(returnTournament);
       }
@@ -60,19 +59,22 @@ public class TournamentServiceImp extends TournamentService {
 
     private Tournament addUsersStringToTournament(String usersString, Tournament o){
       String usernames[] = usersString.split("\n");
+      int id[]=new int[usernames.length];
 	    for(int i = 0; i<usernames.length; i++) {
 		    System.out.println(usernames[i]);
         try {
           User participant = userRepository.findByUsername(usernames[i]);
           if(participant==null){
             System.out.println("A user not found");
+            id[i]=17;
             continue;
           }
-          System.out.print("here is what we got: ");
-          System.out.println(participant.getUsername());
-          participant.setNumtournamentsparticipated(participant.getNumtournamentsparticipated()+1);
+          else{
+            id[i]=participant.getId();
+          }
           TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(o.getId());
           if(!o.getUsers().contains(participant)){
+            participant.setNumtournamentsparticipated(participant.getNumtournamentsparticipated()+1);
             storingTournament.getUsersarray().add(participant);
             o.getUsers().add(participant);
           }
@@ -80,7 +82,17 @@ public class TournamentServiceImp extends TournamentService {
           continue;
         }
 	    }
+      int seed[]=seeding(o.getTsize());
+
       return o;
+    }
+    private int[] seeding(int tourSize){
+      int rounds = (int)(Math.log(tourSize))/(int)(Math.log(2))-1;
+
+      for(int i=0;i<rounds;i++){
+
+      }
+      return null;
     }
 
     //maybe changes are needed
