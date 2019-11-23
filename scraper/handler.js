@@ -45,10 +45,10 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 		  characterSSBWorldPages.push(get(el.url));
 		  characterSSBWorldNames.push(parseURL(el.url));
 	  });
-	  console.log(characterWeight);
-	  console.log(characterDash);
-	  console.log(characterSpotdodge);
-	  console.log(characterTraction);
+	  //console.log(characterWeight);
+	  //console.log(characterDash);
+	  //console.log(characterSpotdodge);
+	  //console.log(characterTraction);
 	return Promise.all(characterSSBWorldPages);
   })
   .then(function(data) {

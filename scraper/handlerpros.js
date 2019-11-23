@@ -2,6 +2,7 @@
 
 const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
+const sel = require('./proStatsSelectors');
 
 AWS.config.update({
 	region: "us-east-2",
@@ -10,7 +11,7 @@ AWS.config.update({
 const {extractDataFromHTML} = require('./helpers');
 const {parseGames} = require('./helpers');
 
-// Run locally with: node -e "require('./handlerpros').scrapeSSBWorldPros(null, {}, console.log)"
+// Run locally with: node -e "require('./handlerpros').scrapeProData(null, {}, console.log)"
 
 module.exports.scrapeProData = (event, context, callback) => {
   const proStats = [];
@@ -21,24 +22,15 @@ module.exports.scrapeProData = (event, context, callback) => {
   promiseProsPage.then(function(data1) {
 	  //console.log(data1.data);
 	  extractDataFromHTML(data1.data, proStats, 'tr', null, 
-          [{name: "style", fn: getProPlayerRowStyle}, 
-		   {name: "name", fn: getProPlayerName}, 
-		   {name: "rank", fn: getProRank},
-		   {name: "nationality", fn: getProPlayerNationality},
-		   {name: "char1", fn: getProPlayerFirstChar},
-		   {name: "char2", fn: getProPlayerSecondChar},
-		   {name: "char3", fn: getProPlayerThirdChar},
-		   {name: "char4", fn: getProPlayerFourthChar},
-		   {name: "score", fn: getProPlayerScore},
-		   {name: "xfactor", fn: getProPlayerXFactor}],
+          sel.getProSelectors(),
 		   [{type: "equal", value: 'text-align:right;'}]
 		   );
 	  
       return Promise.resolve(proStats);
   })
-  .then(function(data) {
-	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/prodata', JSON.stringify(data))
-  })
+  //.then(function(data) {
+//	  return putIntoS3('www.ssbracket.xyz'/*process.env.bucketname*/, 'scrape/prodata', JSON.stringify(data))
+  //})
   .then(function(data) {
 	  callback(null, {data})
   })
