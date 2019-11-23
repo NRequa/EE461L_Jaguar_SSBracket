@@ -1,6 +1,5 @@
 const elemSelector = require('./helpers').elemSelector;
 
-
 // get selectors for the weight
 function getWeightSelectors() {
 	let weightTitleSelector1 = new elemSelector("titletest", getWeightTitleCond, verifyTitle);
@@ -15,7 +14,6 @@ function getDashSelectors() {
     let dashDashSelector = new elemSelector("dash", getDashDash);
 	return [dashTitleSelector1, dashNameSelector, dashDashSelector];
 }
-
 
 function getSpotdodgeSelectors() {
 	let spotdodgeTitleSelector1 = new elemSelector("titletest", getSpotdodgeTitleCond, verifyTitle);
@@ -102,18 +100,10 @@ function getSSBWorldCharURL(row) {
 	return "https://ssbworld.com" + row.attr('href');
 }
 
-function getSSBWorldWinLose(row) {
-	return row.root().children().eq(0).children().eq(1).children().eq(1).children().eq(2).children().eq(5).children().eq(0).attr('class');
-}
-
-
-
 module.exports = {
   getWeightSelectors,
   getDashSelectors,
   getSpotdodgeSelectors,
   getTractionSelectors,
-  getSSBWorldSelectors,
-  getSSBWorldCharURL,
-  getSSBWorldWinLose,
+  getSSBWorldSelectors
 };

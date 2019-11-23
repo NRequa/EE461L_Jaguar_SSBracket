@@ -9,13 +9,6 @@ class elemSelector {
 		this._checker = checker;
 	}
 	
-	// very basic validation function
-	validate() {
-		if(this._property == null || this._property == undefined) return false;
-		if(this._selector == null || this._selector == undefined) return false;
-		return true;
-	}
-	
 	set property(prop) {
 		this._property = prop;
 	}
@@ -68,48 +61,36 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 	if(array == null) return null;
 	if(typeof array != "object") return null;
 	if(typeof elementSelectors != "object") return null;
+	if(typeof rowsDefinition != "string") return array;
 	const $ = cheerio.load(html);
 	var rows;
-	var iterating = false;
 	// make rows
-	if(rowsDefinition != null) {
-		iterating = true;
-		if(rowsNotDefinition != null) {
-			rows = $(rowsDefinition).not(rowsNotDefinition);
-		}
-		else {
-			rows = $(rowsDefinition);
-		}
+	if(rowsNotDefinition != null) {
+		rows = $(rowsDefinition).not(rowsNotDefinition);
 	}
 	else {
-		return array;
-		rows = null;
+		rows = $(rowsDefinition);
 	}
-	if(iterating) {
-		// get data from each row
-		rows.each((i, el) => {
-			let selected = [];
-			var goodRow = true;
-			elementSelectors.forEach((sel, i) => {
-				//console.log(sel);
-				let applied = sel.applySelector($(el));
-				if(typeof applied == "boolean") {
-					if(applied) return;
-					else goodRow = false;
-				}
-				selected.push({name: sel.property, prop: applied});
-			});
-			if(!goodRow) return;
-			//console.log(selected);
-			// put resulting object into the array
-			let object = {};
-			selected.forEach((prop) => {
-				object[prop.name] = prop.prop;
-			});
-			array.push(object);
+	// get data from each row
+	rows.each((i, el) => {
+		let selected = [];
+		var goodRow = true;
+		elementSelectors.forEach((sel, i) => {
+			let applied = sel.applySelector($(el));
+			if(typeof applied == "boolean") {
+				if(applied) return;
+				else goodRow = false;
+			}
+			selected.push({name: sel.property, prop: applied});
 		});
-	}
-	//console.log(array);
+		if(!goodRow) return;
+		// put resulting object into the array
+		let object = {};
+		selected.forEach((prop) => {
+			object[prop.name] = prop.prop;
+		});
+		array.push(object);
+	});
 	return array;
 }
 
@@ -161,7 +142,6 @@ function parseGames(winloss) {
 }
 
 function parseURL(url) {
-	//console.log(url);
 	let trimmed = url.substr(32).trim(); // remove the https://ssbworld.com/characters/ part
 	let output = "";
 	let prevChar = " ";
@@ -191,10 +171,26 @@ function parseURL(url) {
 	return output;
 }
 
+function putIntoS3(bucket, key, data) {
+	var s3 = new AWS.S3();
+    var params = {
+        Bucket : bucket,
+        Key : key,
+        Body : data,
+	    ContentType: 'application/json'
+    }
+    s3.putObject(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     console.log(data);           // successful response
+    });
+	return Promise.resolve(data);
+}
+
 module.exports = {
     elemSelector,
     extractDataFromHTML,
     extractStringFromHTML,
     parseGames,
-    parseURL
+    parseURL,
+	putIntoS3
 };

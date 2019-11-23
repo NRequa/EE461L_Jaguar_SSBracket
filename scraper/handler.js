@@ -3,7 +3,6 @@
 const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
 const sel = require('./charStatsSelectors');
-//const extParams = require('/extractDataParameters');
 
 AWS.config.update({
 	region: "us-east-2",
@@ -15,6 +14,7 @@ const {extractDataFromHTML} = require('./helpers');
 const {extractStringFromHTML} = require('./helpers');
 const {parseGames} = require('./helpers');
 const {parseURL} = require('./helpers');
+const {putIntoS3} = require('./helpers');
 
 var characterData = [];
 
@@ -45,10 +45,6 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
 		  characterSSBWorldPages.push(get(el.url));
 		  characterSSBWorldNames.push(parseURL(el.url));
 	  });
-	  //console.log(characterWeight);
-	  //console.log(characterDash);
-	  //console.log(characterSpotdodge);
-	  //console.log(characterTraction);
 	return Promise.all(characterSSBWorldPages);
   })
   .then(function(data) {
@@ -163,17 +159,3 @@ function combine(weight, dash, spotdodge, traction, games) {
 	return combined;
 }
 
-function putIntoS3(bucket, key, data) {
-	var s3 = new AWS.S3();
-    var params = {
-        Bucket : bucket,
-        Key : key,
-        Body : data,
-	    ContentType: 'application/json'
-    }
-    s3.putObject(params, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-    });
-	return Promise.resolve(data);
-}

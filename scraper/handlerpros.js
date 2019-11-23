@@ -3,6 +3,7 @@
 const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
 const sel = require('./proStatsSelectors');
+const {putIntoS3} = require('./helpers');
 
 AWS.config.update({
 	region: "us-east-2",
@@ -35,18 +36,3 @@ module.exports.scrapeProData = (event, context, callback) => {
   })
   .catch(callback);
 };
-
-function putIntoS3(bucket, key, data) {
-	var s3 = new AWS.S3();
-    var params = {
-        Bucket : bucket,
-        Key : key,
-        Body : data,
-	    ContentType: 'application/json'
-    }
-    s3.putObject(params, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-    });
-	return Promise.resolve(data);
-}
