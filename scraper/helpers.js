@@ -1,5 +1,42 @@
-const cheerio = require('./cheerio/lib/cheerio'); // ./cheerio/lib/cheerio
+const cheerio = require('./cheerio/lib/cheerio'); 
 const util = require('util');
+
+// The class for element selector objects
+class elemSelector {
+	constructor(property, selector) {
+		this._property = property;
+		this._selector = selector;
+	}
+	
+	// very basic validation function
+	validate() {
+		if(this._property == null || this._property == undefined) return false;
+		if(this._selector == null || this._selector == undefined) return false;
+		return true;
+	}
+	
+	set property(prop) {
+		this._property = prop;
+	}
+	
+	set sel(sel) {
+		this._selector = sel;
+	}
+	
+	get property() {
+		return this._property;
+	}
+	
+	get selector() {
+		return this._selector;
+	}
+	
+	applySelector(row) {
+		//let object = {};
+		//object[this._property] = this._selector(row);
+		return this._selector(row);//object;
+	}
+}
 
 /*
     html is the html document from axios that we want to scrape
@@ -7,9 +44,8 @@ const util = require('util');
 	rowsDefinition is to iterate over regular elements; put in class and tag names for the elements
 	rowsNotDefition requires rowsDefinition, and is optional. Use if you want to preclude elements from iteration.
 	
-	elementSelectors are functions that define what elements you want to select from the HTML. 
+	elementSelectors are elemSelector objects that define what elements you want to select from the HTML. 
 	    If you want to iterate, they will be applied to each iteration. Else, they will be applied to the document holistically.
-		They should be objects, with a name value and a function for selecting. The function should use Cheerio
 		
     elementConditionals is optional, and matches with the first X number of elementSelectors. elementConditionals 
 	    will be tested against the elements selected - elements selected must == the conditions to be included. Else,
@@ -19,6 +55,7 @@ const util = require('util');
 	If you aren't using some optional values, input null!
 */
 function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
+	// test for valid inputs
 	if(typeof html != "string") return null;
 	if(array == null) return null;
 	if(typeof array != "object") return null;
@@ -26,6 +63,7 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 	const $ = cheerio.load(html);
 	var rows;
 	var iterating = false;
+	// make rows
 	if(rowsDefinition != null) {
 		iterating = true;
 		if(rowsNotDefinition != null) {
@@ -36,16 +74,19 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 		}
 	}
 	else {
-		//console.error("null rowsDefinition - cannot work!");
 		return array;
 		rows = null;
 	}
 	if(iterating) {
+		// get data from each row
 		rows.each((i, el) => {
 			let selected = [];
 			elementSelectors.forEach((sel, i) => {
-				selected.push({name: sel.name, prop: sel.fn($(el))});
+				//console.log(sel);
+				selected.push({name: sel.property, prop: sel.applySelector($(el))});
 			});
+			//console.log(selected);
+			// perform tests on data to see if we want to keep it
 			if(elementConditionals != null && elementConditionals != 'undefined') {
 				let success = true;
 				elementConditionals.forEach((con) => {
@@ -73,6 +114,8 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 			    });
 				if(!success) {return;}
 			}	
+			console.log(selected);
+			// put resulting object into the array
 			let object = {};
 			selected.forEach((prop) => {
 				object[prop.name] = prop.prop;
@@ -132,6 +175,7 @@ function parseGames(winloss) {
 }
 
 function parseURL(url) {
+	//console.log(url);
 	let trimmed = url.substr(32).trim(); // remove the https://ssbworld.com/characters/ part
 	let output = "";
 	let prevChar = " ";
@@ -162,8 +206,9 @@ function parseURL(url) {
 }
 
 module.exports = {
-  extractDataFromHTML,
-  extractStringFromHTML,
-  parseGames,
-  parseURL
+    elemSelector,
+    extractDataFromHTML,
+    extractStringFromHTML,
+    parseGames,
+    parseURL
 };

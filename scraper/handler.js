@@ -3,6 +3,7 @@
 const get = require('./axios/lib/axios');// ./axios/axios
 const AWS = require('aws-sdk');
 const sel = require('./charStatsSelectors');
+//const extParams = require('/extractDataParameters');
 
 AWS.config.update({
 	region: "us-east-2",
@@ -33,17 +34,21 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   var promiseSpotdodge = get('https://www.ssbwiki.com/Spotdodge');
   var promiseTraction = get('https://www.ssbwiki.com/Traction');
   var promiseSSBWorldChars = get('https://ssbworld.com/characters/');
-
+// [{name: "wtitle", fn: sel.getWeightTitleCond}, {name: "wtitle2", fn: sel.getWeightTitleCond}, {name: "name", fn: sel.getWeightName}, {name: "weight", fn: sel.getWeightWeight}]
   Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction, promiseSSBWorldChars]).then(function(data1) {
-	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getWeightTitleCond}, {name: "wtitle2", fn: sel.getWeightTitleCond}, {name: "name", fn: sel.getWeightName}, {name: "weight", fn: sel.getWeightWeight}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getDashTitleCond}, {name: "wtitle2", fn: sel.getDashTitleCond}, {name: "name", fn: sel.getDashName}, {name: "dash", fn: sel.getDashDash}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getSpotdodgeTitleCond}, {name: "wtitle2", fn: sel.getSpotdodgeTitleCond}, {name: "name", fn: sel.getSpotdodgeName}, {name: "spotdodge", fn: sel.getSpotdodgeSpotdodge}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', [{name: "wtitle", fn: sel.getTractionTitleCond}, {name: "wtitle2", fn: sel.getTractionTitleCond}, {name: "name", fn: sel.getTractionName}, {name: "traction", fn: sel.getTractionTraction}], [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[4].data, characterSSBWorldURLs, '.players-list div a', null, [{name: "url", fn: sel.getSSBWorldCharURL}], null);
+	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', sel.getWeightSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', sel.getDashSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', sel.getSpotdodgeSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', sel.getTractionSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[4].data, characterSSBWorldURLs, '.players-list div a', null, sel.getSSBWorldSelectors(), null);
 	  characterSSBWorldURLs.forEach(function(el) {
 		  characterSSBWorldPages.push(get(el.url));
 		  characterSSBWorldNames.push(parseURL(el.url));
 	  });
+	  console.log(characterWeight);
+	  console.log(characterDash);
+	  console.log(characterSpotdodge);
+	  console.log(characterTraction);
 	return Promise.all(characterSSBWorldPages);
   })
   .then(function(data) {
