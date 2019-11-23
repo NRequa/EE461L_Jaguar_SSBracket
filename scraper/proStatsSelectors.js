@@ -2,7 +2,7 @@ const elemSelector = require('./helpers').elemSelector;
 
 // get selectors for the weight
 function getProSelectors() {
-	let styleSelector = new elemSelector("style", getProPlayerRowStyle);
+	let styleSelector = new elemSelector("style", getProPlayerRowStyle, verifyStyle);
 	let nameSelector = new elemSelector("name", getProPlayerName);
 	let rankSelector = new elemSelector("rank", getProRank);
 	let nationalitySelector = new elemSelector("nationality", getProPlayerNationality);
@@ -61,6 +61,12 @@ function getProPlayerXFactor(row) {
 	let xfac = row.children().eq(5).text();
 	if(typeof xfac === "string") xfac = xfac.trim();
 	return xfac;
+}
+
+//[{type: "equal", value: 'text-align:right;'}]
+
+function verifyStyle(style) {
+	return style === 'text-align:right;';
 }
 
 module.exports = {
