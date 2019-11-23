@@ -34,12 +34,12 @@ module.exports.scrapeSSBWiki = (event, context, callback) => {
   var promiseSpotdodge = get('https://www.ssbwiki.com/Spotdodge');
   var promiseTraction = get('https://www.ssbwiki.com/Traction');
   var promiseSSBWorldChars = get('https://ssbworld.com/characters/');
-// [{name: "wtitle", fn: sel.getWeightTitleCond}, {name: "wtitle2", fn: sel.getWeightTitleCond}, {name: "name", fn: sel.getWeightName}, {name: "weight", fn: sel.getWeightWeight}]
+
   Promise.all([promiseWeight, promiseDash, promiseSpotdodge, promiseTraction, promiseSSBWorldChars]).then(function(data1) {
-	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', sel.getWeightSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', sel.getDashSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', sel.getSpotdodgeSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
-	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', sel.getTractionSelectors(), [{type: "notTypeof", value: "undefined"}, {type: "contains", value: 'SSBU'}]);
+	  extractDataFromHTML(data1[0].data, characterWeight, '.wikitable tbody tr', '.collapsed', sel.getWeightSelectors());
+	  extractDataFromHTML(data1[1].data, characterDash, '.wikitable tbody tr', '.collapsed', sel.getDashSelectors());
+	  extractDataFromHTML(data1[2].data, characterSpotdodge, '.wikitable tbody tr', '.collapsed', sel.getSpotdodgeSelectors());
+	  extractDataFromHTML(data1[3].data, characterTraction, '.wikitable tbody tr', '.collapsed', sel.getTractionSelectors());
 	  extractDataFromHTML(data1[4].data, characterSSBWorldURLs, '.players-list div a', null, sel.getSSBWorldSelectors(), null);
 	  characterSSBWorldURLs.forEach(function(el) {
 		  characterSSBWorldPages.push(get(el.url));

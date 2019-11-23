@@ -22,9 +22,8 @@ module.exports.scrapeProData = (event, context, callback) => {
   promiseProsPage.then(function(data1) {
 	  //console.log(data1.data);
 	  extractDataFromHTML(data1.data, proStats, 'tr', null, 
-          sel.getProSelectors(),
-		   [{type: "equal", value: 'text-align:right;'}]
-		   );
+          sel.getProSelectors()
+		  );
 	  
       return Promise.resolve(proStats);
   })

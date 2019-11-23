@@ -59,14 +59,10 @@ class elemSelector {
 	elementSelectors are elemSelector objects that define what elements you want to select from the HTML. 
 	    If you want to iterate, they will be applied to each iteration. Else, they will be applied to the document holistically.
 		
-    elementConditionals is optional, and matches with the first X number of elementSelectors. elementConditionals 
-	    will be tested against the elements selected - elements selected must == the conditions to be included. Else,
-		they will be skipped. Elements with conditionals are not included in the return. 
-		
 	Output is an array of objects, with each object containing key:value pairs
 	If you aren't using some optional values, input null!
 */
-function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors, elementConditionals) {
+function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, elementSelectors) {
 	// test for valid inputs
 	if(typeof html != "string") return null;
 	if(array == null) return null;
@@ -104,37 +100,6 @@ function extractDataFromHTML (html, array, rowsDefinition, rowsNotDefinition, el
 				selected.push({name: sel.property, prop: applied});
 			});
 			if(!goodRow) return;
-			//console.log(selected);
-			// perform tests on data to see if we want to keep it
-			/*
-			if(elementConditionals != null && elementConditionals != 'undefined') {
-				let success = true;
-				elementConditionals.forEach((con) => {
-					let thing = selected.shift();
-					thing = thing.prop;
-					switch(con.type) {
-						case "typeof":
-						    if(typeof thing != con.value) {success = false;}
-							break;
-						case "notTypeof":
-						    if(typeof thing == con.value) {success = false;}
-							break;
-						case "equal":
-						    if(thing != con.value) {success = false;}
-							break;
-						case "notEqual":
-						    if(thing == con.value) {success = false;}
-							break;
-						case "contains":
-						    if(success == false) break;
-						    if(!thing.toString().includes(con.value)) {success = false;}
-							break;
-						default: success = false;
-					}
-			    });
-				if(!success) {return;}
-			}	
-			*/
 			//console.log(selected);
 			// put resulting object into the array
 			let object = {};
