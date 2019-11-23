@@ -60,13 +60,18 @@ public class TournamentServiceImp extends TournamentService {
 
     private Tournament addUsersStringToTournament(String usersString, Tournament o){
       String usernames[] = usersString.split("\n");
+      int id[]=new int[usernames.length];
 	    for(int i = 0; i<usernames.length; i++) {
 		    System.out.println(usernames[i]);
         try {
           User participant = userRepository.findByUsername(usernames[i]);
           if(participant==null){
             System.out.println("A user not found");
+            id[i]=17;
             continue;
+          }
+          else{
+            id[i]=participant.getId();
           }
           System.out.print("here is what we got: ");
           System.out.println(participant.getUsername());
@@ -80,7 +85,16 @@ public class TournamentServiceImp extends TournamentService {
           continue;
         }
 	    }
+      int seed[]=seeding(o.getTsize());
+
       return o;
+    }
+    private int[] seeding(int tourSize){
+      int rounds = Math.log(tourSize)/Math.log(2)-1;
+
+      for(int i=0;i<rounds;i++){
+
+      }
     }
 
     //maybe changes are needed
