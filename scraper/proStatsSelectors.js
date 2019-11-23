@@ -23,7 +23,7 @@ function getProRank(row) {
 	return row.children().eq(0).text();
 }
 
-function getProPlayerName(row) { // TODO: edit so it doesn't have the number!
+function getProPlayerName(row) {
 	return row.children().eq(2).children().eq(0).text();
 }
 
@@ -62,8 +62,6 @@ function getProPlayerXFactor(row) {
 	if(typeof xfac === "string") xfac = xfac.trim();
 	return xfac;
 }
-
-//[{type: "equal", value: 'text-align:right;'}]
 
 function verifyStyle(style) {
 	return style === 'text-align:right;';

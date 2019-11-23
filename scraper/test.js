@@ -13,8 +13,6 @@ describe('wiki sanity tests', function() {
 		return new Promise((resolve) => {
 		    var fromBucket = get('http://www.ssbracket.xyz/scrape/data');
 	        fromBucket.then(function(data) {
-			//console.log(data);
-			//console.log(data.data);
 		    dataArray = data.data;
 		    resolve(dataArray);
 	        })
@@ -318,32 +316,26 @@ describe('general tests', function() {
 		});
 		it('should not return more than 26 characters', function() {
 			let value = helpers.extractStringFromHTML(testHTML, '<body>', 0, "&");
-			//console.log(value);
 		    assert.equal(value.length == 26, true);
 		});
 		it('should not accept a non-string keyPhrase', function() {
 			let value = helpers.extractStringFromHTML(testHTML, 123456789, 0, "&");
-			//console.log(value);
 		    assert.equal(value, null);
 		});
 		it('should not accept an empty keyPhrase', function() {
 			let value = helpers.extractStringFromHTML(testHTML, "", 0, "&");
-			//console.log(value);
 		    assert.equal(value, null);
 		});
 		it('should not accept a non-string end character', function() {
 			let value = helpers.extractStringFromHTML(testHTML, "<", 0, 42);
-			//console.log(value);
 		    assert.equal(value, null);
 		});
 		it('should not accept a string of length != 1 as end character', function() {
 			let value = helpers.extractStringFromHTML(testHTML, "<", 0, "42");
-			//console.log(value);
 		    assert.equal(value, null);
 		});
 		it('should not try to read beyond the end of the html document', function() {
 			let value = helpers.extractStringFromHTML(testHTML, "</b", 0, "0");
-			//console.log(value);
 		    assert.equal(value, "ody>");
 		});
 		
