@@ -36,8 +36,6 @@ function getSSBWorldSelectors() {
 	return [ssbworldUrlSelector];
 }
 
-
-
 // Character Stats Element Selector Functions
 
 // Weight functions
@@ -97,7 +95,6 @@ function verifyTitle(title) {
 	if(!title.toString().includes("SSBU")) return false;
 	return true;
 }
-
 
 // SSBWorld Functions
 

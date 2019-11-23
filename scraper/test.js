@@ -1,7 +1,7 @@
 var assert = require('assert');
 const get = require('./axios/lib/axios');
 const helpers = require('./helpers.js');
-
+const elemSelector = require('./helpers').elemSelector;
 
 // array to hold the json data. Possibly smelly, but making additional
 // promises to get around that is slow and prone to error (even more smelly)
@@ -199,6 +199,10 @@ function returnAString(row) {return "hello";}
 function returnANumber(row) {return 42;}
 function returnNull(row) {return null;}
 
+function getGeneralTestSelectors1() {
+	return [new elemSelector("test", getTableRow)];
+}
+
 
 describe('general tests', function() {
 	var testHTML = '<body><table><tbody class="awesome"><tr>0</tr><tr>1</tr><tr>2</tr><tr>3</tr><tr>4</tr><tr>5</tr></tbody></table><table><tbody class="awesome notawesome"><tr>5</tr><tr>4</tr><tr>3</tr><tr>2</tr><tr>1</tr><tr>0</tr></tbody></table><ul class="awesomer"><li class="skipme"><a href="bad.link">NO</a></li><li><a href="cultofthepartyparrot.com">cult</a></li><li><a href="google.com">goog</a></li><li><a href="yahoo.com" title="notnull">yaho</a></li></ul></body>';
@@ -207,43 +211,37 @@ describe('general tests', function() {
 		it('should return true selecting the right test table', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, '.awesome tr', null, 
-                [{name: "test", fn: getTableRow}],
-		        null);
+                getGeneralTestSelectors1());
 			assert.equal(array.length == 12, true);
 		});
 		it('should return true selecting only 1 test table', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, '.awesome', '.notawesome', 
-                [{name: "test", fn: getTableRow}],
-		        null);
+                getGeneralTestSelectors1());
 			assert.equal(array.length == 1, true);
 		});
 		it('should return an empty array when given invalid row definition', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, null, '.notawesome', 
-                [{name: "test", fn: getTableRow}],
-		        null);
+                getGeneralTestSelectors1());
 			assert.equal(array.length == 0, true);
 		});
 		it('should return null when given invalid html', function() {
 			let array = [];
 			let val = helpers.extractDataFromHTML(null, array, '.awesome', '.notawesome', 
-                [{name: "test", fn: getTableRow}],
-		        null);
+                getGeneralTestSelectors1());
 			assert.equal(val == null, true);
 		});
 		it('should return null when given null array', function() {
 			let array = [];
 			let val = helpers.extractDataFromHTML(testHTML, null, '.awesome', '.notawesome', 
-                [{name: "test", fn: getTableRow}],
-		        null);
+                getGeneralTestSelectors1());
 			assert.equal(val == null, true);
 		});
 		it('should return null when given a non-object array', function() {
 			let array = [];
 			let val = helpers.extractDataFromHTML(testHTML, 42, '.awesome', '.notawesome', 
-                [{name: "test", fn: getTableRow}],
-		        null);
+                getGeneralTestSelectors1());
 			assert.equal(val == null, true);
 		});
 		it('should return null when given a non-object elementSelectors array', function() {
@@ -253,53 +251,48 @@ describe('general tests', function() {
 		        null);
 			assert.equal(val == null, true);
 		});
+		// NOTE: after refactoring, the below 5 tests are relatively meaningless, since they tested a function that didn't make sense
 		it('should exclude the first li element with anchor "bad.link"', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "test", fn: getLink},
-				 {name: "link", fn: getLink}],
-		        [{type: "notEqual", value: 'bad.link'}]);
+			    [new elemSelector("test", getLink, function(l) {return l != "bad.link";}),
+				 new elemSelector("link", getLink)]);
 			assert.equal(array.length == 3, true);
 		});
 		it('should find only 1 li with the anchor "bad.link"', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "test", fn: getLink},
-				 {name: "link", fn: getLink}],
-		        [{type: "equal", value: 'bad.link'}]);
+			    [new elemSelector("test", getLink, function(l) {return l === "bad.link";}),
+				 new elemSelector("link", getLink)]);
 			assert.equal(array.length == 1, true);
 		});
 		it('should exclude li elements without "parrot" in the anchor', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "test", fn: getLink},
-				 {name: "link", fn: getLink}],
-		        [{type: "contains", value: 'parrot'}]);
+			    [new elemSelector("test", getLink, function(l) {return l.includes('parrot') === true;}),
+				 new elemSelector("link", getLink)]);
 			assert.equal(array.length == 1, true);
 		});
 		it('should exclude li elements with null title attributes on their anchors', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "test", fn: getTitle},
-				 {name: "link", fn: getLink}],
-		        [{type: "notTypeof", value: 'undefined'}]);
+			    [new elemSelector("test", getTitle, function(l) {return typeof l != "undefined";}),
+				 new elemSelector("link", getLink)]);
 			assert.equal(array.length == 1, true);
 		});
 		it('should exclude test condition values from returned objects', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "test", fn: getTitle},
-				 {name: "link", fn: getLink}],
-		        [{type: "notTypeof", value: 'undefined'}]);
+                [new elemSelector("test", getTitle, function(l) {return typeof l != "undefined";}),
+				 new elemSelector("link", getLink)]);
 			assert.equal(array[0].test == undefined, true);
 		});
 		it('should return an object with the specified parameters', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "string", fn: returnAString},
-				 {name: "number", fn: returnANumber},
-			     {name: "nullval", fn: returnNull}],
-		        null);
+			    [new elemSelector("string", returnAString),
+				 new elemSelector("number", returnANumber),
+				 new elemSelector("nullval", returnNull)]);
 			assert.equal(array[0].string == "hello", true);
 			assert.equal(array[0].number == 42, true);
 			assert.equal(array[0].nullval == null, true);
@@ -307,10 +300,9 @@ describe('general tests', function() {
 		it('should not return an object with unspecified parameters', function() {
 			let array = [];
 			helpers.extractDataFromHTML(testHTML, array, 'li', null, 
-                [{name: "string", fn: returnAString},
-				 {name: "number", fn: returnANumber},
-			     {name: "nullval", fn: returnNull}],
-		        null);
+                [new elemSelector("string", returnAString),
+				 new elemSelector("number", returnANumber),
+				 new elemSelector("nullval", returnNull)]);
 			assert.equal(array[0].unspecified == undefined, true);
 		});
 	});
