@@ -25,6 +25,7 @@ import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISM
 import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
 import xyz.ssbracket.Results.ResponseWrapper;
+import xyz.ssbracket.Results.Resultset;
 import xyz.ssbracket.Service.AccountService;
 
 
@@ -47,14 +48,14 @@ public class AccountsController{
 
     // Test get request
     @CrossOrigin
-    @GetMapping("/friends/{id}")
-    public Accounts getFriends(@PathVariable String id){
-        System.out.println("String ID is : " + id);
-        return accountsLog.findAccountsByName(id);
+    @GetMapping(value = "/friends/{id}")
+    public ResponseWrapper<Accounts> getFriends( @PathVariable String id){
+        //return accountsLog.findAccountsByName(id);
+        return new ResponseWrapper<>( accountMainService.getFriends( id ), HttpStatus.OK );
     }
 
     @CrossOrigin
-    @PostMapping("/register")
+    @PostMapping(value = "/register")
     public LogInResult registerAccount(@RequestBody AccountSubmission registerAttempt){
       //  return registerAttempt;
         // Check if the username exists
@@ -63,7 +64,7 @@ public class AccountsController{
         String password = registerAttempt.getPassword();
         System.out.println("Username: " + username + " | Password: " + password);
 
-        Accounts existingUser = accountsLog.findAccountsByName(username);
+        Accounts existingUser = accountsLog.findAccountsByUsername(username);
         System.out.println("Existing user result: " + existingUser);
 
         if(existingUser == null){
@@ -82,12 +83,12 @@ public class AccountsController{
     }
 
     @CrossOrigin
-    @PostMapping("/test")
+    @PostMapping(value = "/test")
     public Accounts debuggingMethod(@RequestBody AccountSubmission signInAttempt){
         String username = signInAttempt.getUsername();
         String password = signInAttempt.getPassword();
 
-        Accounts existingUser = accountsLog.findAccountsByName(username);
+        Accounts existingUser = accountsLog.findAccountsByUsername(username);
         if(existingUser == null){
             User newUser = new User(username, 1,1,0,1,1);
             Accounts newAccount = new Accounts(username, password, newUser);
@@ -101,41 +102,34 @@ public class AccountsController{
     }
 
     @CrossOrigin
-    @PostMapping("/signin")
+    @PostMapping(value = "/signin")
     public LogInResult signInAccount(@RequestBody AccountSubmission signInAttempt){
         String username = signInAttempt.getUsername();
         String password = signInAttempt.getPassword();
 
-        Accounts existingUser = accountsLog.findAccountsByName(username);
+        Accounts existingUser = accountsLog.findAccountsByUsername(username);
         System.out.println(existingUser);
 
         if(existingUser == null){
             return new LogInResult(-1, -1, false);
-
         }
-
         else{
             boolean attemptStatus = existingUser.getPassword().equals(password);
-
             // Get associated User object
             User linkedUser = userRepository.findByUsername(username);
             System.out.println(linkedUser);
             int Id = linkedUser.getId();
             int accId = existingUser.getId();
             return new LogInResult(Id, accId, attemptStatus);
-
-
         }
     }
-
-
 
     @CrossOrigin
     @PatchMapping(value = "/updatePass/{id}")
     public ResponseWrapper<Integer> updatePassword(@Valid @RequestBody AccountSubmission userId,
                                                @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
     {
-        return new ResponseWrapper<>( accountMainService.updatePassword(Integer.parseInt(id), userId.getPassword()), HttpStatus.OK );
+        return new ResponseWrapper<>( accountMainService.updatePassword( Integer.parseInt(id), userId ), HttpStatus.OK );
     }
 
 }

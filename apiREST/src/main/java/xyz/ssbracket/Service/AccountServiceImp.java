@@ -51,9 +51,8 @@ public class AccountServiceImp extends AccountService {
     }
 
     @Override
-    public Accounts getById(int id) {
-        // TODO Auto-generated method stub
-        return null;
+    public Accounts getById( int id ) {
+        return checkIfIdIsPresentAndReturnAccounts( id );
     }
 
     @Override
@@ -62,36 +61,22 @@ public class AccountServiceImp extends AccountService {
         return null;
     }
 
+    public Accounts getFriends( String name ) {
+        return accountsRepository.findAccountsByUsername( name );
+    }
+
     @Override
-    public int updatePassword(int id, String newPass) {
+    public int updatePassword( int id, AccountSubmission o ) {
         Accounts oldUser = checkIfIdIsPresentAndReturnAccounts( id );
-        oldUser.setPassword(newPass);
+        oldUser.setPassword(o.getPassword());
         accountsRepository.save( oldUser );
         return 1;
     }
 
-
     private Accounts checkIfIdIsPresentAndReturnAccounts( int id ) {
         if ( !accountsRepository.findById( id ).isPresent() )
-            throw new ResourceNotFoundException( " User id = " + id + " not found" );
+            throw new ResourceNotFoundException( " Account id = " + id + " not found" );
         else
             return accountsRepository.findById( id ).get();
     }
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
 }
