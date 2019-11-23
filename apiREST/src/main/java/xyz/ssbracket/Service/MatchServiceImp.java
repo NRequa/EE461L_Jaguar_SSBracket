@@ -137,15 +137,48 @@ public class MatchServiceImp extends MatchService {
 
     @Override
     public MatchResult updateUsers( MatchResult o, int id) throws ResourceNotFoundException{
-        MatchResult oldMatchResult = getById( id );
-        oldMatchResult.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
-        oldMatchResult.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
-        oldMatchResult.setPlayer1(o.getPlayer1());
-        oldMatchResult.setPlayer2(o.getPlayer2());
-        oldMatchResult.setPlayer1string(o.getPlayer1string());
-        oldMatchResult.setPlayer2string(o.getPlayer2string());
+        MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        Tournament myTournament = checkIfIdIsPresentAndReturnTournament(o.getEvent());
+        User participant1 = null;
+        User participant2 = null;
+        if(o.getPlayer1()!=0){
+          participant1 = checkIfIdIsPresentAndReturnUser(o.getPlayer1());
+          oldMatchResult.setHigherseed(participant1);
+          oldMatchResult.setPlayer1(o.getPlayer1());
+          oldMatchResult.setPlayer1string(o.getPlayer1string());
+          oldMatchResult.setP1characterplayed(o.getP1characterplayed());
+        }
+
+        if(o.getPlayer2()!=0){
+          participant2 = checkIfIdIsPresentAndReturnUser(o.getPlayer2());
+          oldMatchResult.setLowerseed(participant2);
+          oldMatchResult.setPlayer2(o.getPlayer2());
+          oldMatchResult.setPlayer2string(o.getPlayer2string());
+          oldMatchResult.setP2characterplayed(o.getP2characterplayed());
+        }
+
+        if(!myTournament.isClosed()){
+          TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(o.getEvent());
+          if(participant1!=null){
+            addUserToTournament(participant1, myTournament, storingTournament);
+          }
+          if(participant2!=null){
+            addUserToTournament(participant2, myTournament, storingTournament);
+          }
+        }
+
         oldMatchResult.setOngoing(o.isOngoing());
         return matchResultRepository.save(oldMatchResult);
+    }
+
+    private void addUserToTournament(User participant, Tournament myTournament, TournamentArray storingTournament){
+      participant.setNumtournamentsparticipated(participant.getNumtournamentsparticipated()+1);
+      if(!myTournament.getUsers().contains(participant)){
+        storingTournament.getUsersarray().add(participant);
+        myTournament.getUsers().add(participant);
+        tournamentArrayRepository.save(storingTournament);
+        tournamentRepository.save(myTournament);
+      }
     }
 
     public MatchResult updateUser1( MatchResult o, int id) throws ResourceNotFoundException{
@@ -203,6 +236,7 @@ public class MatchServiceImp extends MatchService {
       return matchResultRepository.save(oldMatchResult);
     };
 
+
     @Override
     public MatchResult updateP1String( MatchResult o, int id) throws ResourceNotFoundException{
         MatchResult oldMatchResult = getById( id );
@@ -219,22 +253,14 @@ public class MatchServiceImp extends MatchService {
 
     @Override
     public MatchResult updateCharsPlayed( MatchResult o, int id) throws ResourceNotFoundException{
-        MatchResult oldMatchResult = getById( id );
-        oldMatchResult.setP1characterplayed(o.getP1characterplayed());
-        oldMatchResult.setP2characterplayed(o.getP2characterplayed());
+        MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        if(o.getP1characterplayed()!=null){
+          oldMatchResult.setP1characterplayed(o.getP1characterplayed());
+        }
+        if(o.getP2characterplayed()!=null){
+          oldMatchResult.setP2characterplayed(o.getP2characterplayed());
+        }
         return matchResultRepository.save(oldMatchResult);
-    }
-
-    @Override
-    public MatchResult getById( int id ) throws ResourceNotFoundException {
-        return checkIfIdIsPresentAndReturnMatchResult( id );
-    }
-
-    @Override
-    public MatchResult deleteById( int id ) throws ResourceNotFoundException {
-        MatchResult matchResult = checkIfIdIsPresentAndReturnMatchResult( id );
-        matchResultRepository.deleteById( id );
-        return matchResult;
     }
 
     @Override
@@ -250,6 +276,18 @@ public class MatchServiceImp extends MatchService {
       matchResult.setP2characterplayed(o.getP2characterplayed());
       return matchResultRepository.save(matchResult);
     };
+
+    @Override
+    public MatchResult getById( int id ) throws ResourceNotFoundException {
+        return checkIfIdIsPresentAndReturnMatchResult( id );
+    }
+
+    @Override
+    public MatchResult deleteById( int id ) throws ResourceNotFoundException {
+        MatchResult matchResult = checkIfIdIsPresentAndReturnMatchResult( id );
+        matchResultRepository.deleteById( id );
+        return matchResult;
+    }
 
     private MatchResult checkIfIdIsPresentAndReturnMatchResult( int id ) {
         if ( !matchResultRepository.findById( id ).isPresent() )
