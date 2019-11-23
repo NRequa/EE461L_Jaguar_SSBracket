@@ -8,8 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface AccountsRepository extends JpaRepository<Accounts,Integer> {
+    /*
     @Query( value = "SELECT * FROM accounts WHERE tname= :userName",
             nativeQuery = true)
     Accounts findAccountsByName(@Param("userName") String userName);
-
+     */
+    Accounts findAccountsByUsername( String username );
 }

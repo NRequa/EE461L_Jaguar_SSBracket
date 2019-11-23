@@ -13,6 +13,4 @@ public class AccountSubmission{
     public String getPassword(){
         return this.password;
     }
-
-
 }
