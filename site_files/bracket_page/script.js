@@ -807,7 +807,7 @@ function createTour(){
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
-            var touid=myResponse.data.id;
+            /*var touid=myResponse.data.id;
             playerText=parsePlayer(tPlayers);
             seed=seeding(tSize);
             size=playerText.length;
@@ -848,7 +848,7 @@ function createTour(){
             await patchPlayer(touid,mtchid,0,"nullzeroplayer");
             await patchPlayer(touid,mtchid,1,"nullzeroplayer");
           }
-        }
+        }*/
         window.location.href = "bracket.html?id="+touid;
       }
   };
