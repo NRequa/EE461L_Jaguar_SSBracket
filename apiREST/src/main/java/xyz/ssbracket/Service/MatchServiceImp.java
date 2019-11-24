@@ -53,8 +53,8 @@ public class MatchServiceImp extends MatchService {
             o.setHigherseed(checkIfIdIsPresentAndReturnUser(o.getPlayer1()));
             o.setLowerseed(checkIfIdIsPresentAndReturnUser(o.getPlayer2()));
             o.setTournament(checkIfIdIsPresentAndReturnTournament(o.getEvent()));
-            o.setPlayer1string(o.getHigherseed().getUsername());
-            o.setPlayer2string(o.getLowerseed().getUsername());
+            o.setPlayer1string(o.getPlayer1string());
+            o.setPlayer2string(o.getPlayer2string());
             MatchResult returnMatchResult = matchResultRepository.save(o);
             return returnMatchResult;
         }

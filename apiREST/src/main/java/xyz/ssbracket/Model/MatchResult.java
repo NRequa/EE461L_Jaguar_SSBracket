@@ -103,13 +103,15 @@ public class MatchResult implements Serializable {
         this.level = level;
     }
 
-    public MatchResult(int player1, String player1string, int player2, String player2string, int event, int level) {
+    public MatchResult(User higherseed, int player1, String player1string, User lowerseed, int player2, String player2string, int event, int level) {
         this.completed = false;
         this.p1win = false;
+        this.higherseed = higherseed;
         this.player1 = player1;
         this.player1string = player1string;
         this.p1characterplayed = "None";
         this.p1roundswon = 0;
+        this.lowerseed = lowerseed;
         this.player2 = player2;
         this.player2string = player2string;
         this.p2characterplayed = "None";
