@@ -84,28 +84,33 @@ public class TournamentServiceImp extends TournamentService {
 	    }
       int seed[]=seeding(o.getTsize());
       for(int i=0;i<o.getTsize/2;i++){
-        int sd1=seed[i*2];
-        int sd2=seed[i*2+1];
-        String player1="";
-        String player2="";
-        if(sd1<=usernames.length){
-          player1=username[sd1-1];
-        }
-        if(sd2<=username.length){
-          player2=username[sd2-1];
-        }
-        //create a match, add users, and add to the tournament
-      }
+         int sd1=seed[i*2];
+         int sd2=seed[i*2+1];
+         String player1="";
+         String player2="";
+         if(sd1<=usernames.length){
+           player1=username[sd1-1];
+         }
+         if(sd2<=username.length){
+           player2=username[sd2-1];
+         }
+         //create a match, add users, and add to the tournament
+       }
 
       return o;
     }
     private int[] seeding(int tourSize){
       int rounds = (int)(Math.log(tourSize))/(int)(Math.log(2))-1;
-
+      ArrayList <Integer> place=new ArrayList<Integer>();
+      place.add(1);
+      place.add(2);
       for(int i=0;i<rounds;i++){
-
+        place=nextLayer(place);
       }
       return null;
+    }
+    private ArrayList nextLayer(ArrayList<Integer> place){
+
     }
 
     //maybe changes are needed

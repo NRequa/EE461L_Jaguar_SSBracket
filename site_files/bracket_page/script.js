@@ -833,7 +833,7 @@ function createTour(){
               //search for player, if not guest player
 
               var id2=await findplayer(player2)
-              mtchid[i]=await postMatch(touid,id1,id2,1)
+              mtchid[i]=await postMatch(touid,id1,id2)
             //document.getElementById("test").innerHTML = myResponse.data.tname;
             await patchPlayer(touid,mtchid[i],0,player1);
             await patchPlayer(touid,mtchid[i],1,player2);
