@@ -15,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import xyz.ssbracket.Model.User;
-import xyz.ssbracket.Model.Accounts;
 import xyz.ssbracket.Model.LogInResult;
 import xyz.ssbracket.Model.AccountSubmission;
-import xyz.ssbracket.Repository.AccountsRepository;
-import xyz.ssbracket.Repository.UserRepository;
 import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISMATCH;
 import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
@@ -36,12 +32,6 @@ public class AccountsController{
 
     @Autowired
     private AccountService accountMainService;
-
-    @CrossOrigin
-    @GetMapping(value = "/friends/{id}")
-    public ResponseWrapper<Accounts> getFriends( @PathVariable String id){
-        return new ResponseWrapper<>( accountMainService.getFriends( id ), HttpStatus.OK );
-    }
 
     @CrossOrigin
     @PostMapping(value = "/register")

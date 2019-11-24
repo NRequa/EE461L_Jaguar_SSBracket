@@ -42,10 +42,6 @@ public class AccountServiceImp extends AccountService {
     @Override
     public Accounts deleteById(int id) { return null; }
 
-    public Accounts getFriends( String name ) {
-        return accountsRepository.findAccountsByUsername( name );
-    }
-
     public int updatePassword( int id, AccountSubmission o ) {
         Accounts oldUser = checkIfIdIsPresentAndReturnAccounts( id );
         oldUser.setPassword(o.getPassword());
