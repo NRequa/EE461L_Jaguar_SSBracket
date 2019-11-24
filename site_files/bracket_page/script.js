@@ -838,7 +838,7 @@ function createTour(){
             await patchPlayer(touid,mtchid[i],0,player1);
             await patchPlayer(touid,mtchid[i],1,player2);
         }
-        //create the rest of the mattches
+        //create the rest of the mattches after round 1
         var counter=tSize/2;
         while(!(counter==1)){
           counter=counter/2;

@@ -99,8 +99,8 @@ public class TournamentServiceImp extends TournamentService {
 
       return o;
     }
-    private int[] seeding(int tourSize){
-      int rounds = (int)(Math.log(tourSize))/(int)(Math.log(2))-1;
+    private static ArrayList seeding(int tourSize){
+      int rounds = (int)(Math.log(tourSize)/Math.log(2))-1;
       ArrayList <Integer> place=new ArrayList<Integer>();
       place.add(1);
       place.add(2);
@@ -109,14 +109,14 @@ public class TournamentServiceImp extends TournamentService {
       }
       return place;
     }
-    private ArrayList nextLayer(ArrayList<Integer> place){
+    private static ArrayList nextLayer(ArrayList<Integer> place){
       ArrayList <Integer> output=new ArrayList<Integer>();
-      Integer length =new Integer(place.length*2+1);
+      Integer length =new Integer(place.size()*2+1);
       for(Integer i:place){
         output.add(i);
         output.add(length-i);
       }
-      return out;
+      return output;
     }
 
     //maybe changes are needed
