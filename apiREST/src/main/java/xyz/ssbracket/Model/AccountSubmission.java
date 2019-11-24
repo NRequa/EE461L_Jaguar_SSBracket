@@ -1,10 +1,9 @@
 package xyz.ssbracket.Model;
 
-public class AccountSubmission{
+public class AccountSubmission {
+
     private String username;
     private String password;
-   
-
 
     public String getUsername(){
         return this.username;
@@ -13,4 +12,5 @@ public class AccountSubmission{
     public String getPassword(){
         return this.password;
     }
+
 }

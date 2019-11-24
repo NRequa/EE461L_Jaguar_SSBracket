@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -79,7 +77,5 @@ public class Accounts implements Serializable {
     public void setPassword(String pass){
         this.password = pass;
     }
-
-
 
 }

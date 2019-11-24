@@ -25,7 +25,6 @@ import static xyz.ssbracket.Constants.ApiConstants.MESSAGE_FOR_REGEX_NUMBER_MISM
 import static xyz.ssbracket.Constants.ApiConstants.REGEX_FOR_NUMBERS;
 
 import xyz.ssbracket.Results.ResponseWrapper;
-import xyz.ssbracket.Results.Resultset;
 import xyz.ssbracket.Service.AccountService;
 
 
@@ -36,92 +35,24 @@ import xyz.ssbracket.Service.AccountService;
 public class AccountsController{
 
     @Autowired
-    AccountsRepository accountsLog;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
     private AccountService accountMainService;
 
-    // Login check
-   // @PostMapping("/login")
-   // public boolean
-
-    // Test get request
     @CrossOrigin
     @GetMapping(value = "/friends/{id}")
     public ResponseWrapper<Accounts> getFriends( @PathVariable String id){
-        //return accountsLog.findAccountsByName(id);
         return new ResponseWrapper<>( accountMainService.getFriends( id ), HttpStatus.OK );
     }
 
     @CrossOrigin
     @PostMapping(value = "/register")
-    public LogInResult registerAccount(@RequestBody AccountSubmission registerAttempt){
-      //  return registerAttempt;
-        // Check if the username exists
-
-        String username = registerAttempt.getUsername();
-        String password = registerAttempt.getPassword();
-        System.out.println("Username: " + username + " | Password: " + password);
-
-        Accounts existingUser = accountsLog.findAccountsByUsername(username);
-        System.out.println("Existing user result: " + existingUser);
-
-        if(existingUser == null){
-            User newUser = new User(username, 0,0,0,0,0);
-            Accounts newAccount = new Accounts(username, password, newUser);
-            accountsLog.save(newAccount);
-            LogInResult response = new LogInResult(newUser.getId(), newAccount.getId(), true);
-            return response;
-        }
-
-        else{
-            return new LogInResult(-1, -1, false);
-        }
-
-
-    }
-
-    @CrossOrigin
-    @PostMapping(value = "/test")
-    public Accounts debuggingMethod(@RequestBody AccountSubmission signInAttempt){
-        String username = signInAttempt.getUsername();
-        String password = signInAttempt.getPassword();
-
-        Accounts existingUser = accountsLog.findAccountsByUsername(username);
-        if(existingUser == null){
-            User newUser = new User(username, 1,1,0,1,1);
-            Accounts newAccount = new Accounts(username, password, newUser);
-            accountsLog.save(newAccount);
-            return newAccount;
-        }
-
-        else{
-            return existingUser;
-        }
+    public ResponseWrapper<LogInResult> registerAccount(@RequestBody AccountSubmission registerAttempt){
+        return new ResponseWrapper<>( accountMainService.registerAccount( registerAttempt ), HttpStatus.OK );
     }
 
     @CrossOrigin
     @PostMapping(value = "/signin")
-    public LogInResult signInAccount(@RequestBody AccountSubmission signInAttempt){
-        String username = signInAttempt.getUsername();
-        String password = signInAttempt.getPassword();
-
-        Accounts existingUser = accountsLog.findAccountsByUsername(username);
-        System.out.println(existingUser);
-
-        if(existingUser == null){
-            return new LogInResult(-1, -1, false);
-        }
-        else{
-            boolean attemptStatus = existingUser.getPassword().equals(password);
-            // Get associated User object
-            User linkedUser = userRepository.findByUsername(username);
-            System.out.println(linkedUser);
-            int Id = linkedUser.getId();
-            int accId = existingUser.getId();
-            return new LogInResult(Id, accId, attemptStatus);
-        }
+    public ResponseWrapper<LogInResult> signInAccount( @RequestBody AccountSubmission signInAttempt ){
+        return new ResponseWrapper<>( accountMainService.attemptSignIn( signInAttempt ), HttpStatus.OK );
     }
 
     @CrossOrigin
