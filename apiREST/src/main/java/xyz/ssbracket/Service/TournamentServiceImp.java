@@ -9,6 +9,7 @@ import xyz.ssbracket.Repository.TournamentRepository;
 import xyz.ssbracket.Repository.TournamentArrayRepository;
 import xyz.ssbracket.Exception.ResourceNotFoundException;
 import xyz.ssbracket.Exception.DuplicateResourceFoundException;
+import xyz.ssbracket.Service.MatchService;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class TournamentServiceImp extends TournamentService {
     private UserRepository userRepository;
     @Autowired
     private TournamentArrayRepository tournamentArrayRepository;
+    @Autowired
+    private MatchService matchMainService;
 
     @Override
     public Page<Tournament> getAll( Pageable pageable ) {
@@ -83,20 +86,34 @@ public class TournamentServiceImp extends TournamentService {
         }
 	    }
       int seed[]=seeding(o.getTsize());
-      for(int i=0;i<o.getTsize/2;i++){
+      for(int i=0;i<o.getTsize()/2;i++){
         int sd1=seed[i*2];
         int sd2=seed[i*2+1];
-        String player1="";
-        String player2="";
+        String player1="Bye";
+        String player2="Bye";
+        int id1 = 17;
+        int id2 = 17;
         if(sd1<=usernames.length){
-          player1=username[sd1-1];
+          player1=usernames[sd1-1];
+          id1 = id[sd1-1];
         }
-        if(sd2<=username.length){
-          player2=username[sd2-1];
+        if(sd2<=usernames.length){
+          player2=usernames[sd2-1];
+          id2 = id[sd2-1];
         }
-        //create a match, add users, and add to the tournament
-      }
 
+        //create a match, add users, and add to the tournament
+        matchMainService.add(new MatchResult(id1,player1,id2,player2,o.getId(),1));
+
+      }
+      int counter = o.getTsize()/2;
+      while(!(counter==1)){
+        counter = counter/2;
+        int tempPlayId = 17;
+        for(int i=0; i<counter; i++){
+          MatchResult myMatch = matchMainService.add(new MatchResult(tempPlayId,"nullzeroplayer",tempPlayId,"nullzeroplayer",o.getId(),1));
+        }
+      }
       return o;
     }
     private int[] seeding(int tourSize){
