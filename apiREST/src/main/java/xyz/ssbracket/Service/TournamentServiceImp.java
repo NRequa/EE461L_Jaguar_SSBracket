@@ -107,10 +107,16 @@ public class TournamentServiceImp extends TournamentService {
       for(int i=0;i<rounds;i++){
         place=nextLayer(place);
       }
-      return null;
+      return place;
     }
     private ArrayList nextLayer(ArrayList<Integer> place){
-
+      ArrayList <Integer> output=new ArrayList<Integer>();
+      Integer length =new Integer(place.length*2+1);
+      for(Integer i:place){
+        output.add(i);
+        output.add(length-i);
+      }
+      return out;
     }
 
     //maybe changes are needed
