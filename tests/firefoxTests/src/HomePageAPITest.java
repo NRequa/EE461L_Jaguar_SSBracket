@@ -23,12 +23,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class HomePageAPITest {
 
-	static String homePageURL = "http://www.ssbracket.xyz";
-	static String homePageAPI = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament";
+	private static String homePageURL = "http://www.ssbracket.xyz";
+	private static String homePageAPI = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament";
 	
-	static String leaderBoardAPI = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user";
+	private static String leaderBoardAPI = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user";
 	
-	static WebDriver driver;
+	private static WebDriver driver;
 	
 	@BeforeAll
 	public static void setup() {
@@ -40,23 +40,8 @@ public class HomePageAPITest {
 	
 	@Test
 	void popularEventsTest() throws IOException, ParseException {
-		URL url = new URL(homePageAPI);
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		
-		con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null)
-            response.append(inputLine);
-
-        in.close();
-        
-        JSONParser parser = new JSONParser();
-        JSONObject obj = (JSONObject) parser.parse(response.toString());
+		JSONReader reader = new JSONReader(homePageURL);
+        JSONObject obj = reader.getResponse();
         
         JSONObject data = (JSONObject) obj.get("data");
         JSONArray content = (JSONArray) data.get("content");
