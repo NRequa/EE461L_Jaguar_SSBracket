@@ -157,7 +157,8 @@ function populateDrop() {
 
 			var requestMaker = new RequestFactory();
 			var request = requestMaker.createRequest("tournament", cmd, readyFunc);
-			request.httpObject.open("POST", request.callURL);
+			request.httpObject.open("POST", request.callURL, true);
+			request.httpObject.setRequestHeader("Content-type", "application/json");
 			request.httpObject.send(JSON.stringify({
 					"tname":text
 			}));
