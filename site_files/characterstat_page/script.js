@@ -11,8 +11,9 @@ function handleCharacterData(){
   //var proxyUrl = "https://cors-anywhere.herokuapp.com/"
   //var ourApi = proxyUrl + "http://www.ssbracket.xyz/scrape/data";
   var ourApi = "../../scrape/data"
+  var cmd = "data";
   var myResponse;
-  xmlhttp.onreadystatechange = function() {
+  var readyFunc = function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
@@ -46,17 +47,26 @@ function handleCharacterData(){
             }
         }
   };
+
+  /*
   xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
+  */
+
+  var requestMaker = new RequestFactory();
+  var request = requestMaker.createRequest("scrape", cmd, readyFunc);
+  request.httpObject.open("GET", request.callURL);
+  request.httpObject.send();
 }
 
 function handleProData(){
   var xmlhttp = new XMLHttpRequest();
   //var proxyUrl = "https://cors-anywhere.herokuapp.com/"
   //var ourApi = proxyUrl + "http://www.ssbracket.xyz/scrape/prodata";
-  var ourApi = "../../scrape/prodata"
+  var ourApi = "../../scrape/prodata";
+  var cmd = "prodata";
   var myResponse;
-  xmlhttp.onreadystatechange = function() {
+  var readyFunc = function() {
         if (this.readyState == 4 && this.status == 200) {
             myResponse = JSON.parse(this.responseText);
             console.log(myResponse);
@@ -64,8 +74,15 @@ function handleProData(){
             addRowToProTable(myResponse);
             }
   }
+
+  /*
   xmlhttp.open("GET", ourApi, true);
   xmlhttp.send();
+  */
+ var requestMaker = new RequestFactory();
+ var request = requestMaker.createRequest("scrape", cmd, readyFunc);
+ request.httpObject.open("GET", request.callURL);
+ request.httpObject.send();
 }
 
 function addToObject(myObject, nameKey){
@@ -177,3 +194,66 @@ function populateChartHelper(labelArray, dataArray, backgroundArray, borderArray
   }
   });
 }
+
+
+function RequestFactory() {
+  this.createRequest = function(type, command, func){
+      var request;
+
+      if(type == "accounts"){
+          request = new AccountsRequest(command);
+      }
+
+      else if (type == "matchresult"){
+          request = new MatchResultRequest(command);
+      }
+
+      else if (type == "tournament"){
+          request = new TournamentRequest(command);
+      }
+      else if (type == "user"){
+          request = new UserRequest(command);
+      }
+
+      else if (type == "scrape"){
+          request = new ScrapeRequest(command);
+      }
+
+      request.type = type;
+      request.command = command;
+      request.recallFunction = func;
+
+      request.httpObject = new XMLHttpRequest();
+      request.httpObject.onreadystatechange = func;
+
+      return request;
+  }
+}
+
+
+
+var AccountsRequest = function(command) {
+      this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
+}
+
+var MatchResultRequest = function(command) {
+  this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/" + command;
+}
+
+var TournamentRequest = function(command) {
+  this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/" + command;
+
+}
+
+var UserRequest = function(command) {
+  this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + command;
+
+}
+
+var ScrapeRequest  = function(command) {
+  this.callURL = "../../scrape/" + command;
+}
+
+
+
+

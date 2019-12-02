@@ -4,9 +4,10 @@ function loading() {
 	logInDisplay();
 	var xmlHttp = new XMLHttpRequest();
 	var url = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/";
+	var cmd = "";
 
 
-	xmlHttp.onreadystatechange = function() {
+	var readyFunc = function() {
 		if (this.readyState == 4 && this.status == 200) {
 		var obj = JSON.parse(this.responseText);
 
@@ -80,8 +81,15 @@ function loading() {
 	}
 	}
 
+	/*
 	xmlHttp.open("GET", url,true);
 	xmlHttp.send();
+	*/
+
+	var requestMaker = new RequestFactory();
+	var request = requestMaker.createRequest("tournament", cmd, readyFunc);
+	request.httpObject.open("GET", request.callURL);
+	request.httpObject.send();
 
 	$(".dropdown").on("hide.bs.dropdown", function(){
 		document.getElementById("drop_menu").innerHTML = "";
@@ -112,8 +120,9 @@ function populateDrop() {
 			var xmlhttp2 = new XMLHttpRequest();
 			var ourApi2 = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/name";
 			var myResponse2;
+			var cmd = "name";
 
-			xmlhttp2.onreadystatechange = function() {
+			var readyFunc = function() {
 	    			if (this.readyState == 4 && this.status == 200) {
 								document.getElementById("drop_menu").innerHTML = "";
 	        			myResponse2 = JSON.parse(this.responseText);
@@ -137,12 +146,22 @@ function populateDrop() {
 	    			}
 			};
 
+			/*
 			xmlhttp2.open("POST", ourApi2, true);
 			xmlhttp2.setRequestHeader("Content-type", "application/json");
 			xmlhttp2.send(JSON.stringify({
 					"tname":text
 				})
 			);
+				*/
+
+			var requestMaker = new RequestFactory();
+			var request = requestMaker.createRequest("tournament", cmd, readyFunc);
+			request.httpObject.open("POST", request.callURL);
+			request.httpObject.send(JSON.stringify({
+					"tname":text
+			}));
+			//xmlhttp.send();
 		}
 	}
 }
@@ -168,8 +187,9 @@ function logInDisplay(){
 function showFeatures() {
 	var xmlHttp = new XMLHttpRequest();
 	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/";
+	var cmd = "";
 
-	xmlHttp.onreadystatechange = function() {
+	var readyFunc = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			content = obj.data.content;
@@ -240,7 +260,73 @@ function showFeatures() {
 		}
 	}
 
+	/*
 	xmlHttp.open("GET", url, true);
 	xmlHttp.send();
+	*/
+	
+	var requestMaker = new RequestFactory();
+	var request = requestMaker.createRequest("user", cmd, readyFunc);
+	request.httpObject.open("GET", request.callURL);
+	request.httpObject.send();
 
+}
+
+
+function RequestFactory() {
+    this.createRequest = function(type, command, func){
+        var request;
+
+        if(type == "accounts"){
+            request = new AccountsRequest(command);
+        }
+
+        else if (type == "matchresult"){
+            request = new MatchResultRequest(command);
+        }
+
+        else if (type == "tournament"){
+            request = new TournamentRequest(command);
+        }
+        else if (type == "user"){
+            request = new UserRequest(command);
+        }
+
+        else if (type == "scrape"){
+            request = new ScrapeRequest(command);
+        }
+
+        request.type = type;
+        request.command = command;
+        request.recallFunction = func;
+
+        request.httpObject = new XMLHttpRequest();
+        request.httpObject.onreadystatechange = func;
+
+        return request;
+    }
+}
+
+
+
+var AccountsRequest = function(command) {
+        this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
+}
+
+var MatchResultRequest = function(command) {
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/" + command;
+}
+
+var TournamentRequest = function(command) {
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/" + command;
+
+}
+
+var UserRequest = function(command) {
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + command;
+
+}
+
+var ScrapeRequest  = function(command) {
+    this.callURL = "../../scrape/" + command;
 }
