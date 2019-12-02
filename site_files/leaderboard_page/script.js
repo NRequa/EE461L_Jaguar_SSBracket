@@ -40,7 +40,7 @@ function showTopUsers() {
 
 	var readyFunc = function() {
 		
-		var obj = JSON.parse(Http.responseText);
+		var obj = JSON.parse(this.responseText);
 		var holder = [];
 
 		var i;
