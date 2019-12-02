@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import xyz.ssbracket.Exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
-import xyz.ssbracket.Model.User;
-import xyz.ssbracket.Model.Tournament;
 
 import java.time.LocalDateTime;
 import java.util.List;
