@@ -3,7 +3,6 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<!-- <script src="../res/jquery.js"></script> -->
 		<script src="site_files/home_page/script.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="site_files/home_page/style.css">
@@ -12,24 +11,23 @@
 	</head>
 	<body onload="loading()">
 
-			<nav class="navbar navbar-default navbar-fixed-top">
-					<div class="container-fluid">
-						<div class="navbar-header">
-							<a class="navbar-brand" href="#">SSBracket</a>
-						</div>
-						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">Home</a></li>
-							<li><a href="site_files/bracket_page/index.html">Tournaments</a></li>
-							<li><a href="site_files/leaderboard_page/index.html">LeaderBoard</a></li>
-							<li><a href="site_files/characterstat_page/index.html">Character Stats</a></li>
-							<li><a href="site_files/about_page/index.html">About Us</a></li>
-							<li class="guestLinks"><a href="site_files/account_page/regPage.html">Register</a></li>
-							<li class="guestLinks"><a href="site_files/account_page/loginPrompt.html">Log In</a></li>
-							<li class="logInLinks"><a href="site_files/account_page/accountDataPage.html">Account Data</a></li>
-
-						</ul>
-					</div>
-				</nav>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">SSBracket</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="site_files/bracket_page/index.html">Tournaments</a></li>
+					<li><a href="site_files/leaderboard_page/index.html">LeaderBoard</a></li>
+					<li><a href="site_files/characterstat_page/index.html">Character Stats</a></li>
+					<li><a href="site_files/about_page/index.html">About Us</a></li>
+					<li class="guestLinks"><a href="site_files/account_page/regPage.html">Register</a></li>
+					<li class="guestLinks"><a href="site_files/account_page/loginPrompt.html">Log In</a></li>
+					<li class="logInLinks"><a href="site_files/account_page/accountDataPage.html">Account Data</a></li>
+				</ul>
+			</div>
+		</nav>
 
 		<div class="container-fluid">
 			<div class="row">
@@ -37,7 +35,6 @@
 					<div id="twitter_view">
 						<h3 style="text-align: center" id="twitter_title">Tweets from SSBracket (@SsBracket)</h3>
 						<hr>
-						<!-- obviously change -->
 						<div id="tweets">
 							<a class="twitter-timeline" data-dnt="true" data-theme="light" href="https://twitter.com/SsBracket?ref_src=twsrc%5Etfw">Tweets by SsBracket</a>
 							<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -46,7 +43,6 @@
 				</div>
 
 				<div class="col-sm-6" style="background-color:lavender;" id="col2">
-				
 					<div id="splash_screen">
 						<h1>Welcome to SSBracket</h1>
 						<p>Make a new bracket right away or explore our page!</p>
@@ -56,17 +52,8 @@
 						<h1 style="text-align: center; font-weight: bold; font-size: 35px; 	text-decoration: underline;">Featured Users</h1>
 
 						<div id="myCarousel" class="carousel slide" data-ride="carousel" id="scroller" data-pause="false">
-
-						  <!-- Indicators -->
-						  <ol class="carousel-indicators">
-							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-							<li data-target="#myCarousel" data-slide-to="1"></li>
-							<li data-target="#myCarousel" data-slide-to="2"></li>
-						  </ol>
-
 						  <!-- Wrapper for slides -->
 						  <div class="carousel-inner" id="tcarousel"></div>
-						
 						</div>
 					</div>
 					<button type="button" class="btn" onclick="showFeatures();" id="features_btn">Featured Users</button>
@@ -88,14 +75,13 @@
 					</button>
 					<hr>
 					<h3>Popular Tournaments</h3>
-					<div id="popular">
-					</div>
+					<div id="popular"></div>
 					<hr>
 					<button type="button" class="btn" onclick="showContactInfo();" id="contact_btn">Contact:</button>
 					<p style="display: none" id="contact_p">ssbracket.web@gmail.com</p>
 				</div>
 			</div>
 		</div>
-
+		
 	</body>
 </html>

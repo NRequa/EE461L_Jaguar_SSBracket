@@ -1,6 +1,4 @@
-toggleOn = false;
-topThree = [];
-index = 1;
+var toggleOn = false;
 
 function loading() {
 	logInDisplay();
@@ -76,11 +74,6 @@ function loading() {
 			para2.className = "visit_nums";
 			entry.appendChild(para2);
 
-			if (count >= 1) {
-				topThree.push(description);
-				count = count - 1;
-			}
-
 			popular.appendChild(entry);
 		}
 		$("#features_btn").click();
@@ -118,7 +111,6 @@ function populateDrop() {
 		if (text != "") {
 			var xmlhttp2 = new XMLHttpRequest();
 			var ourApi2 = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/name";
-			//var ourApi2 = "http://localhost:8080/api/v1/tournament/name";
 			var myResponse2;
 
 			xmlhttp2.onreadystatechange = function() {
@@ -132,7 +124,6 @@ function populateDrop() {
 									var new_content = '<li style="padding-left: 5%;">'+'<a href='+
 									"site_files/bracket_page/bracket.html?id="+searchedTournaments[eachTournament].id+'>'+
 									searchedTournaments[eachTournament].tname+'</a>'+'</li>';
-									//searchedTournaments[eachTournament].tname+' by '+searchedTournaments[eachTournament].tcreator+'</a>'+'</li>';
 									document.getElementById("drop_menu").innerHTML = document.getElementById("drop_menu").innerHTML + new_content;
 								}
 								if(countTournament==0){
@@ -152,7 +143,6 @@ function populateDrop() {
 					"tname":text
 				})
 			);
-			//xmlhttp.send();
 		}
 	}
 }
