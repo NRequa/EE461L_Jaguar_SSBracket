@@ -1,3 +1,57 @@
+function RequestFactory() {
+    this.createRequest = function(type, command, func){
+        var request;
+
+        if(type == "accounts"){
+            request = new AccountsRequest(command);
+        }
+
+        else if (type == "matchresult"){
+            request = new MatchResultRequest(command);
+        }
+
+        else if (type == "tournament"){
+            request = new TournamentRequest(command);
+        }
+        else if (type == "user"){
+            request = new UserRequest(command);
+        }
+
+        request.type = type;
+        request.command = command;
+        request.recallFunction = func;
+
+        request.httpObject = new XMLHttpRequest();
+        request.httpObject.onreadystatechange = func;
+
+        return request;
+    }
+}
+
+
+
+var AccountsRequest = function(command) {
+        this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
+}
+
+var MatchResultRequest = function(command) {
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/" + command;
+}
+
+var TournamentRequest = function(command) {
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/" + command;
+
+}
+
+var UserRequest = function(command) {
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + command;
+
+}
+
+var ScrapeRequest  = function(command) {
+
+}
+
 function swapPage(pageName){
     switch(pageName){
 
@@ -63,10 +117,10 @@ function confirmPassword(){
 }
 function populateTables(){
     var userID = sessionStorage.getItem("userId");
-    var apiCall = "http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + userID;
        changeProfilePicture("notavailable.jpeg");
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
+
+        // Handler for successful call.
+        var readyFunc = function(){
             console.log(this.readyState);
             console.log(this.responseText);
             if(this.readyState == 4 && this.status == 200){
@@ -86,8 +140,12 @@ function populateTables(){
             }
         };
 
-        xmlhttp.open("GET",apiCall);
-        xmlhttp.send();
+        // Build request type
+        var requestMaker = new RequestFactory();
+        var request = requestMaker.createRequest("user", userID, readyFunc);
+        request.httpObject.open("GET", request.callURL);
+        request.httpObject.send();
+
 }
 
 function populateOverview(response){
@@ -216,15 +274,14 @@ function changeProfilePicture(imageName){
 function addBuddy(){
     var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/addfriend/' + sessionStorage.getItem("userId");
     
-
+    var cmd = 'addfriend/' + sessionStorage.getItem("userId");
 
     var formData = {
         "username" : $('input[id=palUserName]').val(),
     }
 
 
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
+    var readyFunc = function(){
         console.log(this.readyState);
         console.log(this.status);
         console.log(this.responseText);
@@ -237,21 +294,23 @@ function addBuddy(){
         }
     };
 
-    xmlhttp.open("PATCH",apiCall);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-   // xmlhttp.setRequestHeader("Accept", "*/*");
-    xmlhttp.send(JSON.stringify(formData));
+
+    var requestMaker = new RequestFactory();
+    var request = requestMaker.createRequest("user", cmd, readyFunc);
+    request.httpObject.open("PATCH", request.callURL);
+    request.httpObject.setRequestHeader("Content-Type", "application/json");
+    request.httpObject.send(JSON.stringify(formData));
 }
 
 function killFriend(){
         var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/deletefriend/' + sessionStorage.getItem("userId");
         
+        var cmd = 'deletefriend/' + sessionStorage.getItem("userId");
         var formData = {
             "username" : $('input[id=palUserName]').val(),
         }
     
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
+        var readyFunc = function(){
             console.log(this.readyState);
             console.log(this.status);
             console.log(this.responseText);
@@ -264,21 +323,22 @@ function killFriend(){
             }
         };
     
-        xmlhttp.open("PATCH",apiCall);
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-       // xmlhttp.setRequestHeader("Accept", "*/*");
-        xmlhttp.send(JSON.stringify(formData));
+        var requestMaker = new RequestFactory();
+        var request = requestMaker.createRequest("user", cmd, readyFunc);
+        request.httpObject.open("PATCH", request.callURL);
+        request.httpObject.setRequestHeader("Content-Type", "application/json");
+        request.httpObject.send(JSON.stringify(formData));
     }
 
 
 function changePictureRequest(imageName){
   var myuserid = sessionStorage.getItem("userId");
   var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/updateavatar/'+myuserid;
+  var cmd = "updateavatar/" + myuserid;
   var formData = {
       "avatarName" : imageName
   }
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function(){
+  var readyFunc = function(){
       if(this.readyState == 4 && this.status == 200){
           var response = JSON.parse(this.responseText);
           if(response.status){
@@ -288,22 +348,26 @@ function changePictureRequest(imageName){
       }
   };
 
-  xmlhttp.open("PATCH",apiCall);
-  xmlhttp.setRequestHeader("Content-Type", "application/json");
-  xmlhttp.send(JSON.stringify(formData));
+  var requestMaker = new RequestFactory();
+  var request = requestMaker.createRequest("user", cmd, readyFunc);
+  request.httpObject.open("PATCH", request.callURL);
+  request.httpObject.setRequestHeader("Content-Type", "application/json");
+  request.httpObject.send(JSON.stringify(formData));
+
+  
 }
 
 
 function resetPassword(){
     var myuserid = sessionStorage.getItem("accId");
     var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/updatePass/'+myuserid;
+    var cmd = "updatePass/" + myuserid;
    // var apiLocal = 'http://localhost:8080/api/v1/Accounts/updatePass/'+myuserid;
     var formData = {
         "username" :  "bigDummy",
         "password" :  $('input[id=regPass]').val()
     }
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
+    var readyFunc = function(){
         if(this.readyState == 4 && this.status == 200){
             var response = JSON.parse(this.responseText);
             if(response.status){
@@ -317,9 +381,11 @@ function resetPassword(){
         }
     };
   
-    xmlhttp.open("PATCH",apiCall);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify(formData));
+    var requestMaker = new RequestFactory();
+    var request = requestMaker.createRequest("user", cmd, readyFunc);
+    request.httpObject.open("PATCH", request.callURL);
+    request.httpObject.setRequestHeader("Content-Type", "application/json");
+    request.httpObject.send(JSON.stringify(formData));
 
 }
 window.onload = populateTables;

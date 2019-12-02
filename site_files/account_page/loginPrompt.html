@@ -3,7 +3,8 @@
 	<head>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<script src="../res/jquery.js"></script>
-		<script src="script.js"></script>
+        <script src="script.js"></script>
+        <script src="../res/RequestMaker.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<meta charset="UTF-8">
@@ -62,9 +63,15 @@
             }
 
             
-
+            /*
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function(){
+
+          xmlhttp.open("POST",apiCall);
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+           
+            xmlhttp.send(JSON.stringify(formData));
+            */
+            var readyFunc = function(){
                 console.log(this.readyState);
                 console.log(this.responseText);
                 if(this.readyState == 4 && this.status == 200){
@@ -82,11 +89,14 @@
 					}
                 }
             };
+           var requestMaker = new RequestFactory();
+           var request = requestMaker.createRequest("accounts", "signin", readyFunc);
+           console.log("Type : " + request.type + " Call URL : " + request.callURL);
 
-            xmlhttp.open("POST",apiCall);
-            xmlhttp.setRequestHeader("Content-Type", "application/json");
-           // xmlhttp.setRequestHeader("Accept", "*/*");
-            xmlhttp.send(JSON.stringify(formData));
+           // Request object made, now go to town!
+           request.httpObject.open("POST", request.callURL);
+           request.httpObject.setRequestHeader("Content-Type", "application/json");
+           request.httpObject.send(JSON.stringify(formData));
 
 
         }
