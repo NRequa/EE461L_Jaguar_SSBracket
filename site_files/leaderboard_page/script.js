@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$("#content_row").css({"display": "none"});
-
 	$("#content_row").css({"transition-duration": "0.5s"});
 	$("#content_row").css({"transform-origin": "top"});
 	$("#content_row").css({"transform": "scale(0)"});
@@ -33,7 +32,6 @@ function resetAll() {
 
 
 function showTopUsers() {
-	console.log("showing top users");
 	var Http = new XMLHttpRequest();
 	var url = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user";
 	var cmd = "";
@@ -43,12 +41,37 @@ function showTopUsers() {
 		var obj = JSON.parse(this.responseText);
 		var holder = [];
 
-		var i;
-		var user;
-		var tmp;
-		var winRate;
+		holder = fillHolder(obj, holder);
+		holder = sort(holder);
 
-		// 2D array holds player associated with win rate
+		$("#top_list1").empty();
+		populateList(obj, holder);
+	}
+
+	var requestMaker = new RequestFactory();
+	var request = requestMaker.createRequest("user", cmd, readyFunc);
+	request.httpObject.open("GET", request.callURL);
+	request.httpObject.send();
+}
+
+function sort(holder) {
+	// insertion sort
+	for (i = 1; i < holder.length; i++) {
+		key = holder[i];
+		j = i - 1;
+
+		while (j >= 0 && holder[j][1] > key[1]) {
+			holder[j + 1] = holder[j];
+			j = j - 1;
+		}
+		holder[j + 1] = key;
+	}
+	
+	return holder;
+}
+
+function fillHolder(obj, holder) {
+	// 2D array holds player associated with win rate
 		for (i = 0; i < obj.data.content.length; i++) {
 			tmp = [];
 			user = obj.data.content[i];
@@ -61,37 +84,19 @@ function showTopUsers() {
 			tmp.push(winRate.toFixed(2));
 			holder.push(tmp)
 		}
+		
+		return holder;
+}
 
-		console.log(holder);
+function populateList(obj, holder) {
+	var list = document.getElementById("top_list1");
 
-		var j;
-		var n = holder.length;
-
-
-		// insertion sort
-		for (i = 1; i < n; i++) {
-			key = holder[i];
-			j = i - 1;
-
-			while (j >= 0 && holder[j][1] > key[1]) {
-				holder[j + 1] = holder[j];
-				j = j - 1;
-			}
-			holder[j + 1] = key;
-		}
-
-		$("#top_list1").empty();
-		var list = document.getElementById("top_list1");
-
-		var name;
-		var val;
-		var entry;
 		for (i = 0; i < obj.data.content.length; i++) {
 			entry = document.createElement("li");
 
 			name = holder[obj.data.content.length - 1 - i][0];
 			
-			// ignore for debugging
+			// ignore 'guest' for debugging
 			if (name == "guest") {
 				continue;
 			}
@@ -101,16 +106,6 @@ function showTopUsers() {
 			entry.appendChild(document.createTextNode(name + ": " + val));
 			list.appendChild(entry);
 		}
-	}
-
-	/*
-	Http.open("GET", url);
-	Http.send();
-	*/
-	var requestMaker = new RequestFactory();
-	var request = requestMaker.createRequest("user", cmd, readyFunc);
-	request.httpObject.open("GET", request.callURL);
-	request.httpObject.send();
 }
 
 function RequestFactory() {
@@ -147,10 +142,8 @@ function RequestFactory() {
     }
 }
 
-
-
 var AccountsRequest = function(command) {
-        this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
 }
 
 var MatchResultRequest = function(command) {
@@ -159,12 +152,10 @@ var MatchResultRequest = function(command) {
 
 var TournamentRequest = function(command) {
     this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/tournament/" + command;
-
 }
 
 var UserRequest = function(command) {
     this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + command;
-
 }
 
 var ScrapeRequest  = function(command) {
