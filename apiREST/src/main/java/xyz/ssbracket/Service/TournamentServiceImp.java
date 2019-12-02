@@ -114,8 +114,9 @@ public class TournamentServiceImp extends TournamentService {
 
         System.out.println("player1 is: " + player1 + "| id1 is: " + id1 + "|player2 is: " + player2 + "| id2 is: " + id2);
         System.out.println("tournament id is: "+o.getId());
+        System.out.println("User is: "+ user1.getUsername());
         //create a match, add users, and add to the tournament
-        MatchResult match1 = new MatchResult(user1, id1, player1, user2, id2,player2, o.getId(), 1);
+        MatchResult match1 = new MatchResult(user1, id1, player1, user2, id2, player2, o.getId(), 1,o);
         o.getMatchResults().add(match1);
         //matchResultRepository.save(match1);
 
@@ -126,12 +127,13 @@ public class TournamentServiceImp extends TournamentService {
         int tempPlayId = 17;
         User userTemp = checkIfIdIsPresentAndReturnUser(tempPlayId);
         for(int i=0; i<counter; i++){
-          MatchResult match2 = new MatchResult(userTemp, tempPlayId,"nullzeroplayer",userTemp,tempPlayId,"nullzeroplayer",o.getId(),1);
+          MatchResult match2 = new MatchResult(userTemp, tempPlayId,"",userTemp,tempPlayId,"",o.getId(),1,o);
           o.getMatchResults().add(match2);
         }
       }
       return o;
     }
+
     private static ArrayList seeding(int tourSize){
       int rounds = (int)(Math.log(tourSize)/Math.log(2))-1;
       ArrayList <Integer> place=new ArrayList<Integer>();
@@ -142,6 +144,7 @@ public class TournamentServiceImp extends TournamentService {
       }
       return place;
     }
+
     private static ArrayList nextLayer(ArrayList<Integer> place){
       ArrayList <Integer> output=new ArrayList<Integer>();
       Integer length =new Integer(place.size()*2+1);
