@@ -115,4 +115,20 @@ public class MatchResultController {
     {
         return new ResponseWrapper<>( matchMainService.updateCharsPlayed( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
     }
+
+    @CrossOrigin
+    @PatchMapping(value = "/setcharacter1/{id}")
+    public ResponseWrapper<MatchResult> updateMatchCharacter1(@Valid @RequestBody MatchResult matchResult,
+                                                       @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( matchMainService.updateChar1( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
+
+    @CrossOrigin
+    @PatchMapping(value = "/setcharacter2/{id}")
+    public ResponseWrapper<MatchResult> updateMatchCharacter2(@Valid @RequestBody MatchResult matchResult,
+                                                       @Valid @Pattern(regexp = REGEX_FOR_NUMBERS, message = MESSAGE_FOR_REGEX_NUMBER_MISMATCH) @PathVariable(value = "id") String id )
+    {
+        return new ResponseWrapper<>( matchMainService.updateChar2( matchResult, Integer.parseInt( id ) ), HttpStatus.OK );
+    }
 }

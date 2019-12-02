@@ -70,7 +70,7 @@ function loading() {
 			para = document.createElement("p");
 			para.innerHTML = description;
 			entry.appendChild(para);
-			
+
 			para2 = document.createElement("p");
 			para2.innerHTML = "<b>Visits: </b>" + visits;
 			para2.className = "visit_nums";
@@ -131,7 +131,8 @@ function populateDrop() {
 									countTournament++;
 									var new_content = '<li style="padding-left: 5%;">'+'<a href='+
 									"site_files/bracket_page/bracket.html?id="+searchedTournaments[eachTournament].id+'>'+
-									searchedTournaments[eachTournament].tname+' by '+searchedTournaments[eachTournament].tcreator+'</a>'+'</li>';
+									searchedTournaments[eachTournament].tname+'</a>'+'</li>';
+									//searchedTournaments[eachTournament].tname+' by '+searchedTournaments[eachTournament].tcreator+'</a>'+'</li>';
 									document.getElementById("drop_menu").innerHTML = document.getElementById("drop_menu").innerHTML + new_content;
 								}
 								if(countTournament==0){
@@ -157,7 +158,8 @@ function populateDrop() {
 }
 
 function logInDisplay(){
-    if(sessionStorage.getItem("userId") != null){
+	console.log();
+    if(sessionStorage.getItem("userId") != null && sessionStorage.getItem("userId") != "null"){
         // Hide log in/register
         $(".guestLinks").hide();
         // Show account data link
@@ -169,7 +171,7 @@ function logInDisplay(){
         $(".logInLinks").hide();
         // Show account data link
         $(".guestLinks").show();
-        
+
     }
 }
 
@@ -181,24 +183,24 @@ function showFeatures() {
 		if (this.readyState == 4 && this.status == 200) {
 			var obj = JSON.parse(this.responseText);
 			content = obj.data.content;
-			
+
 			var users = [];
 			for (i = 0; i < content.length; i++) {
 				if (content[i].numtournamentswon >= 5) {
 					users.push(content[i]);
 				}
 			}
-			
+
 			inner = document.getElementById("tcarousel");
-			
+
 			// creating first/active carousel item
 			var item = document.createElement("div");
 			item.className = "item active";
-			
+
 			var head = document.createElement("h1");
 			head.innerHTML = users[0].username;
 			var image = document.createElement("img");
-			
+
 			var srcString;
 			if (users[0].avatarName == null) {
 				srcString = "site_files/account_page/images/notavailable.jpeg"
@@ -206,44 +208,48 @@ function showFeatures() {
 				srcString = "site_files/account_page/images/" + users[0].avatarName;
 			}
 			image.src = srcString;
-			
+
 			var para = document.createElement("p");
 			para.innerHTML = "Tournament Wins: " + users[0].numtournamentswon;
-			
+
 			item.appendChild(head);
 			item.appendChild(image);
 			item.appendChild(para);
-			
+
 			inner.appendChild(item);
-			
+
 			// do the rest
 			for (i = 1; i < users.length; i++) {
+				if (users[i].username == "guest") {
+					continue;
+				}
+
 				item = document.createElement("div");
 				item.className = "item";
-				
+
 				head = document.createElement("h1");
 				head.innerHTML = users[i].username;
 				image = document.createElement("img");
-				
+
 				if (users[i].avatarName == null) {
 					srcString = "site_files/account_page/images/notavailable.jpeg"
 				} else {
 					srcString = "site_files/account_page/images/" + users[i].avatarName;
 				}
 				image.src = srcString;
-				
+
 				para = document.createElement("p");
 				para.innerHTML = "Tournament Wins: " + users[i].numtournamentswon;
-				
+
 				item.appendChild(head);
 				item.appendChild(image);
 				item.appendChild(para);
-				
+
 				inner.appendChild(item);
 			}
 		}
 	}
-	
+
 	xmlHttp.open("GET", url, true);
 	xmlHttp.send();
 

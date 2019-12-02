@@ -45,6 +45,7 @@ function swapPage(pageName){
         // Log out requested
         case 4: {
             sessionStorage.setItem("userId", null);
+            sessionStorage.setItem("accId", null);
             document.location.href = "loginPrompt.html";
         }
     }
@@ -126,17 +127,19 @@ function populateCharTable(response){
     var updatedArray;
 
     // Iterate through lower seed matches and add wins/losses
+    
     for(var i = 0; i < lowSeedMatches.length; i++){
         var matchComplete = lowSeedMatches[i]["completed"];
         if(matchComplete){
 
             // Get character played and if match won
             var charPlayed = lowSeedMatches[i]["p2characterplayed"];
+            
             var won = !(lowSeedMatches[i]["p1win"]);
 
             // Checks if characer is already in map. Creates entry if not
             if(charStatsMap.get(charPlayed) == undefined){
-                charStatsMap.set(charPlayed, defaultArray);
+                charStatsMap.set(charPlayed, [0, 0]);
             }
 
             // Holds our [Wins, Losses] for given character
@@ -159,12 +162,12 @@ function populateCharTable(response){
         if(matchComplete){
 
             // Get character played and if match won
-            var charPlayed = highSeedMatches[i]["p2characterplayed"];
+            var charPlayed = highSeedMatches[i]["p1characterplayed"];
             var won = highSeedMatches[i]["p1win"];
 
             // Checks if characer is already in map. Creates entry if not
             if(charStatsMap.get(charPlayed) == undefined){
-                charStatsMap.set(charPlayed, defaultArray);
+                charStatsMap.set(charPlayed, [0, 0]);
             }
 
             // Holds our [Wins, Losses] for given character
@@ -292,8 +295,9 @@ function changePictureRequest(imageName){
 
 
 function resetPassword(){
-    var myuserid = sessionStorage.getItem("userId");
+    var myuserid = sessionStorage.getItem("accId");
     var apiCall = 'http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/updatePass/'+myuserid;
+   // var apiLocal = 'http://localhost:8080/api/v1/Accounts/updatePass/'+myuserid;
     var formData = {
         "username" :  "bigDummy",
         "password" :  $('input[id=regPass]').val()

@@ -54,7 +54,7 @@ public class UserController {
     {
         return new ResponseWrapper<>( userMainService.add( user ), HttpStatus.OK );
     }
-
+/*
     @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public ResponseWrapper<User> deleteUser(
@@ -70,7 +70,7 @@ public class UserController {
     {
         return new ResponseWrapper<>( userMainService.update( user, Integer.parseInt( id ) ), HttpStatus.OK );
     }
-
+*/
     @CrossOrigin
     @PatchMapping(value = "addfriend/{id}")
     public ResponseWrapper<User> addFriendToUser( @Valid @RequestBody User friend,

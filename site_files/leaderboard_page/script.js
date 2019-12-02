@@ -55,7 +55,7 @@ function showTopUsers() {
 			if (user.numwins == 0) {
 				winRate = 0;
 			} else {
-				winRate = user.numgamesplayed / user.numwins;
+				winRate = user.numwins / user.numgamesplayed;
 			}
 			tmp.push(winRate.toFixed(2));
 			holder.push(tmp)
@@ -89,6 +89,12 @@ function showTopUsers() {
 			entry = document.createElement("li");
 
 			name = holder[obj.data.content.length - 1 - i][0];
+			
+			// ignore for debugging
+			if (name == "guest") {
+				continue;
+			}
+			
 			val = holder[obj.data.content.length - 1 - i][1];
 
 			entry.appendChild(document.createTextNode(name + ": " + val));

@@ -55,7 +55,7 @@ public class AccountsController{
 
     @CrossOrigin
     @PostMapping("/register")
-    public boolean registerAccount(@RequestBody AccountSubmission registerAttempt){
+    public LogInResult registerAccount(@RequestBody AccountSubmission registerAttempt){
       //  return registerAttempt;
         // Check if the username exists
 
@@ -70,11 +70,12 @@ public class AccountsController{
             User newUser = new User(username, 0,0,0,0,0);
             Accounts newAccount = new Accounts(username, password, newUser);
             accountsLog.save(newAccount);
-            return true;
+            LogInResult response = new LogInResult(newUser.getId(), newAccount.getId(), true);
+            return response;
         }
 
         else{
-            return false;
+            return new LogInResult(-1, -1, false);
         }
 
 
@@ -109,17 +110,19 @@ public class AccountsController{
         System.out.println(existingUser);
 
         if(existingUser == null){
-            return new LogInResult(-1, false);
+            return new LogInResult(-1, -1, false);
 
         }
 
         else{
             boolean attemptStatus = existingUser.getPassword().equals(password);
+
             // Get associated User object
             User linkedUser = userRepository.findByUsername(username);
             System.out.println(linkedUser);
             int Id = linkedUser.getId();
-            return new LogInResult(Id, attemptStatus);
+            int accId = existingUser.getId();
+            return new LogInResult(Id, accId, attemptStatus);
 
 
         }

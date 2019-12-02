@@ -36,19 +36,31 @@
 		<div class="row">
 
 			<div class="col-sm-8" style="background-color:;">
+				<div class="row">
 				<div class="col-sm-1">
 				</div>
 				<div class="col-sm-11">
 					<h1 id="title">Default Title</h1>
 				</div>
-
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<h4 style="text-align:right">Tournament Creator:</h4>
+				</div>
+				<div class="col-sm-9">
+					<h5 id="creator" style="text-align:left"></h5>
+				</div>
+			</div>
 				<div class="top">
 					<div class="col-sm-3">
-						<h3 style="text-align:left">Description:</h3>
+						<h3 style="text-align:right">Description:</h3>
 					</div>
 					<div class="col-sm-9" onclick="descClick()">
-						<h5 id="desc">Click to enter a description!</h5>
+						<h5 id="desc" style="text-align:left">Click to enter a description!</h5>
 					</div>
+					</div>
+					<div class="middle">
+
 					</div>
 					<div class="bottom">
 						<button id="close-tour" onclick ="closeTour()">Close Tournament</button>
@@ -104,6 +116,9 @@
 						<textarea id="modal-ta1" rows="8" cols="80"></textarea>
 						<p id="modal-text2">Some text in the modal.</p>
 						<textarea id="modal-ta2" rows="8" cols="80"></textarea>
+						<select id="character-data">
+							<option value=""></option>
+						</select>
 					</div>
 					<div class="modal-footer">
 						<button id="modal-enter" type="button" class="btn btn-default" data-dismiss="modal" onclick="modalEnter()">Enter</button>
