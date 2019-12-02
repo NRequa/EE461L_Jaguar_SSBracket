@@ -33,15 +33,9 @@ public class LeaderBoardAPITest {
 		
 		// get appropriate JSON information
 		
-		leaderContent = getContent(leaderBoardAPI);
-	}
-	
-	private static JSONArray getContent(String url) {
-		JSONReader reader = new JSONReader(url);
-		JSONObject obj = reader.getResponse();
+		JSONReader reader = new JSONReader();
 		
-		JSONObject data = (JSONObject) obj.get("data");
-        return (JSONArray) data.get("content");
+		leaderContent = reader.getContent(leaderBoardAPI);
 	}
 	
 	@Test
@@ -55,21 +49,21 @@ public class LeaderBoardAPITest {
         JSONObject arrayElement;
         String userName;
         for (int i = 0; i < leaderContent.size(); i++) {
+        	System.out.println(i);
         	arrayElement = (JSONObject) leaderContent.get(i);
         	userName = (String) arrayElement.get("username");
+        	// "guest" is not included in leaderboard
+        	if (userName.equals("guest")) continue;
         	assertTrue(listText.contains(userName));
         }
         
         // Next check that webpage list goes from highest to lowest value
         
-        String[] listItems = listText.split("\n");
-        
         // gather values in webpage's ordered list
-        // TODO: could use regular array if we have no NaN's, since you can allocate 
+        
+        String[] listItems = listText.split("\n");
         ArrayList<String> winRates = new ArrayList<>();
         for (String li : listItems) {
-        	// TODO: if statement should be temporary
-        	if (li.contains("NaN")) continue;
         	String[] nameAndRate = li.split(" ");
         	// indexing last element of array guarantees you get the winrate number
         	winRates.add(nameAndRate[nameAndRate.length - 1]);
@@ -84,7 +78,6 @@ public class LeaderBoardAPITest {
         	currentVal = nextVal;
         }
 	}
-	
 	
 	@AfterAll
 	public static void tearDown() {

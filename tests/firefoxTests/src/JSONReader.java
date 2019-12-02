@@ -5,23 +5,28 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class JSONReader {
 	
-	private URL url = null;
+	private URL url;
 	HttpURLConnection connection = null;
 	
-	JSONReader(String URLString) {
+	public JSONArray getContent(String urlString) {
 		try {
-			this.url = new URL(URLString);
+			url = new URL(urlString);
 		} catch (MalformedURLException e) {
-			System.err.println("Incorrect URL format");
+			System.err.println("Incorrect URL format.");
 		}
+		JSONObject obj = getResponse();
+		
+		JSONObject data = (JSONObject) obj.get("data");
+        return (JSONArray) data.get("content");
 	}
 
-	public JSONObject getResponse() {
+	private JSONObject getResponse() {
 		try {
 			setup();
 		} catch (IOException e) {

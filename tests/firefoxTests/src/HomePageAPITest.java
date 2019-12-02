@@ -43,16 +43,10 @@ public class HomePageAPITest {
 		
 		// get all appropriate JSON information
 		
-		tournamentContent = getContent(homePageAPI);
-		leaderContent = getContent(leaderBoardAPI);
-	}
-	
-	private static JSONArray getContent(String url) {
-		JSONReader reader = new JSONReader(url);
-		JSONObject obj = reader.getResponse();
+		JSONReader reader = new JSONReader();
 		
-		JSONObject data = (JSONObject) obj.get("data");
-        return (JSONArray) data.get("content");
+		tournamentContent = reader.getContent(homePageAPI);
+		leaderContent = reader.getContent(leaderBoardAPI);
 	}
 	
 	@Test
