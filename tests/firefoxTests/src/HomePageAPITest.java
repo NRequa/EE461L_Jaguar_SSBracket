@@ -64,9 +64,6 @@ public class HomePageAPITest {
         	popContent = (String) arrayElement.get("tname");
         	assertTrue(listText.contains(popContent.trim()));
         	
-        	popContent = (String) arrayElement.get("description");
-        	assertTrue(listText.contains(popContent.trim()));
-        	
         	popContent = ((Long) arrayElement.get("visits")).toString();
         	assertTrue(listText.contains(popContent.trim()));
         } 
