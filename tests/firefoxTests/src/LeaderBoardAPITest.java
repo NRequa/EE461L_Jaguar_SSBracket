@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
-import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,6 +21,8 @@ public class LeaderBoardAPITest {
 	static String leaderBoardURL = "http://www.ssbracket.xyz/site_files/leaderboard_page/index.html";
 	static String leaderBoardAPI = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user";
 	
+	static JSONArray leaderContent = null;
+	
 	static WebDriver driver;
 	
 	@BeforeAll
@@ -29,40 +30,32 @@ public class LeaderBoardAPITest {
 		System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
 		driver = new FirefoxDriver();
 		driver.get(leaderBoardURL);
+		
+		// get appropriate JSON information
+		
+		leaderContent = getContent(leaderBoardAPI);
+	}
+	
+	private static JSONArray getContent(String url) {
+		JSONReader reader = new JSONReader(url);
+		JSONObject obj = reader.getResponse();
+		
+		JSONObject data = (JSONObject) obj.get("data");
+        return (JSONArray) data.get("content");
 	}
 	
 	@Test
 	void leaderBoardTest() throws IOException, ParseException {
-		URL url = new URL(leaderBoardAPI);
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		
-		con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null)
-            response.append(inputLine);
-
-        in.close();
-        
-        JSONParser parser = new JSONParser();
-        JSONObject obj = (JSONObject) parser.parse(response.toString());
-        
-        JSONObject data = (JSONObject) obj.get("data");
-        JSONArray content = (JSONArray) data.get("content");
-        
         WebElement topList = driver.findElement(By.id("top_list1"));
         
         // First check all names from JSON response exist on page
+        
         String listText = topList.getText();
         
         JSONObject arrayElement;
         String userName;
-        for (int i = 0; i < content.size(); i++) {
-        	arrayElement = (JSONObject) content.get(i);
+        for (int i = 0; i < leaderContent.size(); i++) {
+        	arrayElement = (JSONObject) leaderContent.get(i);
         	userName = (String) arrayElement.get("username");
         	assertTrue(listText.contains(userName));
         }
