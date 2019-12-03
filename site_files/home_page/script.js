@@ -12,47 +12,62 @@ function loading() {
 		var obj = JSON.parse(this.responseText);
 
 		var holder = [];
-
-		var i;
-		var tourney;
-		var tmp;
-
-		// 2D array holds player associated with win rate
-		for (i = 0; i < obj.data.content.length; i++) {
-			tmp = [];
-			tourney = obj.data.content[i];
-			tmp.push(tourney.tname);
-			tmp.push(tourney.description);
-			tmp.push(tourney.id);
-			tmp.push(tourney.visits);
-			holder.push(tmp)
-		}
-
-		var j;
-		var n = holder.length;
-
-		// insertion sort
-		for (i = 1; i < n; i++) {
-			key = holder[i];
-			j = i - 1;
-
-			while (j >= 0 && holder[j][3] > key[3]) {
-				holder[j + 1] = holder[j];
-				j = j - 1;
-			}
-			holder[j + 1] = key;
-		}
+		
+		holder = fillHolder(obj, holder);
+		holder = sort(holder);
 
 		var popular = document.getElementById("popular");
+		
+		populateList(obj, holder);
+		
+		$("#features_btn").click();
+	}
+	}
 
-		var tname;
-		var description;
-		var id;
-		var visits;
-		var a;
-		var para;
-		var entry;
-		var count = 3;
+	var requestMaker = new RequestFactory();
+	var request = requestMaker.createRequest("tournament", cmd, readyFunc);
+	request.httpObject.open("GET", request.callURL);
+	request.httpObject.send();
+
+	$(".dropdown").on("hide.bs.dropdown", function(){
+		document.getElementById("drop_menu").innerHTML = "";
+    toggleOn = false;
+  });
+}
+
+function sort(holder) {
+	// insertion sort
+	for (i = 1; i < holder.length; i++) {
+		key = holder[i];
+		j = i - 1;
+
+		while (j >= 0 && holder[j][3] > key[3]) {
+			holder[j + 1] = holder[j];
+			j = j - 1;
+		}
+		holder[j + 1] = key;
+	}
+	
+	return holder;
+}
+
+function fillHolder(obj, holder) {
+	// 2D array holds player associated with win rate
+	for (i = 0; i < obj.data.content.length; i++) {
+		tmp = [];
+		tourney = obj.data.content[i];
+		tmp.push(tourney.tname);
+		tmp.push(tourney.description);
+		tmp.push(tourney.id);
+		tmp.push(tourney.visits);
+		holder.push(tmp)
+	}
+	
+	return holder;
+}
+
+function populateList(obj, holder) {
+	var count = 3;
 		for (i = 0; i < obj.data.content.length; i++) {
 			entry = document.createElement("div");
 
@@ -77,24 +92,6 @@ function loading() {
 
 			popular.appendChild(entry);
 		}
-		$("#features_btn").click();
-	}
-	}
-
-	/*
-	xmlHttp.open("GET", url,true);
-	xmlHttp.send();
-	*/
-
-	var requestMaker = new RequestFactory();
-	var request = requestMaker.createRequest("tournament", cmd, readyFunc);
-	request.httpObject.open("GET", request.callURL);
-	request.httpObject.send();
-
-	$(".dropdown").on("hide.bs.dropdown", function(){
-		document.getElementById("drop_menu").innerHTML = "";
-    toggleOn = false;
-  });
 }
 
 function showContactInfo() {
@@ -146,15 +143,6 @@ function populateDrop() {
 	    			}
 			};
 
-			/*
-			xmlhttp2.open("POST", ourApi2, true);
-			xmlhttp2.setRequestHeader("Content-type", "application/json");
-			xmlhttp2.send(JSON.stringify({
-					"tname":text
-				})
-			);
-				*/
-
 			var requestMaker = new RequestFactory();
 			var request = requestMaker.createRequest("tournament", cmd, readyFunc);
 			request.httpObject.open("POST", request.callURL, true);
@@ -162,7 +150,6 @@ function populateDrop() {
 			request.httpObject.send(JSON.stringify({
 					"tname":text
 			}));
-			//xmlhttp.send();
 		}
 	}
 }
@@ -203,74 +190,49 @@ function showFeatures() {
 			}
 
 			inner = document.getElementById("tcarousel");
-
-			// creating first/active carousel item
-			var item = document.createElement("div");
-			item.className = "item active";
-
-			var head = document.createElement("h1");
-			head.innerHTML = users[0].username;
-			var image = document.createElement("img");
-
-			var srcString;
-			if (users[0].avatarName == null) {
-				srcString = "site_files/account_page/images/notavailable.jpeg"
-			} else {
-				srcString = "site_files/account_page/images/" + users[0].avatarName;
-			}
-			image.src = srcString;
-
-			var para = document.createElement("p");
-			para.innerHTML = "Tournament Wins: " + users[0].numtournamentswon;
-
-			item.appendChild(head);
-			item.appendChild(image);
-			item.appendChild(para);
-
-			inner.appendChild(item);
-
-			// do the rest
-			for (i = 1; i < users.length; i++) {
-				if (users[i].username == "guest") {
-					continue;
-				}
-
-				item = document.createElement("div");
-				item.className = "item";
-
-				head = document.createElement("h1");
-				head.innerHTML = users[i].username;
-				image = document.createElement("img");
-
-				if (users[i].avatarName == null) {
-					srcString = "site_files/account_page/images/notavailable.jpeg"
-				} else {
-					srcString = "site_files/account_page/images/" + users[i].avatarName;
-				}
-				image.src = srcString;
-
-				para = document.createElement("p");
-				para.innerHTML = "Tournament Wins: " + users[i].numtournamentswon;
-
-				item.appendChild(head);
-				item.appendChild(image);
-				item.appendChild(para);
-
-				inner.appendChild(item);
-			}
+			
+			populateCarousel(inner, users);
 		}
 	}
-
-	/*
-	xmlHttp.open("GET", url, true);
-	xmlHttp.send();
-	*/
 	
 	var requestMaker = new RequestFactory();
 	var request = requestMaker.createRequest("user", cmd, readyFunc);
 	request.httpObject.open("GET", request.callURL);
 	request.httpObject.send();
+}
 
+function populateCarousel(inner, users) {
+	for (i = 0; i < users.length; i++) {
+		if (users[i].username == "guest") {
+			continue;
+		}
+
+		item = document.createElement("div");
+		if(i == 0) {
+			item.className = "item active";
+		} else {
+			item.className = "item";
+		}
+
+		head = document.createElement("h1");
+		head.innerHTML = users[i].username;
+		image = document.createElement("img");
+
+		if (users[i].avatarName == null) {
+			srcString = "site_files/account_page/images/notavailable.jpeg"
+		} else {
+			srcString = "site_files/account_page/images/" + users[i].avatarName;
+		}
+		image.src = srcString;
+
+		para = document.createElement("p");
+		para.innerHTML = "Tournament Wins: " + users[i].numtournamentswon;
+
+		item.appendChild(head);
+		item.appendChild(image);
+		item.appendChild(para);
+		inner.appendChild(item);
+	}
 }
 
 
@@ -311,7 +273,7 @@ function RequestFactory() {
 
 
 var AccountsRequest = function(command) {
-        this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
+    this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/Accounts/" + command;
 }
 
 var MatchResultRequest = function(command) {
@@ -325,7 +287,6 @@ var TournamentRequest = function(command) {
 
 var UserRequest = function(command) {
     this.callURL = "http://www.ssbracket.us-east-2.elasticbeanstalk.com/api/v1/user/" + command;
-
 }
 
 var ScrapeRequest  = function(command) {
