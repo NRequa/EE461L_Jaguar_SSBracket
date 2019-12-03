@@ -328,7 +328,7 @@ function patchScore(mtchid,score1,score2,mNum){
                 resolve(1);
               }
               var full =await findNextMatch(mid[nextmNum])
-              await patchNextMatch(mid[nextmNum],winner,winnerid,winnerChar,even,full);
+              await patchNextMatch(mid[nextmNum],winner,winnerid,winnerChar,even,full,id);
               resolve(1);
             }
             else{
@@ -376,7 +376,7 @@ function findNextMatch(mtchid){
   		xmlhttp.send();
   })
 }
-function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full){
+function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full,eventId){
   return new Promise(function(resolve,reject){
       var xmlhttp = new XMLHttpRequest();
       var m1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setusers/"+mtchid.toString();
@@ -398,7 +398,8 @@ function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full){
         "player1":winnerid,
         "player1string":winner,
         "p1characterplayed":winnerChar,
-        "ongoing":full
+        "ongoing":full,
+        "event":eventId
       }));
       }
       else{
@@ -409,6 +410,7 @@ function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full){
           "player2string":winner,
           "p2characterplayed":winnerChar,
           "ongoing":full
+          "event":eventId
         }));
       }
   })
@@ -485,7 +487,7 @@ function patchUserId(mtid,pid,even){
             if(this.status == 200){
               myResponse = JSON.parse(this.responseText);
               var full= await findNextMatch(mtid);
-              await patchNextMatch(mtid,myResponse.data.username,myResponse.data.id,"",even,full)
+              await patchNextMatch(mtid,myResponse.data.username,myResponse.data.id,"",even,full,id)
               resolve();
               }
               else{
