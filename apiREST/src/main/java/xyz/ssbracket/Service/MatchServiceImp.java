@@ -138,7 +138,7 @@ public class MatchServiceImp extends MatchService {
     @Override
     public MatchResult updateUsers( MatchResult o, int id) throws ResourceNotFoundException{
         MatchResult oldMatchResult = checkIfIdIsPresentAndReturnMatchResult( id );
-        Tournament myTournament = checkIfIdIsPresentAndReturnTournament(o.getEvent());
+        Tournament myTournament = checkIfIdIsPresentAndReturnTournament(oldMatchResult.getTournament().getId());
         User participant1 = null;
         User participant2 = null;
         if(o.getPlayer1()!=0){
@@ -158,7 +158,7 @@ public class MatchServiceImp extends MatchService {
         }
 
         if(!myTournament.isClosed()){
-          TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(o.getEvent());
+          TournamentArray storingTournament = checkIfIdIsPresentAndReturnArrayTournament(oldMatchResult.getTournament().getId());
           if(participant1!=null){
             addUserToTournament(participant1, myTournament, storingTournament);
           }
