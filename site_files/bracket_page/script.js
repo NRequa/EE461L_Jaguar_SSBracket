@@ -409,7 +409,7 @@ function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full,eventId){
           "player2":winnerid,
           "player2string":winner,
           "p2characterplayed":winnerChar,
-          "ongoing":full
+          "ongoing":full,
           "event":eventId
         }));
       }
