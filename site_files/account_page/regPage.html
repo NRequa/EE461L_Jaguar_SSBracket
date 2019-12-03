@@ -98,9 +98,9 @@
                 console.log(this.responseText);
                 if(this.readyState == 4 && this.status == 200){
                     var response = JSON.parse(this.responseText);
-                    if(response.status){
-                        sessionStorage.setItem("userId", response.id);
-                        sessionStorage.setItem("accId", response.accId);
+                    if(response["data"].status){
+                        sessionStorage.setItem("userId", response["data"].id);
+                        sessionStorage.setItem("accId", response["data"].accId);
                         window.location.href = "accountDataPage.html";
                     }
 

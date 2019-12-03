@@ -76,12 +76,12 @@
                 console.log(this.responseText);
                 if(this.readyState == 4 && this.status == 200){
                     var response = JSON.parse(this.responseText);
-                    if(response.status){
+                    if(response["data"].status){
                         console.log(response.id);
                         console.log(response.accId);
                         // Use ID between pages in a session
-                        sessionStorage.setItem("userId", response.id);
-                        sessionStorage.setItem("accId", response.accId);
+                        sessionStorage.setItem("userId", response["data"].id);
+                        sessionStorage.setItem("accId", response["data"].accId);
                         window.location.href = "accountDataPage.html";
 					}
 					else{
