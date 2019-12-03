@@ -379,7 +379,7 @@ function findNextMatch(mtchid){
 function patchNextMatch(mtchid,winner,winnerid,winnerChar,even,full){
   return new Promise(function(resolve,reject){
       var xmlhttp = new XMLHttpRequest();
-      var m1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setuser/"+mtchid.toString();
+      var m1Api="http://ssbracket.us-east-2.elasticbeanstalk.com/api/v1/match/setusers/"+mtchid.toString();
       var myResponse;
       if(winnerChar==""){
         winnerChar="None";
@@ -802,7 +802,6 @@ function createTour(){
   );
   }
 }
-
 function findplayer(player){
   return new Promise(function(resolve,reject){
   var xmlhttp = new XMLHttpRequest();
