@@ -190,61 +190,8 @@ function showFeatures() {
 			}
 
 			inner = document.getElementById("tcarousel");
-
-			// creating first/active carousel item
-			var item = document.createElement("div");
-			item.className = "item active";
-
-			var head = document.createElement("h1");
-			head.innerHTML = users[0].username;
-			var image = document.createElement("img");
-
-			var srcString;
-			if (users[0].avatarName == null) {
-				srcString = "site_files/account_page/images/notavailable.jpeg"
-			} else {
-				srcString = "site_files/account_page/images/" + users[0].avatarName;
-			}
-			image.src = srcString;
-
-			var para = document.createElement("p");
-			para.innerHTML = "Tournament Wins: " + users[0].numtournamentswon;
-
-			item.appendChild(head);
-			item.appendChild(image);
-			item.appendChild(para);
-
-			inner.appendChild(item);
-
-			// do the rest
-			for (i = 1; i < users.length; i++) {
-				if (users[i].username == "guest") {
-					continue;
-				}
-
-				item = document.createElement("div");
-				item.className = "item";
-
-				head = document.createElement("h1");
-				head.innerHTML = users[i].username;
-				image = document.createElement("img");
-
-				if (users[i].avatarName == null) {
-					srcString = "site_files/account_page/images/notavailable.jpeg"
-				} else {
-					srcString = "site_files/account_page/images/" + users[i].avatarName;
-				}
-				image.src = srcString;
-
-				para = document.createElement("p");
-				para.innerHTML = "Tournament Wins: " + users[i].numtournamentswon;
-
-				item.appendChild(head);
-				item.appendChild(image);
-				item.appendChild(para);
-
-				inner.appendChild(item);
-			}
+			
+			populateCarousel(inner, users);
 		}
 	}
 	
@@ -252,6 +199,40 @@ function showFeatures() {
 	var request = requestMaker.createRequest("user", cmd, readyFunc);
 	request.httpObject.open("GET", request.callURL);
 	request.httpObject.send();
+}
+
+function populateCarousel(inner, users) {
+	for (i = 0; i < users.length; i++) {
+		if (users[i].username == "guest") {
+			continue;
+		}
+
+		item = document.createElement("div");
+		if(i == 0) {
+			item.className = "item active";
+		} else {
+			item.className = "item";
+		}
+
+		head = document.createElement("h1");
+		head.innerHTML = users[i].username;
+		image = document.createElement("img");
+
+		if (users[i].avatarName == null) {
+			srcString = "site_files/account_page/images/notavailable.jpeg"
+		} else {
+			srcString = "site_files/account_page/images/" + users[i].avatarName;
+		}
+		image.src = srcString;
+
+		para = document.createElement("p");
+		para.innerHTML = "Tournament Wins: " + users[i].numtournamentswon;
+
+		item.appendChild(head);
+		item.appendChild(image);
+		item.appendChild(para);
+		inner.appendChild(item);
+	}
 }
 
 
